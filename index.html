@@ -485,12 +485,18 @@
     <img src="Assets/table1_priors.png" alt="Table 1: the seven prior variants compared" />
     <figcaption>The seven prior variants. π<sub>pre</sub> is the pretrained LBM (LBM 1.0, π<sub>0.5</sub>, or GR00T N1.5).</figcaption>
   </div>
-  <p>Four experimental settings test our research questions:</p>
+  <p>Our study is guided by three research questions:</p>
   <ul>
-    <li><strong>Setting A</strong> — Controlled test with a prior artificially constructed to be very close to the target.</li>
-    <li><strong>Setting B<sub>sim</sub></strong> — Full-scale LBM 1.0 fine-tuning across 8 tasks and 5 fine-tuning data fractions (56K rollouts).</li>
-    <li><strong>Setting B<sub>real</sub></strong> — Blinded A/B hardware testing on 5 bimanual tasks (1,250 rollouts).</li>
-    <li><strong>Setting C</strong> — VLA validation on π<sub>0.5</sub> and GR00T N1.5 across 34 RoboCasa tasks (54K rollouts).</li>
+    <li><strong>Q1.</strong> Do non-Gaussian priors that are measurably <em>closer to the target</em> improve policy fine-tuning performance?</li>
+    <li><strong>Q2.</strong> Do informed priors have an advantage across data fractions — particularly in the <em>low-data regime</em>, where the added inductive bias may be most beneficial?</li>
+    <li><strong>Q3.</strong> Is the effect of prior choice <em>consistent</em> across model architectures as well as simulation and hardware?</li>
+  </ul>
+  <p>We design four experimental settings to study these questions, each annotated with the question(s) it addresses:</p>
+  <ul>
+    <li><strong>Setting A</strong> <span style="color: var(--accent); font-weight: 600;">(Q1)</span> — Controlled test with a prior artificially constructed to be very close to the target.</li>
+    <li><strong>Setting B<sub>sim</sub></strong> <span style="color: var(--accent); font-weight: 600;">(Q1, Q2)</span> — Full-scale LBM 1.0 fine-tuning across 8 tasks and 5 fine-tuning data fractions (56K rollouts).</li>
+    <li><strong>Setting B<sub>real</sub></strong> <span style="color: var(--accent); font-weight: 600;">(Q3)</span> — Blinded A/B hardware testing on 5 bimanual tasks (1,250 rollouts).</li>
+    <li><strong>Setting C</strong> <span style="color: var(--accent); font-weight: 600;">(Q3)</span> — VLA validation on π<sub>0.5</sub> and GR00T N1.5 across 34 RoboCasa tasks (54K rollouts).</li>
   </ul>
   <div class="note">
     <p>
