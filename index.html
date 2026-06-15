@@ -7,6 +7,16 @@
   <meta name="description" content="Non-Gaussian priors do not improve fine-tuning of Large Behavior Models for robot manipulation." />
   <meta name="keywords" content="imitation learning, flow-matching, diffusion policy, action priors, large behavior models, fine-tuning, LBM, robot learning, negative result" />
 
+  <!-- Open Graph / link-preview cards -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="The Gaussian Is Enough: Flow-Matching Priors Do Not Help When Fine-Tuning Large Behavior Models" />
+  <meta property="og:description" content="Non-Gaussian priors that help when training from scratch do not improve fine-tuning of Large Behavior Models. Across 100K+ simulation and 1,250 hardware rollouts, the standard Gaussian prior is sufficient." />
+  <meta property="og:image" content="Assets/fig1_opener.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="The Gaussian Is Enough: Flow-Matching Priors Do Not Help When Fine-Tuning Large Behavior Models" />
+  <meta name="twitter:description" content="Non-Gaussian priors that help when training from scratch do not improve fine-tuning of Large Behavior Models. Across 100K+ simulation and 1,250 hardware rollouts, the standard Gaussian prior is sufficient." />
+  <meta name="twitter:image" content="Assets/fig1_opener.png" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
@@ -348,6 +358,26 @@
     }
     .bibtex-block .copy-btn:hover { background: rgba(255,255,255,0.2); color: #fff; }
 
+    /* Research-question back-links */
+    .q-link {
+      color: var(--accent);
+      font-weight: 600;
+      text-decoration: none;
+      border-bottom: 1px dotted var(--accent);
+      transition: opacity 0.2s;
+    }
+    .q-link:hover { opacity: 0.65; }
+
+    /* Briefly highlight a question when jumped to */
+    #q1, #q2, #q3 { scroll-margin-top: 72px; }
+    #q1:target, #q2:target, #q3:target {
+      background: var(--accent-light);
+      border-radius: 4px;
+      padding: 4px 8px;
+      margin-left: -8px;
+      transition: background 0.3s;
+    }
+
     .divider { width: 60px; height: 1px; background: var(--border); margin: 0 auto; }
 
     footer {
@@ -461,9 +491,10 @@
   </p>
   <p>
     A natural next step is to ask whether these gains transfer to <em>fine-tuning</em> pretrained Large Behavior
-    Models (LBMs) such as LBM 1.0, π<sub>0.5</sub>, and GR00T N1.5. Surprisingly, we find that this is not the case.
-    Across over 100K simulation rollouts and 1,250 hardware rollouts, non-Gaussian priors yield statistically
-    indistinguishable or worse fine-tuning performance than a standard Gaussian.
+    Models (LBMs) such as LBM 1.0, π<sub>0.5</sub>, and GR00T N1.5. Surprisingly, we find that this is not the
+    case, except possibly at very low fine-tuning data fractions.
+    Across over 100K simulation rollouts and 1,250 hardware rollouts, non-Gaussian priors that are demonstrably
+    closer to the target yield statistically indistinguishable or worse fine-tuning performance than a standard Gaussian.
   </p>
   <p>
     Diagnostic analyses suggest why: fine-tuned policies produce similar action predictions across priors, despite
@@ -487,16 +518,16 @@
   </div>
   <p>Our study is guided by three research questions:</p>
   <ul>
-    <li><strong>Q1.</strong> Do non-Gaussian priors that are measurably <em>closer to the target</em> improve policy fine-tuning performance?</li>
-    <li><strong>Q2.</strong> Do informed priors have an advantage across data fractions — particularly in the <em>low-data regime</em>, where the added inductive bias may be most beneficial?</li>
-    <li><strong>Q3.</strong> Is the effect of prior choice <em>consistent</em> across model architectures as well as simulation and hardware?</li>
+    <li id="q1"><strong>Q1.</strong> Do non-Gaussian priors that are measurably <em>closer to the target</em> improve policy fine-tuning performance?</li>
+    <li id="q2"><strong>Q2.</strong> Do informed priors have an advantage across data fractions — particularly in the <em>low-data regime</em>, where the added inductive bias may be most beneficial?</li>
+    <li id="q3"><strong>Q3.</strong> Is the effect of prior choice <em>consistent</em> across model architectures as well as simulation and hardware?</li>
   </ul>
   <p>We design four experimental settings to study these questions, each annotated with the question(s) it addresses:</p>
   <ul>
     <li><strong>Setting A</strong> <span style="color: var(--accent); font-weight: 600;">(Q1)</span> — Controlled test with a prior artificially constructed to be very close to the target.</li>
     <li><strong>Setting B<sub>sim</sub></strong> <span style="color: var(--accent); font-weight: 600;">(Q1, Q2)</span> — Full-scale LBM 1.0 fine-tuning across 8 tasks and 5 fine-tuning data fractions (56K rollouts).</li>
     <li><strong>Setting B<sub>real</sub></strong> <span style="color: var(--accent); font-weight: 600;">(Q3)</span> — Blinded A/B hardware testing on 5 bimanual tasks (1,250 rollouts).</li>
-    <li><strong>Setting C</strong> <span style="color: var(--accent); font-weight: 600;">(Q3)</span> — VLA validation on π<sub>0.5</sub> and GR00T N1.5 across 34 RoboCasa tasks (54K rollouts).</li>
+    <li><strong>Setting C</strong> <span style="color: var(--accent); font-weight: 600;">(Q3)</span> — VLA validation on π<sub>0.5</sub> and GR00T N1.5 across 34 RoboCasa tasks (54,400 rollouts).</li>
   </ul>
   <div class="note">
     <p>
@@ -516,7 +547,7 @@
   <h2 style="max-width: 860px; margin-left: auto; margin-right: auto; padding: 0 28px;">Results</h2>
 
   <div style="max-width: 860px; margin: 0 auto; padding: 0 28px;">
-    <h3>Setting A: From Scratch vs. Fine-Tuning</h3>
+    <h3>Setting A: From Scratch vs. Fine-Tuning <span style="font-size: 0.85em;">(<a href="#q1" class="q-link">Q1</a>)</span></h3>
     <p>
       With a prior built to be measurably close to the target, A<sub>pre</sub> significantly outperforms the Gaussian
       <em>from scratch</em>, but the advantage vanishes entirely once we fine-tune a pretrained LBM.
@@ -532,10 +563,11 @@
   </div>
 
   <div style="max-width: 860px; margin: 0 auto; padding: 0 28px;">
-    <h3>Setting B<sub>sim</sub>: LBM Fine-Tuning Across Data Fractions</h3>
+    <h3>Setting B<sub>sim</sub>: LBM Fine-Tuning Across Data Fractions <span style="font-size: 0.85em;">(<a href="#q1" class="q-link">Q1</a>, <a href="#q2" class="q-link">Q2</a>)</span></h3>
     <p>
-      At every fraction from 25% upward, all prior variants are statistically indistinguishable.
-      The one exception is the 5% regime, where embedding-space noise (orange) outperforms the Gaussian.
+      At every fraction from 25% upward, most prior variants cluster tightly and share the same statistical group.
+      The one exception is the 5% regime, where embedding-space noise (orange) outperforms the Gaussian
+      (25.9% vs. 18.9% success).
     </p>
   </div>
   <div class="figure">
@@ -546,7 +578,7 @@
   </div>
 
   <div style="max-width: 860px; margin: 0 auto; padding: 0 28px;">
-    <h3>Setting B<sub>real</sub>: Hardware Validation</h3>
+    <h3>Setting B<sub>real</sub>: Hardware Validation <span style="font-size: 0.85em;">(<a href="#q3" class="q-link">Q3</a>)</span></h3>
     <p>
       On five bimanual FR3 tasks with blinded A/B testing (1,250 rollouts), the prior again has no statistically
       significant effect: four of five priors share the same group. BRIDGER is the sole outlier, due to training
@@ -562,7 +594,7 @@
   </div>
 
   <div style="max-width: 860px; margin: 0 auto; padding: 0 28px;">
-    <h3>Setting C: VLA Validation (π<sub>0.5</sub> and GR00T N1.5)</h3>
+    <h3>Setting C: VLA Validation (π<sub>0.5</sub> and GR00T N1.5) <span style="font-size: 0.85em;">(<a href="#q3" class="q-link">Q3</a>)</span></h3>
     <p>
       Both VLA architectures show the same pattern: the Gaussian ties at the top, while pure learned priors degrade
       due to a domain gap between pretraining and fine-tuning data.
