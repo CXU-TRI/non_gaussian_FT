@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Gaussian Is Enough</title>
+  <meta name="description" content="Non-Gaussian priors do not improve fine-tuning of Large Behavior Models for robot manipulation." />
+  <meta name="keywords" content="imitation learning, flow-matching, diffusion policy, action priors, large behavior models, fine-tuning, LBM, robot learning, negative result" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #fafaf8;
+      --text: #1a1a1a;
+      --text-muted: #5a5a5a;
+      --accent: #1a6b5c;
+      --accent-light: #e8f4f0;
+      --border: #e0ddd8;
+      --surface: #f3f2ee;
+      --code-bg: #2d2d2d;
+      --code-text: #e6e6e6;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 17px;
+      line-height: 1.7;
+      color: var(--text);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Nav */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(250, 250, 248, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 0;
+      text-align: center;
+    }
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      margin: 0 16px;
+      transition: color 0.2s;
+    }
+    nav a:hover { color: var(--accent); }
+
+    /* Layout */
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+    .wide {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+
+    /* Hero */
+    .hero {
+      padding: 70px 0 40px;
+      text-align: center;
+    }
+    .hero h1 {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--text);
+      margin-bottom: 28px;
+      letter-spacing: -0.02em;
+    }
+    .authors-list {
+      font-size: 16px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .authors-list a {
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      transition: border-color 0.2s;
+    }
+    .authors-list a:hover { border-color: var(--accent); }
+    .affiliations {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+    }
+    .links {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .links a {
+      display: inline-block;
+      padding: 10px 22px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .links a.primary {
+      background: var(--accent);
+      color: white;
+    }
+    .links a.primary:hover { background: #145a4d; }
+    .links a.secondary {
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .links a.secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* Figure-1 composite: rollouts (left) + schematic (right), matched heights */
+    .teaser1 {
+      display: flex;
+      align-items: stretch;
+      gap: 22px;
+      margin: 20px 0 8px;
+      --fig1-h: 280px;   /* shared height for both columns */
+    }
+    .teaser1 .rollouts {
+      flex: 1.45;
+      display: flex;
+      flex-direction: column;
+    }
+    .teaser1 .rollout-pair {
+      display: flex;
+      gap: 8px;
+      height: var(--fig1-h);
+    }
+    .teaser1 .rollout-pair figure {
+      flex: 1;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .teaser1 .rollout-pair img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      display: block;
+    }
+    .teaser1 .rollout-pair figcaption {
+      font-size: 13px;
+      color: var(--text-muted);
+      text-align: center;
+      margin-top: 6px;
+      flex: 0 0 auto;
+    }
+    .teaser1 .schematic {
+      flex: 1;
+      height: var(--fig1-h);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 16px;
+    }
+    .teaser1 .schematic img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    /* Sections */
+    section {
+      padding: 46px 0;
+      scroll-margin-top: 60px;
+    }
+    section h2 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.8rem;
+      font-weight: 400;
+      margin-bottom: 22px;
+      letter-spacing: -0.01em;
+    }
+    section h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin: 30px 0 12px;
+      color: var(--text);
+    }
+    section p {
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    section ul {
+      color: var(--text-muted);
+      padding-left: 20px;
+      margin-bottom: 16px;
+    }
+    section li { margin-bottom: 8px; }
+
+    /* Key finding */
+    .finding {
+      background: var(--accent-light);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 46px 28px;
+      margin: 30px 0;
+      text-align: center;
+    }
+    .finding .label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+    .finding .statement {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      line-height: 1.35;
+      color: var(--text);
+      max-width: 800px;
+      margin: 0 auto 18px;
+      padding: 0 20px;
+    }
+    .finding .sub {
+      font-size: 14px;
+      color: var(--text-muted);
+      max-width: 620px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    .finding-evidence {
+      max-width: 1004px;
+      margin: 32px auto 0;
+      padding: 20px 20px 16px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    }
+    .finding-evidence img {
+      width: 100%;
+      border-radius: 4px;
+      display: block;
+    }
+    .finding-evidence .evidence-caption {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin: 12px auto 0;
+      max-width: 860px;
+      text-align: center;
+    }
+
+    /* Figures */
+    .figure {
+      margin: 32px 0;
+      text-align: center;
+    }
+    .figure img {
+      width: 100%;
+      max-width: 100%;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+    }
+    .figure.narrow img { max-width: 480px; }
+    .figure.table img { max-width: 620px; border: none; }
+    .figure figcaption {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-top: 12px;
+      line-height: 1.5;
+      max-width: 720px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .two-fig {
+      display: flex;
+      gap: 20px;
+      align-items: flex-end;
+      flex-wrap: wrap;
+    }
+    .two-fig .figure { flex: 1; min-width: 280px; margin: 16px 0; }
+
+    /* Insight box */
+    .insight {
+      background: var(--accent-light);
+      border-left: 3px solid var(--accent);
+      padding: 20px 24px;
+      border-radius: 0 6px 6px 0;
+      margin: 28px 0;
+    }
+    .insight p { color: var(--text); margin: 0; font-size: 16px; }
+    .insight strong { color: var(--accent); }
+
+    /* Neutral helper note (lighter than .insight) */
+    .note {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 16px 20px;
+      margin: 24px 0;
+    }
+    .note p { color: var(--text-muted); margin: 0; font-size: 14.5px; line-height: 1.6; }
+    .note strong { color: var(--text); }
+
+    /* BibTeX */
+    .bibtex-block {
+      background: var(--code-bg);
+      color: var(--code-text);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      padding: 24px;
+      border-radius: 8px;
+      overflow-x: auto;
+      line-height: 1.6;
+      position: relative;
+    }
+    .bibtex-block .copy-btn {
+      position: absolute;
+      top: 12px; right: 12px;
+      background: rgba(255,255,255,0.1);
+      color: #aaa;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .bibtex-block .copy-btn:hover { background: rgba(255,255,255,0.2); color: #fff; }
+
+    .divider { width: 60px; height: 1px; background: var(--border); margin: 0 auto; }
+
+    footer {
+      text-align: center;
+      padding: 40px 0;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 720px) {
+      .hero { padding: 44px 0 26px; }
+      nav a { margin: 0 9px; font-size: 12px; }
+      .finding .statement { font-size: 1.3rem; }
+      section { padding: 30px 0; }
+      .teaser1 { flex-direction: column; --fig1-h: 220px; }
+      .teaser1 .rollouts, .teaser1 .schematic { flex: none; }
+    }
+  </style>
+</head>
+
+<body>
+
+<nav>
+  <a href="#overview">Overview</a>
+  <a href="#abstract">Abstract</a>
+  <a href="#setup">Experiment Setup</a>
+  <a href="#results">Results</a>
+  <a href="#analysis">Analysis</a>
+  <a href="#bibtex">BibTeX</a>
+</nav>
+
+<!-- Hero -->
+<div class="hero container">
+  <h1>The Gaussian Is Enough:<br>Flow-Matching Priors Do Not Help<br>When Fine-Tuning Large Behavior Models</h1>
+  <p class="authors-list">
+    Chen Xu<sup>1</sup>&ensp;
+    Rishi Shah<sup>2</sup>&ensp;
+    Hadas Kress-Gazit<sup>3</sup>&ensp;
+    Haruki Nishimura<sup>1</sup>&ensp;
+    Masha Itkina<sup>1</sup>
+  </p>
+  <p class="affiliations">
+    <sup>1</sup>Toyota Research Institute&ensp;&ensp;
+    <sup>2</sup>Woven by Toyota&ensp;&ensp;
+    <sup>3</sup>Cornell University
+  </p>
+  <div class="links">
+    <a href="" class="primary">Paper</a>
+    <a href="#bibtex" class="secondary">BibTeX</a>
+  </div>
+</div>
+
+<!-- Overview: revised Figure 1 (rollouts left, schematic right) -->
+<section id="overview" class="wide" style="padding-top: 20px;">
+  <div class="teaser1">
+    <div class="rollouts">
+      <div class="rollout-pair">
+        <figure>
+          <img src="Assets/rollout_gaussian.png" alt="Gaussian prior rollout" />
+          <figcaption>a&#8320; ∼ 𝒵 (Gaussian)</figcaption>
+        </figure>
+        <figure>
+          <img src="Assets/rollout_apre.png" alt="A_pre prior rollout" />
+          <figcaption>a&#8320; ∼ A<sub>pre</sub> (pretrained prior)</figcaption>
+        </figure>
+      </div>
+    </div>
+    <div class="schematic">
+      <img src="Assets/policy_schematic.png" alt="Flow-matching policy schematic" />
+    </div>
+  </div>
+  <p style="font-size: 14px; color: var(--text-muted); max-width: 1004px; margin: 8px auto 0; text-align: center;">
+    <strong>The action prior is the only thing we vary.</strong>
+    <strong>Left:</strong> samples drawn directly from two priors on the DumpVegetables task from LBM Eval. The Gaussian (𝒵) produces
+    incoherent motion, while A<sub>pre</sub> (the pretrained policy's own actions) already makes partial task progress.
+    <strong>Right:</strong> the flow-matching policy transports a prior sample a&#8320; to an action, conditioned on the
+    encoder embedding e and the diffusion step t. Across all experiments, only the prior p&#8320; changes.
+  </p>
+</section>
+
+<!-- Key Finding (with teaser evidence figure) -->
+<div class="finding">
+  <div class="label">Key Finding</div>
+  <p class="statement">
+    Non-Gaussian priors that help when training from scratch do not improve fine-tuning.
+    The observation encoder, not the prior, is the dominant factor.
+  </p>
+  <p class="sub">
+    Across 100K+ simulation rollouts on three LBM architectures, 40+ tasks,
+    and 1,250 hardware rollouts, the standard Gaussian prior is sufficient.
+  </p>
+  <div class="finding-evidence">
+    <img src="Assets/fig1_opener.png" alt="Priors help from scratch but not when fine-tuning" />
+    <p class="evidence-caption">
+      <strong>Left:</strong> the learned prior A<sub>pre</sub> is 3× closer to the target than the Gaussian in squared norm.
+      <strong>Middle:</strong> training from scratch, A<sub>pre</sub> significantly outperforms the Gaussian.
+      <strong>Right:</strong> after fine-tuning a pretrained LBM, the Gaussian matches or exceeds A<sub>pre</sub>.
+    </p>
+  </div>
+</div>
+
+<!-- Abstract -->
+<section id="abstract" class="container">
+  <h2>Abstract</h2>
+  <p>
+    Modern robot imitation learning increasingly relies on generative policies based on diffusion or flow-matching
+    models, which generate actions by transforming samples from a prior distribution. A key question is whether the
+    choice of prior matters. Replacing the standard Gaussian with a closer-to-target, non-Gaussian prior has been
+    shown to substantially improve performance when <em>training from scratch</em>.
+  </p>
+  <p>
+    A natural next step is to ask whether these gains transfer to <em>fine-tuning</em> pretrained Large Behavior
+    Models (LBMs) such as LBM 1.0, π<sub>0.5</sub>, and GR00T N1.5. Surprisingly, we find that this is not the case.
+    Across over 100K simulation rollouts and 1,250 hardware rollouts, non-Gaussian priors yield statistically
+    indistinguishable or worse fine-tuning performance than a standard Gaussian.
+  </p>
+  <p>
+    Diagnostic analyses suggest why: fine-tuned policies produce similar action predictions across priors, despite
+    their encoder embeddings diverging substantially. A learning-rate ablation confirms that encoder training is the
+    dominant factor, substantially outweighing the effect of prior choice.
+  </p>
+</section>
+
+<div class="divider"></div>
+
+<!-- Experimental Setup -->
+<section id="setup" class="container">
+  <h2>Experiment Setup</h2>
+  <p>
+    We compare seven prior variants: the standard Gaussian, three we propose (built directly from the pretrained LBM
+    with no auxiliary training), and three baselines from the literature.
+  </p>
+  <div class="figure table">
+    <img src="Assets/table1_priors.png" alt="Table 1: the seven prior variants compared" />
+    <figcaption>The seven prior variants. π<sub>pre</sub> is the pretrained LBM (LBM 1.0, π<sub>0.5</sub>, or GR00T N1.5).</figcaption>
+  </div>
+  <p>Four experimental settings test our research questions:</p>
+  <ul>
+    <li><strong>Setting A</strong> — Controlled test with a prior artificially constructed to be very close to the target.</li>
+    <li><strong>Setting B<sub>sim</sub></strong> — Full-scale LBM 1.0 fine-tuning across 8 tasks and 5 fine-tuning data fractions (56K rollouts).</li>
+    <li><strong>Setting B<sub>real</sub></strong> — Blinded A/B hardware testing on 5 bimanual tasks (1,250 rollouts).</li>
+    <li><strong>Setting C</strong> — VLA validation on π<sub>0.5</sub> and GR00T N1.5 across 34 RoboCasa tasks (54K rollouts).</li>
+  </ul>
+  <div class="note">
+    <p>
+      <strong>Plotting convention.</strong> We compare policies with a formal statistical test and summarize the
+      result with a <em>compact letter display</em> (CLD). Each method is annotated with one or more letters:
+      methods that share a letter are statistically indistinguishable, while methods with no letter in common are
+      statistically separable. Letters are computed independently within each comparison group (e.g., within each
+      data fraction).
+    </p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Results -->
+<section id="results" class="wide">
+  <h2 style="max-width: 860px; margin-left: auto; margin-right: auto; padding: 0 28px;">Results</h2>
+
+  <div style="max-width: 860px; margin: 0 auto; padding: 0 28px;">
+    <h3>Setting A: From Scratch vs. Fine-Tuning</h3>
+    <p>
+      With a prior built to be measurably close to the target, A<sub>pre</sub> significantly outperforms the Gaussian
+      <em>from scratch</em>, but the advantage vanishes entirely once we fine-tune a pretrained LBM.
+    </p>
+  </div>
+  <div class="figure">
+    <img src="Assets/setting_A_RI_avg.png" alt="Setting A, from scratch" style="max-width: 804px;" />
+    <figcaption>From scratch: A<sub>pre</sub> leads, the Gaussian is among the lowest.</figcaption>
+  </div>
+  <div class="figure">
+    <img src="Assets/setting_A_FT_avg.png" alt="Setting A, fine-tuned" style="max-width: 804px;" />
+    <figcaption>Fine-tuned: most priors are statistically indistinguishable.</figcaption>
+  </div>
+
+  <div style="max-width: 860px; margin: 0 auto; padding: 0 28px;">
+    <h3>Setting B<sub>sim</sub>: LBM Fine-Tuning Across Data Fractions</h3>
+    <p>
+      At every fraction from 25% upward, all prior variants are statistically indistinguishable.
+      The one exception is the 5% regime, where embedding-space noise (orange) outperforms the Gaussian.
+    </p>
+  </div>
+  <div class="figure">
+    <img src="Assets/setting_B_DP_FT_avg.png" alt="Setting B: grouped violin plot across data fractions" style="max-width: 804px;" />
+    <figcaption>
+      Success rate across data fractions for all seven priors. Priors cluster tightly at every fraction.
+    </figcaption>
+  </div>
+
+  <div style="max-width: 860px; margin: 0 auto; padding: 0 28px;">
+    <h3>Setting B<sub>real</sub>: Hardware Validation</h3>
+    <p>
+      On five bimanual FR3 tasks with blinded A/B testing (1,250 rollouts), the prior again has no statistically
+      significant effect: four of five priors share the same group. BRIDGER is the sole outlier, due to training
+      instability.
+    </p>
+  </div>
+  <div class="figure">
+    <img src="Assets/setting_B_real_ab_test.png" alt="Setting B_real: hardware A/B test" style="max-width: 804px;" />
+    <figcaption>
+      <strong>Top:</strong> success rate. <strong>Bottom:</strong> partial task progress.
+      The same finding holds on real hardware.
+    </figcaption>
+  </div>
+
+  <div style="max-width: 860px; margin: 0 auto; padding: 0 28px;">
+    <h3>Setting C: VLA Validation (π<sub>0.5</sub> and GR00T N1.5)</h3>
+    <p>
+      Both VLA architectures show the same pattern: the Gaussian ties at the top, while pure learned priors degrade
+      due to a domain gap between pretraining and fine-tuning data.
+    </p>
+  </div>
+  <div class="figure">
+    <img src="Assets/setting_C_combined.png" alt="Setting C: 4-panel VLA validation" style="max-width: 804px;" />
+    <figcaption>Shared y-axis across all four panels. Both architectures confirm the same finding.</figcaption>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Analysis -->
+<section id="analysis" class="container">
+  <h2>Analysis: Why Does the Prior Not Matter?</h2>
+
+  <div class="insight">
+    <p>
+      <strong>Key insight:</strong> Different priors lead to structurally different encoder solutions of equivalent quality.
+      The prior governs <em>how much</em> the encoder restructures, but not the quality of the final result.
+      Once the encoder is sufficiently well-pretrained, it dominates the transport regardless of where the flow starts.
+    </p>
+  </div>
+
+  <h3>Feature quality is identical across priors</h3>
+  <p>
+    Using LogME (a training-free measure of how predictive the encoder's features are of target actions), we find
+    that all priors yield indistinguishable feature quality at every data fraction.
+  </p>
+  <div class="figure narrow">
+    <img src="Assets/logme_avg_8.png" alt="LogME feature quality across priors" />
+    <figcaption>
+      LogME as percentage difference from the Gaussian. All priors share CLD group "a" at every fraction:
+      the prior leaves no detectable effect on the fine-tuned encoder's feature quality.
+    </figcaption>
+  </div>
+
+  <h3>Encoders visibly diverge, but predicted actions tend to converge</h3>
+  <div class="figure">
+    <img src="Assets/fig8_representation_change.png" alt="Representation change across priors" />
+    <figcaption>
+      <strong>Top:</strong> action-space changes cluster tightly, so all priors produce similar predicted actions.
+      <strong>Bottom:</strong> encoder embeddings diverge substantially. The Gaussian moves the encoder least;
+      A<sub>pre</sub> induces the largest restructuring.
+    </figcaption>
+  </div>
+
+  <h3>The encoder, not the prior, drives performance</h3>
+  <p>
+    A learning-rate ablation reveals the key driver: degrading the encoder's learning rate to 1/10 hurts
+    performance far more than any change of prior, in both simulation and on hardware.
+  </p>
+  <div class="figure">
+    <img src="Assets/setting_B_DP_1_10_lr_FT_avg.png" alt="Encoder LR ablation, simulation" />
+    <figcaption>Simulation: reducing the encoder LR to 1/10 degrades all priors by 15–17%.</figcaption>
+  </div>
+  <div class="figure">
+    <img src="Assets/setting_B_real_1_10_lr.png" alt="Encoder LR ablation, hardware" />
+    <figcaption>Hardware: the same effect, larger than any prior-related difference.</figcaption>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- BibTeX -->
+<section id="bibtex" class="container">
+  <h2>BibTeX</h2>
+  <div class="bibtex-block">
+    <button class="copy-btn" onclick="copyBibtex()">Copy</button>
+    <pre>@article{xu2026gaussian,
+  title   = {The Gaussian Is Enough: Flow-Matching Priors Do Not
+             Help When Fine-Tuning Large Behavior Models},
+  author  = {Xu, Chen and Shah, Rishi and Kress-Gazit, Hadas
+             and Nishimura, Haruki and Itkina, Masha},
+  year    = {2026},
+}</pre>
+  </div>
+</section>
+
+<footer>
+  <p>Toyota Research Institute &middot; 2026</p>
+</footer>
+
+<script>
+function copyBibtex() {
+  const text = document.querySelector('.bibtex-block pre').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.querySelector('.copy-btn');
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy', 2000);
+  });
+}
+</script>
+
+</body>
+</html>
