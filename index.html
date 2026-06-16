@@ -10,11 +10,11 @@
   <!-- Open Graph / link-preview cards -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="The Gaussian Is Enough: Flow-Matching Priors Do Not Help When Fine-Tuning Large Behavior Models" />
-  <meta property="og:description" content="Non-Gaussian priors that help when training from scratch do not improve fine-tuning of Large Behavior Models. Across 100K+ simulation and 1,250 hardware rollouts, the standard Gaussian prior is sufficient." />
+  <meta property="og:description" content="Non-Gaussian priors that help when training from scratch do not improve fine-tuning of Large Behavior Models. Across 100K+ simulation and 1250 hardware rollouts, the standard Gaussian prior is sufficient." />
   <meta property="og:image" content="Assets/fig1_opener.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="The Gaussian Is Enough: Flow-Matching Priors Do Not Help When Fine-Tuning Large Behavior Models" />
-  <meta name="twitter:description" content="Non-Gaussian priors that help when training from scratch do not improve fine-tuning of Large Behavior Models. Across 100K+ simulation and 1,250 hardware rollouts, the standard Gaussian prior is sufficient." />
+  <meta name="twitter:description" content="Non-Gaussian priors that help when training from scratch do not improve fine-tuning of Large Behavior Models. Across 100K+ simulation and 1250 hardware rollouts, the standard Gaussian prior is sufficient." />
   <meta name="twitter:image" content="Assets/fig1_opener.png" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -451,9 +451,9 @@
     </div>
   </div>
   <p style="font-size: 14px; color: var(--text-muted); max-width: 1004px; margin: 8px auto 0; text-align: center;">
-    <strong>The action prior is the only thing we vary.</strong>
-    <strong>Left:</strong> samples drawn directly from two priors on the DumpVegetables task from LBM Eval. The Gaussian (𝒵) produces
-    incoherent motion, while A<sub>pre</sub> (the pretrained policy's own actions) already makes partial task progress.
+    <strong>Prior definition and visualization.</strong>
+    <strong>Left:</strong> samples drawn directly from two priors on the DumpVegetables task from LBM Eval. The Gaussian (𝒵) prior produces
+    incoherent motion, while A<sub>pre</sub> (the pretrained policy's own actions) prior already makes partial task progress.
     <strong>Right:</strong> the flow-matching policy transports a prior sample a&#8320; to an action, conditioned on the
     encoder embedding e and the diffusion step t. Across all experiments, only the prior p&#8320; changes.
   </p>
@@ -468,7 +468,7 @@
   </p>
   <p class="sub">
     Across 100K+ simulation rollouts on three LBM architectures, 40+ tasks,
-    and 1,250 hardware rollouts, the standard Gaussian prior is sufficient.
+    and 1250 hardware rollouts, the standard Gaussian prior is sufficient.
   </p>
   <div class="finding-evidence">
     <img src="Assets/fig1_opener.png" alt="Priors help from scratch but not when fine-tuning" />
@@ -493,7 +493,7 @@
     A natural next step is to ask whether these gains transfer to <em>fine-tuning</em> pretrained Large Behavior
     Models (LBMs) such as LBM 1.0, π<sub>0.5</sub>, and GR00T N1.5. Surprisingly, we find that this is not the
     case, except possibly at very low fine-tuning data fractions.
-    Across over 100K simulation rollouts and 1,250 hardware rollouts, non-Gaussian priors that are demonstrably
+    Across over 100K simulation rollouts and 1250 hardware rollouts, non-Gaussian priors that are demonstrably
     closer to the target yield statistically indistinguishable or worse fine-tuning performance than a standard Gaussian.
   </p>
   <p>
@@ -526,7 +526,7 @@
   <ul>
     <li><strong>Setting A</strong> <span style="color: var(--accent); font-weight: 600;">(Q1)</span> — Controlled test with a prior artificially constructed to be very close to the target.</li>
     <li><strong>Setting B<sub>sim</sub></strong> <span style="color: var(--accent); font-weight: 600;">(Q1, Q2)</span> — Full-scale LBM 1.0 fine-tuning across 8 tasks and 5 fine-tuning data fractions (56K rollouts).</li>
-    <li><strong>Setting B<sub>real</sub></strong> <span style="color: var(--accent); font-weight: 600;">(Q3)</span> — Blinded A/B hardware testing on 5 bimanual tasks (1,250 rollouts).</li>
+    <li><strong>Setting B<sub>real</sub></strong> <span style="color: var(--accent); font-weight: 600;">(Q3)</span> — Blinded A/B hardware testing on 5 bimanual tasks (1250 rollouts).</li>
     <li><strong>Setting C</strong> <span style="color: var(--accent); font-weight: 600;">(Q3)</span> — VLA validation on π<sub>0.5</sub> and GR00T N1.5 across 34 RoboCasa tasks (54,400 rollouts).</li>
   </ul>
   <div class="note">
@@ -534,8 +534,7 @@
       <strong>Plotting convention.</strong> We compare policies with a formal statistical test and summarize the
       result with a <em>compact letter display</em> (CLD). Each method is annotated with one or more letters:
       methods that share a letter are statistically indistinguishable, while methods with no letter in common are
-      statistically separable. Letters are computed independently within each comparison group (e.g., within each
-      data fraction).
+      statistically separable.
     </p>
   </div>
 </section>
@@ -549,7 +548,7 @@
   <div style="max-width: 860px; margin: 0 auto; padding: 0 28px;">
     <h3>Setting A: From Scratch vs. Fine-Tuning <span style="font-size: 0.85em;">(<a href="#q1" class="q-link">Q1</a>)</span></h3>
     <p>
-      With a prior built to be measurably close to the target, A<sub>pre</sub> significantly outperforms the Gaussian
+      On LBM Eval, with a prior built to be measurably close to the target, A<sub>pre</sub> significantly outperforms the Gaussian
       <em>from scratch</em>, but the advantage vanishes entirely once we fine-tune a pretrained LBM.
     </p>
   </div>
@@ -565,7 +564,7 @@
   <div style="max-width: 860px; margin: 0 auto; padding: 0 28px;">
     <h3>Setting B<sub>sim</sub>: LBM Fine-Tuning Across Data Fractions <span style="font-size: 0.85em;">(<a href="#q1" class="q-link">Q1</a>, <a href="#q2" class="q-link">Q2</a>)</span></h3>
     <p>
-      At every fraction from 25% upward, most prior variants cluster tightly and share the same statistical group.
+      On LBM Eval, at every fraction from 25% upward, most prior variants cluster tightly and share the same statistical group.
       The one exception is the 5% regime, where embedding-space noise (orange) outperforms the Gaussian
       (25.9% vs. 18.9% success).
     </p>
@@ -580,7 +579,7 @@
   <div style="max-width: 860px; margin: 0 auto; padding: 0 28px;">
     <h3>Setting B<sub>real</sub>: Hardware Validation <span style="font-size: 0.85em;">(<a href="#q3" class="q-link">Q3</a>)</span></h3>
     <p>
-      On five bimanual FR3 tasks with blinded A/B testing (1,250 rollouts), the prior again has no statistically
+      On five bimanual FR3 tasks with blinded A/B testing (1250 rollouts in total), the prior has no statistically
       significant effect: four of five priors share the same group. BRIDGER is the sole outlier, due to training
       instability.
     </p>
@@ -596,7 +595,7 @@
   <div style="max-width: 860px; margin: 0 auto; padding: 0 28px;">
     <h3>Setting C: VLA Validation (π<sub>0.5</sub> and GR00T N1.5) <span style="font-size: 0.85em;">(<a href="#q3" class="q-link">Q3</a>)</span></h3>
     <p>
-      Both VLA architectures show the same pattern: the Gaussian ties at the top, while pure learned priors degrade
+      On Robocasa, both VLA architectures show the same pattern: the Gaussian ties at the top, while pure learned priors degrade
       due to a domain gap between pretraining and fine-tuning data.
     </p>
   </div>
@@ -616,7 +615,7 @@
     <p>
       <strong>Key insight:</strong> Different priors lead to structurally different encoder solutions of equivalent quality.
       The prior governs <em>how much</em> the encoder restructures, but not the quality of the final result.
-      Once the encoder is sufficiently well-pretrained, it dominates the transport regardless of where the flow starts.
+      Once the encoder is sufficiently well-pretrained, it dominates the policy performance regardless of the prior.
     </p>
   </div>
 
@@ -638,7 +637,7 @@
     <img src="Assets/fig8_representation_change.png" alt="Representation change across priors" />
     <figcaption>
       <strong>Top:</strong> action-space changes cluster tightly, so all priors produce similar predicted actions.
-      <strong>Bottom:</strong> encoder embeddings diverge substantially. The Gaussian moves the encoder least;
+      <strong>Bottom:</strong> encoder embeddings diverge substantially. The Gaussian moves the encoder least from pretraining;
       A<sub>pre</sub> induces the largest restructuring.
     </figcaption>
   </div>
