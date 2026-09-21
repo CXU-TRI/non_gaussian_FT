@@ -4,22 +4,22 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The Gaussian Is Enough</title>
-  <meta name="description" content="Non-Gaussian priors do not improve fine-tuning of Large Behavior Models for robot manipulation." />
+  <meta name="description" content="Non-Gaussian action priors do not improve fine-tuning of Large Behavior Models for robot manipulation." />
   <meta name="keywords" content="imitation learning, flow-matching, diffusion policy, action priors, large behavior models, fine-tuning, LBM, robot learning, negative result" />
 
   <!-- Open Graph / link-preview cards -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="The Gaussian Is Enough: Flow-Matching Priors Do Not Help When Fine-Tuning Large Behavior Models" />
-  <meta property="og:description" content="Non-Gaussian priors that help when training from scratch do not improve fine-tuning of Large Behavior Models. Across 100K+ simulation and 1250 hardware rollouts, the standard Gaussian prior is sufficient." />
+  <meta property="og:description" content="Non-Gaussian action priors that help when training from scratch do not help when fine-tuning Large Behavior Models. Across 100K+ simulation and 1250 hardware rollouts, the standard Gaussian prior is sufficient." />
   <meta property="og:image" content="Assets/fig1_opener.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="The Gaussian Is Enough: Flow-Matching Priors Do Not Help When Fine-Tuning Large Behavior Models" />
-  <meta name="twitter:description" content="Non-Gaussian priors that help when training from scratch do not improve fine-tuning of Large Behavior Models. Across 100K+ simulation and 1250 hardware rollouts, the standard Gaussian prior is sufficient." />
+  <meta name="twitter:description" content="Non-Gaussian action priors that help when training from scratch do not help when fine-tuning Large Behavior Models. Across 100K+ simulation and 1250 hardware rollouts, the standard Gaussian prior is sufficient." />
   <meta name="twitter:image" content="Assets/fig1_opener.png" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -87,16 +87,16 @@
       text-align: center;
     }
     .hero h1 {
-      font-family: 'Instrument Serif', serif;
-      font-size: clamp(2.2rem, 5vw, 3.4rem);
-      font-weight: 400;
+      font-family: 'DM Sans', sans-serif;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 600;
       line-height: 1.15;
       color: var(--text);
       margin-bottom: 28px;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.01em;
     }
     .authors-list {
-      font-size: 16px;
+      font-size: 17px;
       color: var(--text-muted);
       margin-bottom: 8px;
     }
@@ -108,7 +108,7 @@
     }
     .authors-list a:hover { border-color: var(--accent); }
     .affiliations {
-      font-size: 13px;
+      font-size: 14px;
       color: var(--text-muted);
       margin-bottom: 28px;
     }
@@ -145,7 +145,7 @@
       align-items: stretch;
       gap: 22px;
       margin: 20px 0 8px;
-      --fig1-h: 280px;   /* shared height for both columns */
+      --fig1-h: 220px;   /* shared height for both columns */
     }
     .teaser1 .rollouts {
       flex: 1.45;
@@ -163,7 +163,8 @@
       display: flex;
       flex-direction: column;
     }
-    .teaser1 .rollout-pair img {
+    .teaser1 .rollout-pair img,
+    .teaser1 .rollout-pair video {
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -172,7 +173,8 @@
       display: block;
     }
     .teaser1 .rollout-pair figcaption {
-      font-size: 13px;
+      white-space: nowrap;
+      font-size: 14px;
       color: var(--text-muted);
       text-align: center;
       margin-top: 6px;
@@ -201,9 +203,9 @@
       scroll-margin-top: 60px;
     }
     section h2 {
-      font-family: 'Instrument Serif', serif;
+      font-family: 'DM Sans', sans-serif;
       font-size: 1.8rem;
-      font-weight: 400;
+      font-weight: 600;
       margin-bottom: 22px;
       letter-spacing: -0.01em;
     }
@@ -242,23 +244,25 @@
       margin-bottom: 14px;
     }
     .finding .statement {
-      font-family: 'Instrument Serif', serif;
-      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 600;
+      text-wrap: balance;
       line-height: 1.35;
       color: var(--text);
-      max-width: 800px;
+      max-width: 900px;
       margin: 0 auto 18px;
       padding: 0 20px;
     }
     .finding .sub {
-      font-size: 14px;
+      font-size: 17px;
       color: var(--text-muted);
       max-width: 620px;
       margin: 0 auto;
       padding: 0 20px;
     }
     .finding-evidence {
-      max-width: 1004px;
+      max-width: 804px;
       margin: 32px auto 0;
       padding: 20px 20px 16px;
       background: var(--bg);
@@ -272,11 +276,10 @@
       display: block;
     }
     .finding-evidence .evidence-caption {
-      font-size: 13.5px;
+      font-size: 14px;
       color: var(--text-muted);
       line-height: 1.5;
       margin: 12px auto 0;
-      max-width: 860px;
       text-align: center;
     }
 
@@ -291,16 +294,11 @@
       border-radius: 6px;
       border: 1px solid var(--border);
     }
-    .figure.narrow img { max-width: 480px; }
-    .figure.table img { max-width: 620px; border: none; }
     .figure figcaption {
       font-size: 14px;
       color: var(--text-muted);
       margin-top: 12px;
       line-height: 1.5;
-      max-width: 720px;
-      margin-left: auto;
-      margin-right: auto;
     }
     .two-fig {
       display: flex;
@@ -310,6 +308,29 @@
     }
     .two-fig .figure { flex: 1; min-width: 280px; margin: 16px 0; }
 
+    /* Side-by-side rollout grid videos */
+    .video-pair {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      margin: 24px 0 8px;
+    }
+    .video-pair figure { margin: 0; }
+    .video-pair video {
+      width: 100%;
+      display: block;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: #fff;
+    }
+    .video-pair figcaption {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-top: 8px;
+      text-align: center;
+      line-height: 1.5;
+    }
+
     /* Insight box */
     .insight {
       background: var(--accent-light);
@@ -318,7 +339,7 @@
       border-radius: 0 6px 6px 0;
       margin: 28px 0;
     }
-    .insight p { color: var(--text); margin: 0; font-size: 16px; }
+    .insight p { color: var(--text); margin: 0; font-size: 17px; }
     .insight strong { color: var(--accent); }
 
     /* Neutral helper note (lighter than .insight) */
@@ -329,15 +350,70 @@
       padding: 16px 20px;
       margin: 24px 0;
     }
-    .note p { color: var(--text-muted); margin: 0; font-size: 14.5px; line-height: 1.6; }
+    .note p { color: var(--text-muted); margin: 0; font-size: 17px; line-height: 1.6; }
     .note strong { color: var(--text); }
+
+    /* Seven-prior explorer */
+    .priors {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface);
+      padding: 18px 20px 20px;
+      margin: 16px 0 24px;
+    }
+    .prior-tabs { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+    .prior-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+    .prior-row .prior-group { flex: 0 0 100%; margin: 4px 0 0; }
+    .prior-row:first-child .prior-group { margin-top: 0; }
+    .prior-group {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .prior-tab {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 6px 12px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .prior-tab:hover, .prior-tab:focus-visible { border-color: var(--accent); color: var(--accent); outline: none; }
+    .prior-tab.is-active { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .prior-panel {
+      display: flex;
+      gap: 20px;
+      align-items: stretch;
+    }
+    .prior-text { flex: 1; min-width: 240px; }
+    .prior-text h4 { font-size: 17px; font-weight: 600; margin: 0 0 8px; color: var(--text); }
+    .prior-text p { font-size: 14px; color: var(--text-muted); margin: 0 0 10px; line-height: 1.55; }
+    .prior-text .prior-clipnote { font-size: 14px; color: var(--text-muted); opacity: 0.8; }
+    .prior-panel video {
+      width: 300px;
+      flex: 0 0 300px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: #fff;
+      display: block;
+    }
+    @media (max-width: 720px) {
+      .prior-panel { flex-direction: column; }
+      .prior-panel video { width: 100%; flex: none; }
+    }
 
     /* BibTeX */
     .bibtex-block {
       background: var(--code-bg);
       color: var(--code-text);
       font-family: 'JetBrains Mono', monospace;
-      font-size: 13px;
+      font-size: 14px;
       padding: 24px;
       border-radius: 8px;
       overflow-x: auto;
@@ -384,14 +460,14 @@
       text-align: center;
       padding: 40px 0;
       border-top: 1px solid var(--border);
-      font-size: 13px;
+      font-size: 14px;
       color: var(--text-muted);
     }
 
     @media (max-width: 720px) {
       .hero { padding: 44px 0 26px; }
       nav a { margin: 0 9px; font-size: 12px; }
-      .finding .statement { font-size: 1.3rem; }
+      .finding .statement { font-size: 1.2rem; }
       section { padding: 30px 0; }
       .teaser1 { flex-direction: column; --fig1-h: 220px; }
       .teaser1 .rollouts, .teaser1 .schematic { flex: none; }
@@ -404,9 +480,9 @@
 <nav>
   <a href="#overview">Overview</a>
   <a href="#abstract">Abstract</a>
-  <a href="#setup">Experiment Setup</a>
+  <a href="#setup">Setup</a>
   <a href="#results">Results</a>
-  <a href="#analysis">Analysis</a>
+  <a href="#analysis">Why</a>
   <a href="#bibtex">BibTeX</a>
 </nav>
 
@@ -431,51 +507,51 @@
   </div>
 </div>
 
-<!-- Overview: revised Figure 1 (rollouts left, schematic right) -->
-<section id="overview" class="wide" style="padding-top: 20px;">
+<!-- Overview: what an action prior is, and what two of them look like -->
+<section id="overview" class="container" style="padding-top: 20px;">
   <div class="teaser1">
-    <div class="rollouts">
-      <div class="rollout-pair">
-        <figure>
-          <img src="Assets/rollout_gaussian.png" alt="Gaussian prior rollout" />
-          <figcaption>a&#8320; ∼ 𝒵 (Gaussian)</figcaption>
-        </figure>
-        <figure>
-          <img src="Assets/rollout_apre.png" alt="A_pre prior rollout" />
-          <figcaption>a&#8320; ∼ A<sub>pre</sub> (pretrained prior)</figcaption>
-        </figure>
-      </div>
-    </div>
     <div class="schematic">
       <img src="Assets/policy_schematic.png" alt="Flow-matching policy schematic" />
     </div>
+    <div class="rollouts">
+      <div class="rollout-pair">
+        <figure>
+          <video src="Assets/prior_Z_DumpVeg.mp4" poster="Assets/rollout_gaussian.png" autoplay muted loop playsinline controls aria-label="Gaussian prior samples executed as actions"></video>
+          <figcaption>a&#8320; ∼ 𝒵 (Gaussian)</figcaption>
+        </figure>
+        <figure>
+          <video src="Assets/prior_Apre_DumpVeg.mp4" poster="Assets/rollout_apre.png" autoplay muted loop playsinline controls aria-label="A_pre prior samples executed as actions"></video>
+          <figcaption>a&#8320; ∼ A<sub>pre</sub> (pretrained)</figcaption>
+        </figure>
+      </div>
+    </div>
   </div>
-  <p style="font-size: 14px; color: var(--text-muted); max-width: 1004px; margin: 8px auto 0; text-align: center;">
-    <strong>Prior definition and visualization.</strong>
-    <strong>Left:</strong> samples drawn directly from two priors on the DumpVegetables task from LBM Eval. The Gaussian (𝒵) prior produces
-    incoherent motion, while A<sub>pre</sub> (the pretrained policy's own actions) prior already makes partial task progress.
-    <strong>Right:</strong> the flow-matching policy transports a prior sample a&#8320; to an action, conditioned on the
-    encoder embedding e and the diffusion step t. Across all experiments, only the prior p&#8320; changes.
+  <p style="font-size: 14px; color: var(--text-muted); margin: 8px auto 0; text-align: center;">
+    <strong>What is the action prior?</strong>
+    <strong>Left:</strong> a flow-matching policy turns a sample a&#8320; from the prior p&#8320; into an action, conditioned on the
+    encoder embedding e and the step t. The prior is the only thing we change.
+    <strong>Right:</strong> two priors, sampled and executed directly as actions on the DumpVegetables task from LBM Eval (2× speed).
+    The Gaussian 𝒵 moves the arms at random. A<sub>pre</sub>, the pretrained policy's own actions, already makes good task progress.
   </p>
 </section>
 
-<!-- Key Finding (with teaser evidence figure) -->
+<!-- Key Finding -->
 <div class="finding">
   <div class="label">Key Finding</div>
   <p class="statement">
-    Non-Gaussian priors that help when training from scratch do not improve fine-tuning.
-    The observation encoder, not the prior, is the dominant factor.
+    Non-Gaussian action priors help when training from scratch, but not when fine-tuning a pretrained LBM.
+    What matters is the observation encoder, not the action prior.
   </p>
   <p class="sub">
-    Across 100K+ simulation rollouts on three LBM architectures, 40+ tasks,
-    and 1250 hardware rollouts, the standard Gaussian prior is sufficient.
+    Over 100K simulation rollouts on three LBMs and 40+ tasks, plus 1250 hardware rollouts:
+    the standard Gaussian prior is enough.
   </p>
   <div class="finding-evidence">
     <img src="Assets/fig1_opener.png" alt="Priors help from scratch but not when fine-tuning" />
     <p class="evidence-caption">
-      <strong>Left:</strong> the learned prior A<sub>pre</sub> is 3× closer to the target than the Gaussian in squared norm.
-      <strong>Middle:</strong> training from scratch, A<sub>pre</sub> significantly outperforms the Gaussian.
-      <strong>Right:</strong> after fine-tuning a pretrained LBM, the Gaussian matches or exceeds A<sub>pre</sub>.
+      <strong>Left:</strong> A<sub>pre</sub> is 3× closer to the target actions than the Gaussian.
+      <strong>Middle:</strong> trained from scratch, A<sub>pre</sub> is statistically better.
+      <strong>Right:</strong> fine-tuned from the same pretrained LBM 1.0 checkpoint, the Gaussian instead statistically outperforms.
     </p>
   </div>
 </div>
@@ -505,36 +581,59 @@
 
 <div class="divider"></div>
 
-<!-- Experimental Setup -->
+<!-- Setup -->
 <section id="setup" class="container">
-  <h2>Experiment Setup</h2>
+  <h2>What We Compared</h2>
   <p>
-    We compare seven prior variants: the standard Gaussian, three we propose (built directly from the pretrained LBM
-    with no auxiliary training), and three baselines from the literature.
+    Everything except the action prior is held fixed: task, data, architecture, optimizer, and number of training steps.
   </p>
-  <div class="figure table">
-    <img src="Assets/table1_priors.png" alt="Table 1: the seven prior variants compared" />
-    <figcaption>The seven prior variants. π<sub>pre</sub> is the pretrained LBM (LBM 1.0, π<sub>0.5</sub>, or GR00T N1.5).</figcaption>
+  <p>Seven action priors:</p>
+  <div class="priors" id="priors">
+    <div class="prior-tabs" role="tablist" aria-label="Action priors">
+      <div class="prior-row">
+        <span class="prior-group">Default</span>
+        <button class="prior-tab is-active" data-prior="Z" role="tab">𝒵</button>
+      </div>
+      <div class="prior-row">
+        <span class="prior-group">Built from the pretrained LBM, no extra training</span>
+        <button class="prior-tab" data-prior="A_LBM" role="tab">A<sub>pre</sub></button>
+        <button class="prior-tab" data-prior="A_LBMplusZ" role="tab">A<sub>pre</sub>+σ<sub>A</sub>𝒵</button>
+        <button class="prior-tab" data-prior="O_LBMplus025Z" role="tab">E<sub>pre</sub>+σ<sub>E</sub>𝒵</button>
+      </div>
+      <div class="prior-row">
+        <span class="prior-group">From the literature</span>
+        <button class="prior-tab" data-prior="Cocos" role="tab">Cocos</button>
+        <button class="prior-tab" data-prior="BRIDGER" role="tab">BRIDGER</button>
+        <button class="prior-tab" data-prior="Retrieval" role="tab">Retrieval</button>
+      </div>
+    </div>
+    <div class="prior-panel">
+      <div class="prior-text">
+        <h4 id="prior-name"></h4>
+        <p id="prior-desc"></p>
+        <p class="prior-clipnote">Clip: the prior sample itself, executed as the action on DumpVegetables (no fine-tuned policy, no transport). Same episode for all seven.</p>
+      </div>
+      <video id="prior-video" muted loop playsinline controls preload="metadata"></video>
+    </div>
   </div>
-  <p>Our study is guided by three research questions:</p>
+  <p>Three questions:</p>
   <ul>
-    <li id="q1"><strong>Q1.</strong> Do non-Gaussian priors that are measurably <em>closer to the target</em> improve policy fine-tuning performance?</li>
-    <li id="q2"><strong>Q2.</strong> Do informed priors have an advantage across data fractions — particularly in the <em>low-data regime</em>, where the added inductive bias may be most beneficial?</li>
-    <li id="q3"><strong>Q3.</strong> Is the effect of prior choice <em>consistent</em> across model architectures as well as simulation and hardware?</li>
+    <li id="q1"><strong>Q1.</strong> Does a prior that is measurably <em>closer to the target</em> fine-tune better?</li>
+    <li id="q2"><strong>Q2.</strong> Does it help at <em>low data</em>, where an inductive bias should matter most?</li>
+    <li id="q3"><strong>Q3.</strong> Does the answer hold across <em>architectures</em>, and on <em>real robots</em>?</li>
   </ul>
-  <p>We design four experimental settings to study these questions, each annotated with the question(s) it addresses:</p>
+  <p>Four experiments answer them:</p>
   <ul>
-    <li><strong>Setting A</strong> <span style="color: var(--accent); font-weight: 600;">(Q1)</span> — Controlled test with a prior artificially constructed to be very close to the target.</li>
-    <li><strong>Setting B<sub>sim</sub></strong> <span style="color: var(--accent); font-weight: 600;">(Q1, Q2)</span> — Full-scale LBM 1.0 fine-tuning across 8 tasks and 5 fine-tuning data fractions (56K rollouts).</li>
-    <li><strong>Setting B<sub>real</sub></strong> <span style="color: var(--accent); font-weight: 600;">(Q3)</span> — Blinded A/B hardware testing on 5 bimanual tasks (1250 rollouts).</li>
-    <li><strong>Setting C</strong> <span style="color: var(--accent); font-weight: 600;">(Q3)</span> — VLA validation on π<sub>0.5</sub> and GR00T N1.5 across 34 RoboCasa tasks (54,400 rollouts).</li>
+    <li><strong>(1) Controlled test</strong> <span style="color: var(--accent); font-weight: 600;">(Q1)</span>: a prior constructed to be very close to the target, LBM 1.0 in the LBM Eval simulator, 5 tasks.</li>
+    <li><strong>(2) Full-scale fine-tuning in simulation</strong> <span style="color: var(--accent); font-weight: 600;">(Q1, Q2)</span>: LBM 1.0 on 8 tasks and 5 data fractions, 56K rollouts.</li>
+    <li><strong>(3) Bimanual hardware</strong> <span style="color: var(--accent); font-weight: 600;">(Q3)</span>: blind A/B tests on 5 tasks with two Franka arms, 1250 rollouts.</li>
+    <li><strong>(4) Two VLAs</strong> <span style="color: var(--accent); font-weight: 600;">(Q3)</span>: π<sub>0.5</sub> and GR00T N1.5 on 34 RoboCasa tasks, 54,400 rollouts.</li>
   </ul>
   <div class="note">
     <p>
-      <strong>Plotting convention.</strong> We compare policies with a formal statistical test and summarize the
-      result with a <em>compact letter display</em> (CLD). Each method is annotated with one or more letters:
-      methods that share a letter are statistically indistinguishable, while methods with no letter in common are
-      statistically separable.
+      <strong>How to read the plots.</strong> Each violin is one prior. The letters above are a
+      <em>compact letter display</em> (CLD) from a statistical test: priors that share a letter are not
+      significantly different; priors with no letter in common are.
     </p>
   </div>
 </section>
@@ -542,118 +641,168 @@
 <div class="divider"></div>
 
 <!-- Results -->
-<section id="results" class="wide">
-  <h2 style="max-width: 860px; margin-left: auto; margin-right: auto; padding: 0 28px;">Results</h2>
+<section id="results" class="container">
+  <h2>Results</h2>
 
-  <div style="max-width: 860px; margin: 0 auto; padding: 0 28px;">
-    <h3>Setting A: From Scratch vs. Fine-Tuning <span style="font-size: 0.85em;">(<a href="#q1" class="q-link">Q1</a>)</span></h3>
+  <div>
+    <h3>(1) Controlled test: a close prior helps from scratch, not after fine-tuning <span style="font-size: 0.85em;">(<a href="#q1" class="q-link">Q1</a>)</span></h3>
     <p>
-      On LBM Eval, with a prior built to be measurably close to the target, A<sub>pre</sub> significantly outperforms the Gaussian
-      <em>from scratch</em>, but the advantage vanishes entirely once we fine-tune a pretrained LBM.
+      We first fine-tune LBM 1.0 with the Gaussian on half the demonstrations, so that its actions are close to the target.
+      Then we fine-tune again from that checkpoint, changing only the prior. Trained from scratch, A<sub>pre</sub> beats the Gaussian.
+      Fine-tuned, no prior beats it.
     </p>
   </div>
   <div class="figure">
-    <img src="Assets/setting_A_RI_avg.png" alt="Setting A, from scratch" style="max-width: 804px;" />
-    <figcaption>From scratch: A<sub>pre</sub> leads, the Gaussian is among the lowest.</figcaption>
+    <img src="Assets/setting_A_RI_avg.png" alt="Controlled test, from scratch" />
+    <figcaption>From scratch: A<sub>pre</sub> leads and is significantly better than the Gaussian.</figcaption>
   </div>
   <div class="figure">
-    <img src="Assets/setting_A_FT_avg.png" alt="Setting A, fine-tuned" style="max-width: 804px;" />
-    <figcaption>Fine-tuned: most priors are statistically indistinguishable.</figcaption>
+    <img src="Assets/setting_A_FT_avg.png" alt="Controlled test, fine-tuned" />
+    <figcaption>Fine-tuned: no prior is separable from the Gaussian.</figcaption>
   </div>
 
-  <div style="max-width: 860px; margin: 0 auto; padding: 0 28px;">
-    <h3>Setting B<sub>sim</sub>: LBM Fine-Tuning Across Data Fractions <span style="font-size: 0.85em;">(<a href="#q1" class="q-link">Q1</a>, <a href="#q2" class="q-link">Q2</a>)</span></h3>
+  <div>
+    <h3>(2) Full-scale fine-tuning in simulation: a tie at every data fraction above 5% <span style="font-size: 0.85em;">(<a href="#q1" class="q-link">Q1</a>, <a href="#q2" class="q-link">Q2</a>)</span></h3>
     <p>
-      On LBM Eval, at every fraction from 25% upward, most prior variants cluster tightly and share the same statistical group.
-      The one exception is the 5% regime, where embedding-space noise (orange) outperforms the Gaussian
-      (25.9% vs. 18.9% success).
+      LBM 1.0 fine-tuned on 8 LBM Eval tasks it never saw in pretraining, at 5%, 25%, 50%, 75%, and 100% of the demonstrations.
+      From 25% upward all seven priors share the same letter. The one exception is 5% (about 10 to 20 demonstrations per task),
+      where the embedding-noise prior E<sub>pre</sub>+σ<sub>E</sub>𝒵 beats the Gaussian, 25.9% vs. 18.9%.
     </p>
   </div>
   <div class="figure">
-    <img src="Assets/setting_B_DP_FT_avg.png" alt="Setting B: grouped violin plot across data fractions" style="max-width: 804px;" />
-    <figcaption>
-      Success rate across data fractions for all seven priors. Priors cluster tightly at every fraction.
-    </figcaption>
+    <img src="Assets/setting_B_DP_FT_avg.png" alt="Success rate across data fractions, all seven priors" />
+    <figcaption>Success rate across data fractions, averaged over 8 tasks. Letters are computed within each fraction. The box marks the 5% regime, the only place a learned prior wins.</figcaption>
   </div>
 
-  <div style="max-width: 860px; margin: 0 auto; padding: 0 28px;">
-    <h3>Setting B<sub>real</sub>: Hardware Validation <span style="font-size: 0.85em;">(<a href="#q3" class="q-link">Q3</a>)</span></h3>
+  <div>
     <p>
-      On five bimanual FR3 tasks with blinded A/B testing (1250 rollouts in total), the prior has no statistically
-      significant effect: four of five priors share the same group. BRIDGER is the sole outlier, due to training
-      instability.
+      The rollouts tell the same story. Below, the seven policies fine-tuned on 100% of the DumpVegetables demonstrations start from the
+      same initial condition. When they succeed, you cannot tell them apart. When they fail, each fails in its own way.
+    </p>
+  </div>
+  <div class="video-pair">
+    <figure>
+      <video src="Assets/rollout_grid_7_success.mp4" poster="Assets/rollout_grid_7_success_poster.jpg" autoplay muted loop playsinline controls aria-label="Seven fine-tuned policies succeeding from the same initial condition"></video>
+      <figcaption><strong>Same initial condition, all seven succeed</strong> (2× speed).</figcaption>
+    </figure>
+    <figure>
+      <video src="Assets/rollout_grid_7_failure.mp4" poster="Assets/rollout_grid_7_failure_poster.jpg" autoplay muted loop playsinline controls aria-label="Seven fine-tuned policies failing from the same initial condition"></video>
+      <figcaption><strong>Another initial condition, all seven fail</strong> (5× speed), each differently.</figcaption>
+    </figure>
+  </div>
+
+  <div>
+    <h3>(3) Bimanual hardware: the same result on real robots <span style="font-size: 0.85em;">(<a href="#q3" class="q-link">Q3</a>)</span></h3>
+    <p>
+      Five bimanual tasks on two Franka FR3 arms, five priors, 50 blind A/B rollouts per prior per task (1250 total).
+      Four of the five priors share a letter on both success rate and partial task progress. BRIDGER is the outlier;
+      its CVAE prior trained unstably.
     </p>
   </div>
   <div class="figure">
-    <img src="Assets/setting_B_real_ab_test.png" alt="Setting B_real: hardware A/B test" style="max-width: 804px;" />
-    <figcaption>
-      <strong>Top:</strong> success rate. <strong>Bottom:</strong> partial task progress.
-      The same finding holds on real hardware.
-    </figcaption>
+    <img src="Assets/setting_B_real_ab_test.png" alt="Hardware A/B test" />
+    <figcaption><strong>Top:</strong> success rate. <strong>Bottom:</strong> partial task progress.</figcaption>
   </div>
 
-  <div style="max-width: 860px; margin: 0 auto; padding: 0 28px;">
-    <h3>Setting C: VLA Validation (π<sub>0.5</sub> and GR00T N1.5) <span style="font-size: 0.85em;">(<a href="#q3" class="q-link">Q3</a>)</span></h3>
+  <div>
     <p>
-      On Robocasa, both VLA architectures show the same pattern: the Gaussian ties at the top, while pure learned priors degrade
-      due to a domain gap between pretraining and fine-tuning data.
+      Every hardware rollout, two tasks shown. Each row is one prior, each tile one rollout (50 per prior), sped up to 10 seconds
+      and tagged S (success, green) or F (failure, red). The Gaussian's success rate is 18% on the bike-rotor task and 66% on the food-bank task;
+      the other priors land in the same range on both.
+    </p>
+  </div>
+  <div class="video-pair wall">
+    <figure>
+      <video src="Assets/hw_wall_Bike.mp4" poster="Assets/hw_wall_Bike_poster.jpg" autoplay muted loop playsinline controls aria-label="All 250 hardware rollouts on the bike-rotor task"></video>
+      <figcaption><strong>Bike-rotor installation</strong>, 5 priors × 50 rollouts. Use fullscreen to inspect individual tiles.</figcaption>
+    </figure>
+    <figure>
+      <video src="Assets/hw_wall_FoodBank.mp4" poster="Assets/hw_wall_FoodBank_poster.jpg" autoplay muted loop playsinline controls aria-label="All 250 hardware rollouts on the food-bank task"></video>
+      <figcaption><strong>Food bank</strong>, 5 priors × 50 rollouts.</figcaption>
+    </figure>
+  </div>
+
+  <div>
+    <p>
+      Zooming in on the food-bank task, the same picture as in simulation: at one initial condition all five fine-tuned
+      policies succeed and look alike; at another all five fail, each in its own way.
+    </p>
+  </div>
+  <div class="video-pair">
+    <figure>
+      <video src="Assets/hw_grid_FoodBank_success.mp4" poster="Assets/hw_grid_FoodBank_success_poster.jpg" autoplay muted loop playsinline controls aria-label="Five fine-tuned policies succeeding from the same initial condition on the food-bank task"></video>
+      <figcaption><strong>Same initial condition, all five succeed.</strong> Each clip time-normalised to 12 s.</figcaption>
+    </figure>
+    <figure>
+      <video src="Assets/hw_grid_FoodBank_failure.mp4" poster="Assets/hw_grid_FoodBank_failure_poster.jpg" autoplay muted loop playsinline controls aria-label="Five fine-tuned policies failing from the same initial condition on the food-bank task"></video>
+      <figcaption><strong>Another initial condition, all five fail</strong>, each differently.</figcaption>
+    </figure>
+  </div>
+
+  <div>
+    <h3>(4) Two VLAs: the same result on π<sub>0.5</sub> and GR00T N1.5 <span style="font-size: 0.85em;">(<a href="#q3" class="q-link">Q3</a>)</span></h3>
+    <p>
+      On 34 RoboCasa tasks, the Gaussian ties for first on both architectures. The pure pretrained-action prior A<sub>pre</sub>
+      is still 3× closer to the target, yet it is significantly worse. Both VLAs were pretrained mostly on real-world data,
+      so actions from a frozen copy of the VLA are far from the simulated demonstrations. The priors that add Gaussian
+      noise are less affected by this domain gap.
     </p>
   </div>
   <div class="figure">
-    <img src="Assets/setting_C_combined.png" alt="Setting C: 4-panel VLA validation" style="max-width: 804px;" />
-    <figcaption>Shared y-axis across all four panels. Both architectures confirm the same finding.</figcaption>
+    <img src="Assets/setting_C_combined.png" alt="VLA validation, four panels" />
+    <figcaption>π<sub>0.5</sub> (left two) and GR00T N1.5 (right two), atomic and composite tasks, shared y-axis.</figcaption>
   </div>
 </section>
 
 <div class="divider"></div>
 
-<!-- Analysis -->
+<!-- Why -->
 <section id="analysis" class="container">
-  <h2>Analysis: Why Does the Prior Not Matter?</h2>
+  <h2>Why Doesn't the Action Prior Matter?</h2>
 
   <div class="insight">
     <p>
-      <strong>Key insight:</strong> Different priors lead to structurally different encoder solutions of equivalent quality.
-      The prior governs <em>how much</em> the encoder restructures, but not the quality of the final result.
-      Once the encoder is sufficiently well-pretrained, it dominates the policy performance regardless of the prior.
+      <strong>In short:</strong> different action priors yield different encoder representations, but of equal predictive quality of the target actions.
+      Once the encoder is well pretrained, it determines the policy's performance; the action prior does not.
     </p>
   </div>
 
-  <h3>Feature quality is identical across priors</h3>
+  <h3>(1) Fine-tuned encoders predict actions equally well</h3>
   <p>
-    Using LogME (a training-free measure of how predictive the encoder's features are of target actions), we find
-    that all priors yield indistinguishable feature quality at every data fraction.
+    LogME is a training-free score of how well an encoder's features predict the target actions.
+    Every prior gets the same score, at every data fraction.
   </p>
-  <div class="figure narrow">
+  <div class="figure">
     <img src="Assets/logme_avg_8.png" alt="LogME feature quality across priors" />
     <figcaption>
-      LogME as percentage difference from the Gaussian. All priors share CLD group "a" at every fraction:
-      the prior leaves no detectable effect on the fine-tuned encoder's feature quality.
+      LogME as percent difference from the Gaussian. All priors share letter "a" at every fraction.
     </figcaption>
   </div>
 
-  <h3>Encoders visibly diverge, but predicted actions tend to converge</h3>
+  <h3>(2) Encoders move apart, actions do not</h3>
+  <p>
+    Measured against the pretrained model, the fine-tuned actions change by about the same amount for every prior.
+    The encoder embeddings do not: the Gaussian moves the encoder the least, A<sub>pre</sub> moves it 2 to 2.5× more.
+  </p>
   <div class="figure">
     <img src="Assets/fig8_representation_change.png" alt="Representation change across priors" />
     <figcaption>
-      <strong>Top:</strong> action-space changes cluster tightly, so all priors produce similar predicted actions.
-      <strong>Bottom:</strong> encoder embeddings diverge substantially. The Gaussian moves the encoder least from pretraining;
-      A<sub>pre</sub> induces the largest restructuring.
+      <strong>Top:</strong> change in predicted actions. <strong>Bottom:</strong> change in encoder embeddings.
     </figcaption>
   </div>
 
-  <h3>The encoder, not the prior, drives performance</h3>
+  <h3>(3) Training the encoder matters more than choosing the prior</h3>
   <p>
-    A learning-rate ablation reveals the key driver: degrading the encoder's learning rate to 1/10 hurts
-    performance far more than any change of prior, in both simulation and on hardware.
+    Cutting the encoder's learning rate to 1/10 costs 15 to 17 points of success rate for every prior in simulation,
+    and 9 points on hardware. No change of prior comes close.
   </p>
   <div class="figure">
-    <img src="Assets/setting_B_DP_1_10_lr_FT_avg.png" alt="Encoder LR ablation, simulation" />
-    <figcaption>Simulation: reducing the encoder LR to 1/10 degrades all priors by 15–17%.</figcaption>
+    <img src="Assets/setting_B_DP_1_10_lr_FT_avg.png" alt="Encoder learning-rate ablation, simulation" />
+    <figcaption>Simulation, 8 tasks, 100% data. Lighter violins use the reduced encoder learning rate.</figcaption>
   </div>
   <div class="figure">
-    <img src="Assets/setting_B_real_1_10_lr.png" alt="Encoder LR ablation, hardware" />
-    <figcaption>Hardware: the same effect, larger than any prior-related difference.</figcaption>
+    <img src="Assets/setting_B_real_1_10_lr.png" alt="Encoder learning-rate ablation, hardware" />
+    <figcaption>Hardware, 5 tasks, Gaussian prior: 37% vs. 28% success.</figcaption>
   </div>
 </section>
 
@@ -679,6 +828,57 @@
 </footer>
 
 <script>
+const PRIORS = {
+  Z: {
+    name: "𝒵: isotropic Gaussian",
+    desc: "The default prior in every LBM: a₀ ∼ 𝒩(0, I) in action space. No auxiliary training."
+  },
+  A_LBM: {
+    name: "A<sub>pre</sub>: actions from the pretrained LBM",
+    desc: "A frozen copy of the pretrained LBM denoises a Gaussian sample for half of its usual steps; the fine-tuned action head spends the other half, so inference cost is unchanged. Closest to the target of all seven priors. No auxiliary training."
+  },
+  A_LBMplusZ: {
+    name: "A<sub>pre</sub>+σ<sub>A</sub>𝒵: pretrained actions plus noise",
+    desc: "A<sub>pre</sub> with isotropic Gaussian noise added in action space (σ<sub>A</sub> = 1). The noise widens a prior that otherwise collapses onto the pretrained policy's modes. No auxiliary training."
+  },
+  O_LBMplus025Z: {
+    name: "E<sub>pre</sub>+σ<sub>E</sub>𝒵: perturbed embedding",
+    desc: "Gaussian noise (σ<sub>E</sub> = 0.25) is added to the observation embedding before the frozen pretrained LBM generates the action, so the prior is perturbed in embedding space rather than action space. No auxiliary training."
+  },
+  Cocos: {
+    name: "Cocos: condition-dependent Gaussian",
+    desc: "A small transformer autoencoder maps the observation embedding into action space; its output is the mean of a Gaussian prior (Dong et al., 2026). Trained before fine-tuning on (embedding, action) pairs collected under the pretrained policy, then frozen."
+  },
+  BRIDGER: {
+    name: "BRIDGER: CVAE action prior",
+    desc: "A conditional VAE maps a Gaussian latent to an action chunk given the observation embedding (Chen et al., 2024). Trained before fine-tuning, then frozen. Its training was unstable on our datasets and needed restarts."
+  },
+  Retrieval: {
+    name: "Retrieval: k-nearest-neighbour actions",
+    desc: "The mean of the k = 3 action chunks whose embeddings are closest to the current observation embedding, drawn from a frozen bank collected under the pretrained policy. Non-parametric; the bank is built once."
+  }
+};
+function showPrior(key) {
+  const p = PRIORS[key]; if (!p) return;
+  document.getElementById('prior-name').innerHTML = p.name;
+  document.getElementById('prior-desc').innerHTML = p.desc;
+  const v = document.getElementById('prior-video');
+  const src = `Assets/prior_${key}_DumpVeg_1x.mp4`;
+  if (v.dataset.key !== key) {
+    v.dataset.key = key;
+    v.poster = `Assets/prior_${key}_DumpVeg_poster.jpg`;
+    v.src = src;
+    v.play().catch(() => {});
+  }
+  document.querySelectorAll('.prior-tab').forEach(b => b.classList.toggle('is-active', b.dataset.prior === key));
+}
+document.querySelectorAll('.prior-tab').forEach(b => {
+  b.addEventListener('mouseenter', () => showPrior(b.dataset.prior));
+  b.addEventListener('click', () => showPrior(b.dataset.prior));
+  b.addEventListener('focus', () => showPrior(b.dataset.prior));
+});
+showPrior('Z');
+
 function copyBibtex() {
   const text = document.querySelector('.bibtex-block pre').textContent;
   navigator.clipboard.writeText(text).then(() => {
