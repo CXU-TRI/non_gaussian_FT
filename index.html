@@ -573,7 +573,7 @@
     closer to the target yield statistically indistinguishable or worse fine-tuning performance than a standard Gaussian.
   </p>
   <p>
-    Diagnostic analyses suggest why: fine-tuned policies produce similar action predictions across priors, despite
+    Diagnostic analyses suggest why: fine-tuned policies converge to similar action predictions across priors, despite
     their encoder embeddings diverging substantially. A learning-rate ablation confirms that encoder training is the
     dominant factor, substantially outweighing the effect of prior choice.
   </p>
@@ -627,7 +627,7 @@
     <li><strong>(1) Controlled test</strong> <span style="color: var(--accent); font-weight: 600;">(Q1)</span>: a prior constructed to be very close to the target, LBM 1.0 in the LBM Eval simulator, 5 tasks.</li>
     <li><strong>(2) Full-scale fine-tuning in simulation</strong> <span style="color: var(--accent); font-weight: 600;">(Q1, Q2)</span>: LBM 1.0 on 8 tasks and 5 data fractions, 56K rollouts.</li>
     <li><strong>(3) Bimanual hardware</strong> <span style="color: var(--accent); font-weight: 600;">(Q3)</span>: blind A/B tests on 5 tasks with two Franka arms, 1250 rollouts.</li>
-    <li><strong>(4) Two VLAs</strong> <span style="color: var(--accent); font-weight: 600;">(Q3)</span>: π<sub>0.5</sub> and GR00T N1.5 on 34 RoboCasa tasks, 54,400 rollouts.</li>
+    <li><strong>(4) Other LBM architectures</strong> <span style="color: var(--accent); font-weight: 600;">(Q3)</span>: π<sub>0.5</sub> and GR00T N1.5 on 34 RoboCasa tasks, 54,400 rollouts.</li>
   </ul>
   <div class="note">
     <p>
@@ -740,16 +740,16 @@
   </div>
 
   <div>
-    <h3>(4) Two VLAs: the same result on π<sub>0.5</sub> and GR00T N1.5 <span style="font-size: 0.85em;">(<a href="#q3" class="q-link">Q3</a>)</span></h3>
+    <h3>(4) Other LBM architectures: the same result on π<sub>0.5</sub> and GR00T N1.5 <span style="font-size: 0.85em;">(<a href="#q3" class="q-link">Q3</a>)</span></h3>
     <p>
-      On 34 RoboCasa tasks, the Gaussian ties for first on both architectures. The pure pretrained-action prior A<sub>pre</sub>
-      is still 3× closer to the target, yet it is significantly worse. Both VLAs were pretrained mostly on real-world data,
-      so actions from a frozen copy of the VLA are far from the simulated demonstrations. The priors that add Gaussian
+      On 34 RoboCasa tasks, the Gaussian ties for first on both LBMs. The pure pretrained-action prior A<sub>pre</sub>
+      is still 3× closer to the target, yet it is significantly worse. Both models were pretrained mostly on real-world data,
+      so actions from a frozen copy of the pretrained model are far from the simulated demonstrations. The priors that add Gaussian
       noise are less affected by this domain gap.
     </p>
   </div>
   <div class="figure">
-    <img src="Assets/setting_C_combined.png" alt="VLA validation, four panels" />
+    <img src="Assets/setting_C_combined.png" alt="Validation on other LBM architectures, four panels" />
     <figcaption>π<sub>0.5</sub> (left two) and GR00T N1.5 (right two), atomic and composite tasks, shared y-axis.</figcaption>
   </div>
 </section>
