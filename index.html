@@ -395,6 +395,7 @@
     .prior-text h4 { font-size: 17px; font-weight: 600; margin: 0 0 8px; color: var(--text); }
     .prior-text p { font-size: 14px; color: var(--text-muted); margin: 0 0 10px; line-height: 1.55; }
     .prior-text .prior-clipnote { font-size: 14px; color: var(--text-muted); opacity: 0.8; }
+    .prior-text a { color: var(--accent); text-decoration: none; border-bottom: 1px dotted var(--accent); }
     .prior-panel video {
       width: 300px;
       flex: 0 0 300px;
@@ -554,10 +555,10 @@
   <div class="finding-evidence">
     <img src="Assets/fig1_opener.png" alt="Priors help from scratch but not when fine-tuning" />
     <p class="evidence-caption">
+      Five LBM Eval tasks, 1000 rollouts per prior.
       <strong>Left:</strong> ℓ<sub>2</sub> distance between prior samples and ground-truth actions; A<sub>pre</sub> is 3× closer to the target than the Gaussian.
       <strong>Middle:</strong> when training from scratch, A<sub>pre</sub> significantly outperforms the Gaussian.
       <strong>Right:</strong> after fine-tuning from the same pretrained LBM 1.0 checkpoint, the Gaussian instead significantly outperforms A<sub>pre</sub>.
-      Five LBM Eval tasks, 1000 rollouts per prior.
     </p>
   </div>
 </div>
@@ -573,7 +574,7 @@
   </p>
   <p>
     A natural next step is to ask whether these gains transfer to <em>fine-tuning</em> pretrained Large Behavior
-    Models (LBMs) such as LBM 1.0, π<sub>0.5</sub>, and GR00T N1.5. Surprisingly, we find that this is not the
+    Models (LBMs) such as <a href="https://arxiv.org/abs/2507.05331">LBM 1.0</a>, <a href="https://arxiv.org/abs/2504.16054">π<sub>0.5</sub></a>, and <a href="https://arxiv.org/abs/2503.14734">GR00T N1.5</a>. Surprisingly, we find that this is not the
     case, except possibly at very low fine-tuning data fractions.
     Across over 100K simulation rollouts and 1250 hardware rollouts, non-Gaussian priors that are demonstrably
     closer to the target yield statistically indistinguishable or worse fine-tuning performance than a standard Gaussian.
@@ -635,7 +636,7 @@
     <li><strong>(1) Controlled test</strong> <span style="color: var(--accent); font-weight: 600;">(Q1)</span>: a prior constructed to be measurably close to the target, using LBM 1.0 on five <a href="https://arxiv.org/abs/2507.05331">LBM Eval</a> tasks in simulation (14,000 rollouts).</li>
     <li><strong>(2) Full-scale fine-tuning in simulation</strong> <span style="color: var(--accent); font-weight: 600;">(Q1, Q2)</span>: LBM 1.0 on eight LBM Eval tasks unseen during pretraining, at five fine-tuning data fractions (56,000 rollouts).</li>
     <li><strong>(3) Bimanual hardware</strong> <span style="color: var(--accent); font-weight: 600;">(Q3)</span>: blind A/B testing on five bimanual tasks with two Franka FR3 arms (1250 rollouts).</li>
-    <li><strong>(4) Other LBM architectures</strong> <span style="color: var(--accent); font-weight: 600;">(Q3)</span>: π<sub>0.5</sub> and GR00T N1.5 on 34 RoboCasa tasks (54,400 rollouts).</li>
+    <li><strong>(4) Other LBM architectures</strong> <span style="color: var(--accent); font-weight: 600;">(Q3)</span>: π<sub>0.5</sub> and GR00T N1.5 on 34 <a href="https://scholar.google.com/scholar?q=%22RoboCasa365%3A%20A%20Large-Scale%20Simulation%20Framework%20for%20Training%20and%20Benchmarking%20Generalist%20Robots%22">RoboCasa365</a> tasks (54,400 rollouts).</li>
   </ul>
   <div class="note">
     <p>
@@ -643,6 +644,10 @@
       The letters form a <em>compact letter display</em> (CLD) computed from a sequential hypothesis test at α = 0.05 with
       Bonferroni correction: priors that share a letter are not statistically separable; priors with no letter in common
       differ significantly.
+    </p>
+    <p style="margin-top: 10px;">
+      <strong>Video speed.</strong> Clips shorter than about 20 s play in real time. Longer rollouts are time-compressed so that
+      each clip lasts roughly 10 to 12 s; the factor is stated in the caption.
     </p>
   </div>
 </section>
@@ -752,9 +757,25 @@
   </div>
 
   <div>
+    <p>
+      On BikeRotorInstall, success rates are low (18% for the Gaussian, 0 of 50 for BRIDGER), so no initial condition exists on
+      which all five policies succeed. The row below shows an initial condition on which all five fail while still making
+      comparable partial progress: every policy picks up the rotor and seats it on the hub, then diverges. Gaussian 𝒵 and
+      Retrieval skip the lockring and reach for the tool; E<sub>pre</sub>+σ<sub>E</sub>𝒵, Cocos, and BRIDGER place the lockring and
+      pick up the tool but drop it between the spokes.
+    </p>
+  </div>
+  <div class="video-pair">
+    <figure>
+      <video src="Assets/hw_row_Bike_failure.mp4" poster="Assets/hw_row_Bike_failure_poster.jpg" autoplay muted loop playsinline controls aria-label="Five fine-tuned policies failing from the same initial condition on the bike-rotor task"></video>
+      <figcaption><strong>BikeRotorInstall, identical initial condition; all five policies fail</strong> after seating the rotor, with distinct failure modes. Each clip time-normalised to 12 s.</figcaption>
+    </figure>
+  </div>
+
+  <div>
     <h3>(4) Other LBM architectures: the finding holds on π<sub>0.5</sub> and GR00T N1.5 <span style="font-size: 0.85em;">(<a href="#q3" class="q-link">Q3</a>)</span></h3>
     <p>
-      We repeat the comparison on the RoboCasa benchmark with two additional LBMs, π<sub>0.5</sub> and GR00T N1.5, each fine-tuned
+      We repeat the comparison on the <a href="https://scholar.google.com/scholar?q=%22RoboCasa365%3A%20A%20Large-Scale%20Simulation%20Framework%20for%20Training%20and%20Benchmarking%20Generalist%20Robots%22">RoboCasa365</a> benchmark with two additional LBMs, π<sub>0.5</sub> and GR00T N1.5, each fine-tuned
       on 34 tasks. On both architectures, the Gaussian and A<sub>pre</sub>+σ<sub>A</sub>𝒵 tie in the top CLD group, while A<sub>pre</sub>
       is significantly worse despite remaining roughly 3× closer to the target in ℓ<sub>2</sub>. Both models were pretrained predominantly
       on real-world data, so actions from a frozen copy of the pretrained model are out of distribution for the simulated demonstrations;
@@ -865,15 +886,15 @@ const PRIORS = {
   },
   Cocos: {
     name: "Cocos: condition-dependent Gaussian",
-    desc: "A small transformer autoencoder maps the observation embedding into action space; its output is the mean of a Gaussian prior (Dong et al., 2026). Trained before fine-tuning on (embedding, action) pairs collected under the pretrained policy, then frozen."
+    desc: "A small transformer autoencoder maps the observation embedding into action space; its output is the mean of a Gaussian prior (<a href='https://scholar.google.com/scholar?q=%22Conditioning%20Matters%3A%20Training%20Diffusion%20Policies%20is%20Faster%20Than%20You%20Think%22'>Dong et al., 2026</a>). Trained before fine-tuning on (embedding, action) pairs collected under the pretrained policy, then frozen."
   },
   BRIDGER: {
     name: "BRIDGER: CVAE action prior",
-    desc: "A conditional VAE maps a Gaussian latent to an action chunk given the observation embedding (Chen et al., 2024). Trained before fine-tuning, then frozen. Its training was unstable on our datasets and needed restarts."
+    desc: "A conditional VAE maps a Gaussian latent to an action chunk given the observation embedding (<a href='https://arxiv.org/abs/2402.16075'>Chen et al., 2024</a>). Trained before fine-tuning, then frozen. Its training was unstable on our datasets and needed restarts."
   },
   Retrieval: {
     name: "Retrieval: k-nearest-neighbour actions",
-    desc: "The mean of the k = 3 action chunks whose embeddings are closest to the current observation embedding, drawn from a frozen bank collected under the pretrained policy. Non-parametric; the bank is built once."
+    desc: "The mean of the k = 3 action chunks whose embeddings are closest to the current observation embedding, drawn from a frozen bank collected under the pretrained policy. Non-parametric; the bank is built once. The cited works (<a href='https://arxiv.org/abs/2112.01511'>Pari et al., 2022</a>; <a href='https://scholar.google.com/scholar?q=%22Demystifying%20Robot%20Diffusion%20Policies%3A%20Action%20Memorization%20and%20a%20Simple%20Lookup%20Table%20Alternative%22'>He et al., 2026</a>; <a href='https://scholar.google.com/scholar?q=%22A%20retrieval-augmented%20framework%20enabling%20VLM%20spatial%20awareness%20for%20object-centric%20robot%20manipulation%22'>Chen et al., 2026</a>) used k-NN actions directly as policies; we repurpose the idea as a prior."
   }
 };
 function showPrior(key) {
