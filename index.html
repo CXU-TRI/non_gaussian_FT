@@ -723,39 +723,17 @@
 
   <div>
     <p>
-      All hardware rollouts for two of the five tasks. Each row is one prior and each tile one rollout (50 per prior),
-      time-compressed to 10 s and tagged S (success, green) or F (failure, red). The Gaussian prior achieves 18% success on
-      BikeRotorInstall and 66% on FoodBank; the remaining priors fall in the same range on both tasks.
+      All hardware rollouts for two of the five tasks, each followed by a zoom-in on a single initial condition. In the
+      full grids, each row is one prior and each tile one rollout (50 per prior), time-compressed to 10 s and tagged
+      S (success, green) or F (failure, red).
     </p>
   </div>
   <div class="video-pair wall">
     <figure>
       <video src="Assets/hw_wall_Bike.mp4" poster="Assets/hw_wall_Bike_poster.jpg" autoplay muted loop playsinline controls aria-label="All 250 hardware rollouts on the bike-rotor task"></video>
-      <figcaption><strong>BikeRotorInstall</strong>: 5 priors × 50 rollouts. Use fullscreen to inspect individual tiles.</figcaption>
-    </figure>
-    <figure>
-      <video src="Assets/hw_wall_FoodBank.mp4" poster="Assets/hw_wall_FoodBank_poster.jpg" autoplay muted loop playsinline controls aria-label="All 250 hardware rollouts on the food-bank task"></video>
-      <figcaption><strong>FoodBank</strong>: 5 priors × 50 rollouts.</figcaption>
+      <figcaption><strong>BikeRotorInstall</strong>: 5 priors × 50 rollouts. The Gaussian prior achieves 18% success; the other priors fall in the same range. Use fullscreen to inspect individual tiles.</figcaption>
     </figure>
   </div>
-
-  <div>
-    <p>
-      The same pattern as in simulation appears on the FoodBank task: at one initial condition all five fine-tuned policies
-      succeed with similar motions; at another, all five fail, each with a different failure mode.
-    </p>
-  </div>
-  <div class="video-pair">
-    <figure>
-      <video src="Assets/hw_grid_FoodBank_success.mp4" poster="Assets/hw_grid_FoodBank_success_poster.jpg" autoplay muted loop playsinline controls aria-label="Five fine-tuned policies succeeding from the same initial condition on the food-bank task"></video>
-      <figcaption><strong>Identical initial condition; all five policies succeed.</strong> Each clip time-normalised to 12 s.</figcaption>
-    </figure>
-    <figure>
-      <video src="Assets/hw_grid_FoodBank_failure.mp4" poster="Assets/hw_grid_FoodBank_failure_poster.jpg" autoplay muted loop playsinline controls aria-label="Five fine-tuned policies failing from the same initial condition on the food-bank task"></video>
-      <figcaption><strong>A different initial condition; all five policies fail</strong>, with distinct failure modes.</figcaption>
-    </figure>
-  </div>
-
   <div>
     <p>
       On BikeRotorInstall, success rates are low (18% for the Gaussian, 0 of 50 for BRIDGER), so no initial condition exists on
@@ -769,6 +747,28 @@
     <figure>
       <video src="Assets/hw_row_Bike_failure.mp4" poster="Assets/hw_row_Bike_failure_poster.jpg" autoplay muted loop playsinline controls aria-label="Five fine-tuned policies failing from the same initial condition on the bike-rotor task"></video>
       <figcaption><strong>BikeRotorInstall, identical initial condition; all five policies fail</strong> after seating the rotor, with distinct failure modes. Each clip time-normalised to 12 s.</figcaption>
+    </figure>
+  </div>
+  <div class="video-pair wall">
+    <figure>
+      <video src="Assets/hw_wall_FoodBank.mp4" poster="Assets/hw_wall_FoodBank_poster.jpg" autoplay muted loop playsinline controls aria-label="All 250 hardware rollouts on the food-bank task"></video>
+      <figcaption><strong>FoodBank</strong>: 5 priors × 50 rollouts. The Gaussian prior achieves 66% success; the other priors fall in the same range.</figcaption>
+    </figure>
+  </div>
+  <div>
+    <p>
+      On FoodBank, the same pattern as in simulation appears: at one initial condition all five fine-tuned policies
+      succeed with similar motions; at another, all five fail, each with a different failure mode.
+    </p>
+  </div>
+  <div class="video-pair">
+    <figure>
+      <video src="Assets/hw_grid_FoodBank_success.mp4" poster="Assets/hw_grid_FoodBank_success_poster.jpg" autoplay muted loop playsinline controls aria-label="Five fine-tuned policies succeeding from the same initial condition on the food-bank task"></video>
+      <figcaption><strong>FoodBank, identical initial condition; all five policies succeed.</strong> Each clip time-normalised to 12 s.</figcaption>
+    </figure>
+    <figure>
+      <video src="Assets/hw_grid_FoodBank_failure.mp4" poster="Assets/hw_grid_FoodBank_failure_poster.jpg" autoplay muted loop playsinline controls aria-label="Five fine-tuned policies failing from the same initial condition on the food-bank task"></video>
+      <figcaption><strong>FoodBank, a different initial condition; all five policies fail</strong>, with distinct failure modes.</figcaption>
     </figure>
   </div>
 
