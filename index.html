@@ -47,74 +47,49 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Nav */
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(250, 250, 248, 0.92);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-menu {
-      list-style: none;
-      display: flex;
+    /* Two-column layout: sticky contents on the left, 804 px content column */
+    body { overflow-x: hidden; }
+    .layout {
+      display: grid;
+      grid-template-columns: 280px 804px;
+      column-gap: 48px;
       justify-content: center;
-      flex-wrap: wrap;
-      margin: 0;
+      align-items: start;
+    }
+    main { min-width: 0; }
+    main .container { max-width: none; padding-left: 0; padding-right: 0; }
+    main .hero { padding-left: 0; padding-right: 0; }
+    .toc {
+      position: sticky;
+      top: 24px;
+      max-height: calc(100vh - 48px);
+      overflow-y: auto;
+      z-index: 5;
       padding: 0;
-    }
-    .nav-item { position: relative; }
-    .nav-top {
-      display: block;
-      padding: 14px 16px;
-      color: var(--text-muted);
-      text-decoration: none;
       font-size: 14px;
-      font-weight: 500;
-      letter-spacing: 0.02em;
-      transition: color 0.2s;
+      line-height: 1.3;
     }
-    .nav-item:hover .nav-top, .nav-item:focus-within .nav-top { color: var(--accent); }
-    .nav-drop {
-      position: absolute;
-      top: 100%;
-      left: 50%;
-      transform: translate(-50%, 4px);
-      min-width: 220px;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-      padding: 6px 0;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.15s, transform 0.15s, visibility 0.15s;
-      text-align: left;
-    }
-    .nav-item.has-drop:hover .nav-drop,
-    .nav-item.has-drop:focus-within .nav-drop {
-      opacity: 1;
-      visibility: visible;
-      transform: translate(-50%, 0);
-    }
-    .nav-drop a {
+    .toc > ul { padding-top: 70px; }
+    .toc ul { list-style: none; margin: 0; padding: 0; }
+    .toc ul ul { margin: 0 0 6px; }
+    .toc a {
       display: block;
-      padding: 7px 16px;
-      font-size: 14px;
-      color: var(--text-muted);
       text-decoration: none;
-      white-space: nowrap;
+      border-left: 2px solid transparent;
+      transition: color 0.15s, border-color 0.15s;
     }
-    .nav-drop a:hover, .nav-drop a:focus-visible {
-      background: var(--accent-light);
-      color: var(--accent);
-      outline: none;
+    .toc-sec { padding: 3px 0 3px 12px; color: var(--text); font-weight: 600; }
+    .toc-sub { padding: 2px 0 2px 24px; color: var(--text-muted); }
+    .toc a:hover { color: var(--accent); }
+    .toc a.active { color: var(--accent); border-left-color: var(--accent); }
+    @media (max-width: 1180px) {
+      .layout { display: block; }
+      .toc { display: none; }
+      main { max-width: 860px; margin: 0 auto; padding: 0 28px; }
     }
-    @media (hover: none) and (pointer: coarse) { .nav-drop { display: none; } }
 
-    /* Jump targets clear the sticky nav */
-    [id] { scroll-margin-top: 72px; }
+    /* Jump targets keep a little space above them */
+    [id] { scroll-margin-top: 24px; }
 
     /* Layout */
     .container {
@@ -292,12 +267,21 @@
 
     /* Key finding */
     .finding {
+      position: relative;
+      isolation: isolate;
+      padding: 46px 0;
+      margin: 30px 0;
+      text-align: center;
+    }
+    .finding::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      top: 0; bottom: 0;
+      left: -100vw; right: -100vw;
       background: var(--accent-light);
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
-      padding: 46px 28px;
-      margin: 30px 0;
-      text-align: center;
     }
     .finding .label, .finding .statement, .finding .sub {
       max-width: 804px;
@@ -512,7 +496,7 @@
     .q-link:hover { opacity: 0.65; }
 
     /* Briefly highlight a question when jumped to */
-    #q1, #q2, #q3 { scroll-margin-top: 72px; }
+    #q1, #q2, #q3 { scroll-margin-top: 24px; }
     #q1:target, #q2:target, #q3:target {
       background: var(--accent-light);
       border-radius: 4px;
@@ -533,7 +517,6 @@
 
     @media (max-width: 720px) {
       .hero { padding: 44px 0 26px; }
-      .nav-top { padding: 12px 9px; }
       .finding .statement { font-size: 18px; }
       section { padding: 30px 0; }
       .teaser1 { flex-direction: column; --fig1-h: 220px; }
@@ -544,66 +527,61 @@
 
 <body>
 
-<nav>
-  <ul class="nav-menu">
-    <li class="nav-item has-drop">
-      <a class="nav-top" href="#overview">Overview</a>
-      <div class="nav-drop">
-        <a href="#ov-prior">What is the action prior?</a>
-        <a href="#key-finding">Key finding</a>
-      </div>
+
+<div class="layout">
+<aside class="toc" aria-label="Contents">
+  <ul>
+    <li><a class="toc-sec" href="#overview">Overview</a>
+      <ul>
+        <li><a class="toc-sub" href="#ov-prior">What is the action prior?</a></li>
+        <li><a class="toc-sub" href="#key-finding">Key finding</a></li>
+      </ul>
     </li>
-    <li class="nav-item">
-      <a class="nav-top" href="#abstract">Abstract</a>
+    <li><a class="toc-sec" href="#abstract">Abstract</a>
     </li>
-    <li class="nav-item has-drop">
-      <a class="nav-top" href="#background">Background</a>
-      <div class="nav-drop">
-        <a href="#bg-lbm">Large Behavior Models</a>
-        <a href="#bg-prior">Generative policies and the action prior</a>
-        <a href="#bg-closer">Why a closer prior might help</a>
-      </div>
+    <li><a class="toc-sec" href="#background">Background</a>
+      <ul>
+        <li><a class="toc-sub" href="#bg-lbm">Large Behavior Models</a></li>
+        <li><a class="toc-sub" href="#bg-prior">Generative policies and the action prior</a></li>
+        <li><a class="toc-sub" href="#bg-closer">Why a closer prior might help</a></li>
+      </ul>
     </li>
-    <li class="nav-item has-drop">
-      <a class="nav-top" href="#setup">Setup</a>
-      <div class="nav-drop">
-        <a href="#priors">Seven action priors</a>
-        <a href="#setup-questions">Research questions</a>
-        <a href="#setup-settings">Experimental settings</a>
-        <a href="#setup-reading">How to read the plots</a>
-      </div>
+    <li><a class="toc-sec" href="#setup">Setup</a>
+      <ul>
+        <li><a class="toc-sub" href="#priors">Seven action priors</a></li>
+        <li><a class="toc-sub" href="#setup-questions">Research questions</a></li>
+        <li><a class="toc-sub" href="#setup-settings">Experimental settings</a></li>
+        <li><a class="toc-sub" href="#setup-reading">How to read the plots</a></li>
+      </ul>
     </li>
-    <li class="nav-item has-drop">
-      <a class="nav-top" href="#results">Results</a>
-      <div class="nav-drop">
-        <a href="#res-1">(1) Controlled test</a>
-        <a href="#res-2">(2) Full-scale fine-tuning in simulation</a>
-        <a href="#res-3">(3) Bimanual hardware</a>
-        <a href="#res-4">(4) Other LBM architectures</a>
-      </div>
+    <li><a class="toc-sec" href="#results">Results</a>
+      <ul>
+        <li><a class="toc-sub" href="#res-1">(1) Controlled test</a></li>
+        <li><a class="toc-sub" href="#res-2">(2) Full-scale fine-tuning in simulation</a></li>
+        <li><a class="toc-sub" href="#res-3">(3) Bimanual hardware</a></li>
+        <li><a class="toc-sub" href="#res-4">(4) Other LBM architectures</a></li>
+      </ul>
     </li>
-    <li class="nav-item has-drop">
-      <a class="nav-top" href="#analysis">Analysis</a>
-      <div class="nav-drop">
-        <a href="#ana-summary">Summary</a>
-        <a href="#ana-1">(1) Encoder feature quality</a>
-        <a href="#ana-2">(2) Encoder vs. action change</a>
-        <a href="#ana-3">(3) Encoder learning-rate ablation</a>
-      </div>
+    <li><a class="toc-sec" href="#analysis">Analyses</a>
+      <ul>
+        <li><a class="toc-sub" href="#ana-summary">Summary</a></li>
+        <li><a class="toc-sub" href="#ana-1">(1) Encoder feature quality</a></li>
+        <li><a class="toc-sub" href="#ana-2">(2) Encoder vs. action change</a></li>
+        <li><a class="toc-sub" href="#ana-3">(3) Encoder learning-rate ablation</a></li>
+      </ul>
     </li>
-    <li class="nav-item has-drop">
-      <a class="nav-top" href="#discussion">Discussion</a>
-      <div class="nav-drop">
-        <a href="#disc-implications">Implications for practitioners</a>
-        <a href="#disc-limitations">Limitations</a>
-        <a href="#disc-open">Open questions</a>
-      </div>
+    <li><a class="toc-sec" href="#discussion">Discussion</a>
+      <ul>
+        <li><a class="toc-sub" href="#disc-implications">Implications for practitioners</a></li>
+        <li><a class="toc-sub" href="#disc-limitations">Limitations</a></li>
+        <li><a class="toc-sub" href="#disc-open">Open questions</a></li>
+      </ul>
     </li>
-    <li class="nav-item">
-      <a class="nav-top" href="#bibtex">BibTeX</a>
+    <li><a class="toc-sec" href="#bibtex">BibTeX</a>
     </li>
   </ul>
-</nav>
+</aside>
+<main>
 
 <!-- Hero -->
 <div class="hero container">
@@ -952,7 +930,7 @@
 
 <!-- Why -->
 <section id="analysis" class="container">
-  <h2>Analysis</h2>
+  <h2>Analyses</h2>
 
   <p class="analysis-q" id="ana-summary"><strong>How do priors shape the training dynamics and model internals?</strong></p>
   <div class="insight">
@@ -1053,6 +1031,9 @@
   </div>
 </section>
 
+</main>
+</div>
+
 <footer>
   <p>Toyota Research Institute &middot; 2026</p>
 </footer>
@@ -1109,8 +1090,33 @@ document.querySelectorAll('.prior-tab').forEach(b => {
 });
 showPrior('Z');
 
-document.querySelectorAll('.nav-drop a, .nav-top').forEach(a =>
-  a.addEventListener('click', () => a.blur()));
+// Highlight the contents entry for the part currently being read
+(() => {
+  const links = [...document.querySelectorAll('.toc a')];
+  const targets = links.map(a => document.getElementById(a.getAttribute('href').slice(1)));
+  let ticking = false;
+  let clicked = null;          // a clicked entry stays highlighted until the reader scrolls on their own
+  links.forEach(a => a.addEventListener('click', () => {
+    clicked = a; links.forEach(l => l.classList.toggle('active', l === a));
+  }));
+  ['wheel', 'touchmove', 'keydown'].forEach(ev =>
+    window.addEventListener(ev, () => { clicked = null; }, { passive: true }));
+  function update() {
+    ticking = false;
+    if (clicked) return;
+    const y = 120;
+    let idx = 0;
+    const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+    targets.forEach((t, i) => {
+      if (!t) return;
+      const top = t.getBoundingClientRect().top;
+      if (top <= y || (atBottom && top < window.innerHeight * 0.8)) idx = i;
+    });
+    links.forEach((a, i) => a.classList.toggle('active', i === idx));
+  }
+  window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  update();
+})();
 
 function copyBibtex() {
   const text = document.querySelector('.bibtex-block pre').textContent;
