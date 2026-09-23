@@ -83,12 +83,12 @@
 
     /* Hero */
     .hero {
-      padding: 70px 0 40px;
+      padding: 70px 28px 40px;
       text-align: center;
     }
     .hero h1 {
       font-family: 'DM Sans', sans-serif;
-      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-size: clamp(1.8rem, 4.2vw, 2.55rem);
       font-weight: 600;
       line-height: 1.15;
       color: var(--text);
@@ -197,6 +197,14 @@
       object-fit: contain;
     }
 
+    .overview-caption {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin: 12px 0 0;
+      text-align: left;
+    }
+
     /* Sections */
     section {
       padding: 46px 0;
@@ -242,31 +250,32 @@
       margin: 30px 0;
       text-align: center;
     }
+    .finding .label, .finding .statement, .finding .sub {
+      max-width: 804px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0;
+      text-align: center;
+      text-wrap: pretty;
+    }
     .finding .label {
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 14px;
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      margin-bottom: 18px;
     }
     .finding .statement {
       font-family: 'DM Sans', sans-serif;
       font-size: 1.35rem;
       font-weight: 600;
-      text-wrap: balance;
       line-height: 1.35;
       color: var(--text);
-      max-width: 900px;
-      margin: 0 auto 18px;
-      padding: 0 20px;
+      margin-bottom: 18px;
     }
     .finding .sub {
       font-size: 17px;
       color: var(--text-muted);
-      max-width: 620px;
-      margin: 0 auto;
-      padding: 0 20px;
     }
     .finding-evidence {
       max-width: 804px;
@@ -286,8 +295,8 @@
       font-size: 14px;
       color: var(--text-muted);
       line-height: 1.5;
-      margin: 12px auto 0;
-      text-align: center;
+      margin: 12px 0 0;
+      text-align: left;
     }
 
     /* Figures */
@@ -536,7 +545,7 @@
       </div>
     </div>
   </div>
-  <p style="font-size: 14px; color: var(--text-muted); margin: 8px auto 0; text-align: center;">
+  <p class="overview-caption">
     <strong>What is the action prior?</strong>
     <strong>Left:</strong> a flow-matching policy generates an action by transporting a random sample a&#8320;, drawn from a prior
     distribution p&#8320; over action chunks, to the target action. The action head is conditioned on the observation embedding e
