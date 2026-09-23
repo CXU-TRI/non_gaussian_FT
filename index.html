@@ -783,10 +783,10 @@
   </ul>
   <p id="setup-settings">Four experimental settings address these questions:</p>
   <ul>
-    <li><strong>(1) Controlled test</strong> <span style="color: var(--accent); font-weight: 600;">(Q1)</span>: a prior constructed to be measurably close to the target, using LBM 1.0 on five <a href="https://arxiv.org/abs/2507.05331">LBM Eval</a> tasks in simulation (14,000 rollouts).</li>
+    <li><strong>(1) Controlled test</strong> <span style="color: var(--accent); font-weight: 600;">(Q1)</span>: a prior constructed to be measurably close to the target, using LBM 1.0 on five tasks from <a href="https://arxiv.org/abs/2507.05331">LBM Eval</a>, a Drake-based bimanual simulation benchmark (14,000 rollouts).</li>
     <li><strong>(2) Full-scale fine-tuning in simulation</strong> <span style="color: var(--accent); font-weight: 600;">(Q1, Q2)</span>: LBM 1.0 on eight LBM Eval tasks unseen during pretraining, at five fine-tuning data fractions (56,000 rollouts).</li>
     <li><strong>(3) Bimanual hardware</strong> <span style="color: var(--accent); font-weight: 600;">(Q3)</span>: blind A/B testing on five bimanual tasks with two Franka FR3 arms (1250 rollouts).</li>
-    <li><strong>(4) Other LBM architectures</strong> <span style="color: var(--accent); font-weight: 600;">(Q3)</span>: π<sub>0.5</sub> and GR00T N1.5 on 34 <a href="https://scholar.google.com/scholar?q=%22RoboCasa365%3A%20A%20Large-Scale%20Simulation%20Framework%20for%20Training%20and%20Benchmarking%20Generalist%20Robots%22">RoboCasa365</a> tasks (54,400 rollouts).</li>
+    <li><strong>(4) Other LBM architectures</strong> <span style="color: var(--accent); font-weight: 600;">(Q3)</span>: π<sub>0.5</sub> and GR00T N1.5 on 34 tasks from <a href="https://scholar.google.com/scholar?q=%22RoboCasa365%3A%20A%20Large-Scale%20Simulation%20Framework%20for%20Training%20and%20Benchmarking%20Generalist%20Robots%22">RoboCasa365</a>, a MuJoCo-based simulation benchmark (54,400 rollouts).</li>
   </ul>
   <div class="note" id="setup-reading">
     <p>
@@ -835,7 +835,7 @@
     <p>
       We fine-tune LBM 1.0 on eight LBM Eval tasks unseen during pretraining, using 5% to 100% of the available demonstrations.
       From 25% upward, all seven priors share CLD group "a". The one exception is 5% (approximately 10 to 20 demonstrations per
-      task), where E<sub>pre</sub>+σ<sub>E</sub>𝒵 significantly outperforms the Gaussian (25.9% vs. 18.9%); at such low data, the
+      task), where the embedding-noise prior E<sub>pre</sub>+σ<sub>E</sub>𝒵 significantly outperforms the Gaussian (25.9% vs. 18.9%); at such low data, the
       embedding-space perturbation appears to act as an informative inductive bias.
     </p>
   </div>
@@ -867,7 +867,7 @@
     <p>
       We fine-tune LBM 1.0 on five bimanual tasks with two Franka FR3 arms (FoodBank, ClearKitchenCounter,
       GatheringIngredientsForCookies, BusBin, BikeRotorInstall) and compare five priors: 𝒵, E<sub>pre</sub>+σ<sub>E</sub>𝒵, Cocos,
-      BRIDGER, and Retrieval. (A small hardware pilot found the three action-space priors statistically tied, so
+      BRIDGER, and Retrieval. (A small hardware pilot found our three proposed priors statistically tied, so
       E<sub>pre</sub>+σ<sub>E</sub>𝒵 represents them.) In blind A/B testing, following <a href="https://scholar.google.com/scholar?q=%22Robot%20Learning%20as%20an%20Empirical%20Science%3A%20Best%20Practices%20for%20Policy%20Evaluation%22">best practices for policy evaluation</a>, all priors are run in randomized order at each initial
       condition, so the operator does not know which is being tested. Each rollout is scored for binary success and for
       <em>partial task progress</em>, the fraction of ordered task milestones achieved (e.g., rotor picked up, rotor seated,
@@ -935,7 +935,7 @@
       We repeat the comparison on the <a href="https://scholar.google.com/scholar?q=%22RoboCasa365%3A%20A%20Large-Scale%20Simulation%20Framework%20for%20Training%20and%20Benchmarking%20Generalist%20Robots%22">RoboCasa365</a>
       benchmark with π<sub>0.5</sub> and GR00T N1.5, each fine-tuned on 18 atomic and 16 composite tasks.
       Neither model exposes a single bottleneck embedding, so the embedding-space priors (E<sub>pre</sub>+σ<sub>E</sub>𝒵, Cocos,
-      BRIDGER) cannot be ported; we compare the other four. On both models, 𝒵 and A<sub>pre</sub>+σ<sub>A</sub>𝒵 tie at the top, while
+      BRIDGER) cannot be ported; we compare the other four. On both models, 𝒵 and A<sub>pre</sub>+σ<sub>A</sub>𝒵 (pretrained actions plus noise) tie at the top, while
       A<sub>pre</sub> and Retrieval are significantly worse, although A<sub>pre</sub> remains roughly 3× closer to the target in
       ℓ<sub>2</sub>. Proximity to the target therefore does not explain the gap. Unlike LBM 1.0, whose pretraining includes data from
       the same simulator, both models were pretrained mostly on real-world data; this domain gap hurts the two priors that rely
