@@ -225,6 +225,13 @@
       margin-bottom: 16px;
     }
     section li { margin-bottom: 8px; }
+    section p a, section li a, .finding a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(26, 107, 92, 0.3);
+      transition: border-color 0.2s;
+    }
+    section p a:hover, section li a:hover { border-bottom-color: var(--accent); }
 
     /* Key finding */
     .finding {
@@ -596,26 +603,27 @@
 <section id="background" class="container">
   <h2>Background</h2>
   <p>
-    <strong>Large Behavior Models.</strong> An LBM is a robot policy pretrained once on a large, diverse corpus of robot,
-    vision, and language data, and then <em>fine-tuned</em> on a modest set of demonstrations for a new task. This contrasts
-    with <em>training from scratch</em>, where a single-task policy is learned from random initialization without pretrained weights.
-    Recent LBMs include <a href="https://arxiv.org/abs/2507.05331">LBM 1.0</a> (a CLIP vision encoder with a diffusion-transformer
-    action head), <a href="https://arxiv.org/abs/2504.16054">π<sub>0.5</sub></a>, and <a href="https://arxiv.org/abs/2503.14734">GR00T N1.5</a>.
+    <strong>Large Behavior Models.</strong> An LBM is a robot policy pretrained once on large, diverse robot, vision, and
+    language data, then <em>fine-tuned</em> on a modest set of demonstrations for a new task. In contrast, <em>training from
+    scratch</em> learns a single-task policy from random initialization. Examples include
+    <a href="https://arxiv.org/abs/2507.05331">LBM 1.0</a>, <a href="https://arxiv.org/abs/2504.16054">π<sub>0.5</sub></a>, and
+    <a href="https://arxiv.org/abs/2503.14734">GR00T N1.5</a>.
   </p>
   <p>
-    <strong>Generative policies and the action prior.</strong> These models generate actions with diffusion or flow-matching heads:
-    a sample a&#8320; is drawn from a prior distribution p&#8320; and transported, conditioned on the observation, to an action chunk
-    a&#8321; (a short sequence of future actions). By default p&#8320; is an isotropic Gaussian 𝒵 ∼ 𝒩(0, I). Flow matching, however,
-    regresses a velocity field between paired samples (a&#8320;, a&#8321;) and makes no distributional assumption on p&#8320;, so any
-    distribution can serve as the prior without changing the training or inference procedure. The Gaussian is a convention,
-    not a requirement.
+    <strong>Generative policies and the action prior.</strong> These models generate an action chunk a&#8321; (a short sequence
+    of future actions) by transporting a sample a&#8320; from a prior distribution p&#8320;, conditioned on the observation. By
+    default p&#8320; is an isotropic Gaussian 𝒵 ∼ 𝒩(0, I). <a href="https://arxiv.org/abs/2210.02747">Flow matching</a>, however, only requires paired samples
+    (a&#8320;, a&#8321;), so any distribution can serve as the prior without changing training or inference: the Gaussian is a
+    convention, not a requirement.
   </p>
   <p>
-    <strong>Why a closer prior might help.</strong> A line of recent work replaces the Gaussian with a prior that is closer to
-    the target actions, for example a learned conditional distribution or demonstration actions, and reports substantial
-    success-rate gains when training from scratch on benchmarks such as LIBERO, MetaWorld, and Adroit: if the prior is already near the target, the policy only needs to traverse a short transport distance. Whether
-    this benefit survives LBM pretraining, where the policy starts from strong pretrained weights, is the question this
-    work addresses.
+    <strong>Why a closer prior might help.</strong> Recent work exploits this flexibility when training from scratch:
+    <a href="https://arxiv.org/abs/2402.16075">BRIDGER</a> (Chen et al., 2024) learns a CVAE action prior, <a href="https://scholar.google.com/scholar?q=%22Conditioning%20Matters%3A%20Training%20Diffusion%20Policies%20is%20Faster%20Than%20You%20Think%22">Cocos</a> (Dong et al., 2026) a
+    condition-dependent Gaussian, <a href="https://scholar.google.com/scholar?q=%22Action-to-Action%20Flow%20Matching%22">action-to-action flow matching</a> (Jia et al., 2026) starts from demonstration
+    actions, and <a href="https://scholar.google.com/scholar?q=%22EfficientFlow%3A%20Efficient%20equivariant%20flow%20policy%20learning%20for%20embodied%20AI%22">EfficientFlow</a> (Chang et al., 2026) adds equivariance guarantees. Replacing the Gaussian with
+    such a closer-to-target prior substantially improves success rates on <a href="https://arxiv.org/abs/2306.03310">LIBERO</a>,
+    <a href="https://arxiv.org/abs/1910.10897">MetaWorld</a>, and <a href="https://arxiv.org/abs/1709.10087">Adroit</a>: if the prior is already near the target, the policy only needs to
+    traverse a short transport distance. Whether this benefit carries over to fine-tuning a pretrained LBM is the question we study.
   </p>
 </section>
 
@@ -625,9 +633,9 @@
 <section id="setup" class="container">
   <h2>Experimental Setup</h2>
   <p>
-    We compare seven action priors: the standard Gaussian, three that we construct directly from the pretrained LBM with no
-    auxiliary training, and three baselines from the literature. Within each experiment, the task, data, architecture,
-    optimizer, and number of fine-tuning steps are held identical across priors; only the prior differs.
+    We compare seven action priors: the standard Gaussian, three constructed directly from the pretrained LBM with no
+    auxiliary training, and three baselines from the literature. Within each experiment, only the prior differs; task, data,
+    architecture, optimizer, and training steps are held fixed.
   </p>
   <p>Seven action priors (hover or tap a name):</p>
   <div class="priors" id="priors">
@@ -673,18 +681,15 @@
   </ul>
   <div class="note">
     <p>
-      <strong>How to read the plots.</strong> For success rates, each violin shows the Bayesian posterior distribution of one
-      prior's success rate; a black tick marks the posterior mean, a colored dot the empirical mean, and the counts above give
-      successes out of rollouts. For continuous metrics (partial task progress, ℓ<sub>2</sub> distances), violins show the
-      empirical distribution. We treat every policy comparison as a formal
-      hypothesis test (the STEP sequential test for success rates, Welch's <em>t</em>-test for continuous metrics) at
-      α = 0.05 with Bonferroni correction, and summarize the outcome with a <em>compact letter display</em> (CLD): priors that share
-      a letter are not statistically separable; priors with no letter in common differ significantly.
+      <strong>How to read the plots.</strong> Success-rate violins show Bayesian posteriors (black tick: posterior mean; dot:
+      empirical mean; counts: successes out of rollouts); violins for continuous metrics show empirical distributions. Each
+      comparison is a hypothesis test (<a href="https://scholar.google.com/scholar?q=%22Is%20Your%20Imitation%20Learning%20Policy%20Better%20than%20Mine%3F%20Policy%20Comparison%20with%20Near-Optimal%20Stopping%22">STEP</a> for success rates, Welch's <em>t</em>-test otherwise) at α = 0.05 with Bonferroni
+      correction, summarized as a <em>compact letter display</em> (CLD): priors that share a letter are not statistically
+      separable.
     </p>
     <p style="margin-top: 10px;">
-      <strong>Video speed.</strong> Prior-sample clips (at most 20 s long) play in real time. Fine-tuned policy rollouts, which
-      last from about 20 s in simulation to several minutes on hardware, are time-compressed to roughly 10 to 12 s; the factor
-      is stated in each caption.
+      <strong>Video speed.</strong> Prior-sample clips (at most 20 s) play in real time; fine-tuned policy rollouts are
+      time-compressed to roughly 10 to 12 s, with the factor given in each caption.
     </p>
   </div>
 </section>
@@ -698,16 +703,13 @@
   <div>
     <h3>(1) Controlled test: a closer-to-target prior helps from scratch, but not after fine-tuning <span style="font-size: 0.85em;">(<a href="#q1" class="q-link">Q1</a>)</span></h3>
     <p>
-      A pretrained LBM has never seen the fine-tuning task, so its zero-shot actions may be out of distribution and form a weak
-      prior; a null result would then be hard to tell apart from a poor-quality prior. To control the quality of the prior, we
-      first fine-tune LBM 1.0 with the Gaussian prior on 50% of the demonstrations,
-      producing a task-aware checkpoint whose actions are measurably closer to the target than Gaussian samples. We then fine-tune
-      again from this checkpoint, varying only the prior. For the from-scratch comparison, the same LBM 1.0 architecture is
-      trained from random initialization. From scratch, A<sub>pre</sub> significantly outperforms the Gaussian (roughly 28% vs.
-      18% success), consistent with prior work. After fine-tuning, this advantage disappears: A<sub>pre</sub> becomes the
-      lowest-performing prior, and in the seven-way comparison with Bonferroni correction no prior is statistically separable
-      from the Gaussian. (In the pairwise comparison shown in the Key Finding figure, the Gaussian significantly outperforms
-      A<sub>pre</sub>.)
+      A pretrained LBM has never seen the fine-tuning task, so its zero-shot actions may form a weak prior, and a null result
+      could simply reflect that. We therefore first fine-tune LBM 1.0 with the Gaussian on 50% of the demonstrations, yielding a
+      task-aware checkpoint whose actions are measurably closer to the target, and then fine-tune again from it, varying only the
+      prior. The from-scratch baseline trains the same architecture from random initialization. From scratch, A<sub>pre</sub>
+      significantly outperforms the Gaussian (roughly 28% vs. 18%). After fine-tuning, A<sub>pre</sub> becomes the lowest-performing
+      prior, and no prior is statistically separable from the Gaussian in the seven-way comparison. (The pairwise test in the Key
+      Finding figure separates the two in the Gaussian's favor.)
     </p>
   </div>
   <div class="figure">
@@ -722,10 +724,10 @@
   <div>
     <h3>(2) Full-scale fine-tuning in simulation: priors are statistically tied at every data fraction above 5% <span style="font-size: 0.85em;">(<a href="#q1" class="q-link">Q1</a>, <a href="#q2" class="q-link">Q2</a>)</span></h3>
     <p>
-      We fine-tune LBM 1.0 on eight LBM Eval tasks unseen during pretraining, using 5%, 25%, 50%, 75%, and 100% of the
-      available demonstrations. From 25% upward, all seven priors share CLD group "a". The one exception is the 5% fraction
-      (approximately 10 to 20 demonstrations per task), where E<sub>pre</sub>+σ<sub>E</sub>𝒵 significantly outperforms the Gaussian
-      (25.9% vs. 18.9%). At such a low data fraction, the embedding-space perturbation appears to act as an informative inductive bias that the Gaussian cannot provide.
+      We fine-tune LBM 1.0 on eight LBM Eval tasks unseen during pretraining, using 5% to 100% of the available demonstrations.
+      From 25% upward, all seven priors share CLD group "a". The one exception is 5% (approximately 10 to 20 demonstrations per
+      task), where E<sub>pre</sub>+σ<sub>E</sub>𝒵 significantly outperforms the Gaussian (25.9% vs. 18.9%); at such low data, the
+      embedding-space perturbation appears to act as an informative inductive bias.
     </p>
   </div>
   <div class="figure">
@@ -735,9 +737,9 @@
 
   <div>
     <p>
-      Qualitatively, the fine-tuned policies behave similarly. Below, the seven policies fine-tuned on 100% of the
-      DumpVegetablesIntoContainer demonstrations are rolled out from an identical initial condition. Successful rollouts are
-      nearly indistinguishable across priors; failed rollouts exhibit prior-specific failure modes.
+      Qualitatively, the seven policies fine-tuned on 100% of the DumpVegetablesIntoContainer demonstrations behave alike when
+      rolled out from an identical initial condition: successes are nearly indistinguishable, while failures show prior-specific
+      failure modes.
     </p>
   </div>
   <div class="video-pair">
@@ -754,17 +756,15 @@
   <div>
     <h3>(3) Bimanual hardware: the finding holds on real robots <span style="font-size: 0.85em;">(<a href="#q3" class="q-link">Q3</a>)</span></h3>
     <p>
-      We fine-tune LBM 1.0 on five bimanual tasks on two Franka FR3 arms (FoodBank, ClearKitchenCounter,
-      GatheringIngredientsForCookies, BusBin, and BikeRotorInstall) and evaluate five priors: 𝒵,
-      E<sub>pre</sub>+σ<sub>E</sub>𝒵, Cocos, BRIDGER, and Retrieval. A<sub>pre</sub> and A<sub>pre</sub>+σ<sub>A</sub>𝒵 were dropped after a
-      small hardware pilot in which the three action-space priors were statistically tied and E<sub>pre</sub>+σ<sub>E</sub>𝒵 was
-      carried forward as the representative learned prior. Evaluation uses blind A/B testing:
-      for each initial condition, all priors are run in randomized order, so the human operator does not know which prior is
-      being tested. Each rollout receives a binary success label and a <em>partial task progress</em> score, the fraction of
-      ordered task milestones achieved (for example, rotor picked up, rotor seated, lockring tightened). With 50 rollouts per
-      prior per task, 1250 in total, four of the five priors fall in the same CLD group on both metrics, with partial task
-      progress of 71% to 77%. BRIDGER is the sole outlier (about 56%), consistent with the instability we observed in its
-      CVAE training.
+      We fine-tune LBM 1.0 on five bimanual tasks with two Franka FR3 arms (FoodBank, ClearKitchenCounter,
+      GatheringIngredientsForCookies, BusBin, BikeRotorInstall) and compare five priors: 𝒵, E<sub>pre</sub>+σ<sub>E</sub>𝒵, Cocos,
+      BRIDGER, and Retrieval. (A small hardware pilot found the three action-space priors statistically tied, so
+      E<sub>pre</sub>+σ<sub>E</sub>𝒵 represents them.) In blind A/B testing, following <a href="https://scholar.google.com/scholar?q=%22Robot%20Learning%20as%20an%20Empirical%20Science%3A%20Best%20Practices%20for%20Policy%20Evaluation%22">best practices for policy evaluation</a>, all priors are run in randomized order at each initial
+      condition, so the operator does not know which is being tested. Each rollout is scored for binary success and for
+      <em>partial task progress</em>, the fraction of ordered task milestones achieved (e.g., rotor picked up, rotor seated,
+      lockring tightened). Over 50 rollouts per prior per task (1250 total), four of the five priors share a CLD group on both
+      metrics, with partial progress of 71% to 77%. BRIDGER is the sole outlier (about 56%), consistent with its unstable CVAE
+      training.
     </p>
   </div>
   <div class="figure">
@@ -774,9 +774,8 @@
 
   <div>
     <p>
-      All hardware rollouts for two of the five tasks, each followed by a zoom-in on a single initial condition. In the
-      full grids, each row is one prior and each tile one rollout (50 per prior), individually time-compressed to 10 s and tagged
-      S (success, green) or F (failure, red).
+      All rollouts for two of the five tasks, each followed by a zoom-in on one initial condition. In each grid, a row is one
+      prior and a tile is one rollout, individually time-compressed to 10 s and tagged S (success, green) or F (failure, red).
     </p>
   </div>
   <div class="video-pair wall">
@@ -787,11 +786,9 @@
   </div>
   <div>
     <p>
-      On BikeRotorInstall, success rates are low (BRIDGER succeeds in none of its 50 rollouts), so no initial condition exists on
-      which all five policies succeed. The row below shows an initial condition on which all five fail while still making
-      comparable partial progress: every policy picks up the rotor and seats it on the hub, then diverges. Gaussian 𝒵 and
-      Retrieval skip the lockring and reach for the tool; E<sub>pre</sub>+σ<sub>E</sub>𝒵, Cocos, and BRIDGER place the lockring and
-      pick up the tool but drop it between the spokes.
+      BRIDGER never succeeds on BikeRotorInstall, so no initial condition has all five policies succeeding. Below is one where
+      all five fail after comparable progress: each seats the rotor on the hub, then 𝒵 and Retrieval skip the lockring and reach
+      for the tool, while E<sub>pre</sub>+σ<sub>E</sub>𝒵, Cocos, and BRIDGER place the lockring but drop the tool between the spokes.
     </p>
   </div>
   <div class="video-pair">
@@ -808,8 +805,8 @@
   </div>
   <div>
     <p>
-      On FoodBank, the same pattern as in simulation appears: at one initial condition all five fine-tuned policies
-      succeed with similar motions; at another, all five fail, each with a different failure mode.
+      On FoodBank, the simulation pattern recurs: at one initial condition all five policies succeed with similar motions; at
+      another, all five fail in different ways.
     </p>
   </div>
   <div class="video-pair">
@@ -827,15 +824,13 @@
     <h3>(4) Other LBM architectures: the finding holds on π<sub>0.5</sub> and GR00T N1.5 <span style="font-size: 0.85em;">(<a href="#q3" class="q-link">Q3</a>)</span></h3>
     <p>
       We repeat the comparison on the <a href="https://scholar.google.com/scholar?q=%22RoboCasa365%3A%20A%20Large-Scale%20Simulation%20Framework%20for%20Training%20and%20Benchmarking%20Generalist%20Robots%22">RoboCasa365</a>
-      benchmark with two additional LBMs, π<sub>0.5</sub> and GR00T N1.5, each fine-tuned on 18 atomic (single-step) and
-      16 composite (multi-step) tasks. Both models fuse vision and action tokens across many transformer layers and expose no
-      single bottleneck embedding, so the embedding-space priors (E<sub>pre</sub>+σ<sub>E</sub>𝒵, Cocos, BRIDGER) cannot be ported;
-      we compare the remaining four. On both architectures, the Gaussian and A<sub>pre</sub>+σ<sub>A</sub>𝒵 tie in the top CLD
-      group, while A<sub>pre</sub> and Retrieval are significantly worse, even though A<sub>pre</sub> remains roughly 3× closer to
-      the target in ℓ<sub>2</sub>. Geometric proximity to the target is therefore not what drives the gap. Unlike LBM 1.0, whose
-      pretraining includes data from the same simulator, π<sub>0.5</sub> and GR00T N1.5 were pretrained predominantly on real-world
-      data; this domain gap specifically hurts the two priors that rely solely on a frozen copy of the pretrained model, and we
-      hypothesize that the priors regularized by random noise are less affected.
+      benchmark with π<sub>0.5</sub> and GR00T N1.5, each fine-tuned on 18 atomic (single-step) and 16 composite (multi-step) tasks.
+      Neither model exposes a single bottleneck embedding, so the embedding-space priors (E<sub>pre</sub>+σ<sub>E</sub>𝒵, Cocos,
+      BRIDGER) cannot be ported; we compare the other four. On both models, 𝒵 and A<sub>pre</sub>+σ<sub>A</sub>𝒵 tie at the top, while
+      A<sub>pre</sub> and Retrieval are significantly worse, although A<sub>pre</sub> remains roughly 3× closer to the target in
+      ℓ<sub>2</sub>. Proximity to the target therefore does not explain the gap. Unlike LBM 1.0, whose pretraining includes data from
+      the same simulator, both models were pretrained mostly on real-world data; this domain gap hurts the two priors that rely
+      solely on a frozen copy of the pretrained model, while we hypothesize that the noise-regularized priors are less affected.
     </p>
   </div>
   <div class="figure">
@@ -852,20 +847,18 @@
 
   <div class="insight">
     <p>
-      <strong>In short:</strong> different action priors lead to different fine-tuned encoder representations, but these
-      representations are equally predictive of the target actions. Once the encoder is sufficiently well pretrained, it
-      governs policy performance; the choice of action prior does not. Analyses (1) and (2) use the full-scale simulation
-      setting (2) with four representative priors: 𝒵, A<sub>pre</sub>, A<sub>pre</sub>+σ<sub>A</sub>𝒵, and E<sub>pre</sub>+σ<sub>E</sub>𝒵.
-      Analysis (3) is a separate ablation in simulation and on hardware.
+      <strong>In short:</strong> different action priors lead to different fine-tuned encoder representations, but these are
+      equally predictive of the target actions. Once the encoder is sufficiently well pretrained, it governs policy performance;
+      the action prior does not. Analyses (1) and (2) use setting (2) with four priors (𝒵, A<sub>pre</sub>,
+      A<sub>pre</sub>+σ<sub>A</sub>𝒵, E<sub>pre</sub>+σ<sub>E</sub>𝒵); (3) is a separate ablation.
     </p>
   </div>
 
   <h3>(1) Fine-tuned encoders are equally predictive of the target actions</h3>
   <p>
-    LogME estimates, without any additional training, how well an encoder's features predict the target actions: it is the log
-    marginal evidence of a Bayesian linear regression from the fine-tuned encoder's embeddings to the ground-truth actions.
-    LogME scores are statistically inseparable across priors at every data fraction: the prior used during fine-tuning leaves
-    no detectable effect on the quality of the fine-tuned encoder's features.
+    <a href="https://arxiv.org/abs/2102.11005">LogME</a> is a training-free measure of feature quality: the log marginal evidence of a Bayesian linear regression from
+    the fine-tuned encoder's embeddings to the ground-truth actions. Scores are statistically inseparable across priors at every
+    data fraction, so the prior leaves no detectable effect on the quality of the encoder's features.
   </p>
   <div class="figure">
     <img src="Assets/logme_avg_8.png" alt="LogME feature quality across priors" />
@@ -877,12 +870,10 @@
 
   <h3>(2) Encoder representations diverge, action predictions do not</h3>
   <p>
-    We measure how far fine-tuning moves the model from its pretrained starting point, as the per-observation ℓ<sub>2</sub>
-    distance between pre- and post-fine-tuning outputs. In action space, the change is comparable across priors. In the
-    observation embedding space, however, the priors diverge sharply: the Gaussian moves the encoder least from its pretrained
-    state, while A<sub>pre</sub> induces roughly 2 to 2.5× the change. One plausible explanation is that the Gaussian was also
-    the pretraining prior, so fine-tuning with 𝒵 shifts only the target distribution, whereas A<sub>pre</sub> shifts both the prior
-    and the target relative to the pretrained policy, forcing the encoder to compensate more.
+    We measure how far fine-tuning moves each model from the pretrained one (per-observation ℓ<sub>2</sub> distance). Action
+    predictions change by a comparable amount across priors, but encoder embeddings diverge sharply: the Gaussian moves the
+    encoder least, A<sub>pre</sub> roughly 2 to 2.5× more. One plausible reason: the Gaussian was also the pretraining prior, so
+    fine-tuning with 𝒵 shifts only the target, whereas A<sub>pre</sub> shifts both prior and target, and the encoder compensates.
   </p>
   <div class="figure">
     <img src="Assets/fig8_representation_change.png" alt="Representation change across priors" />
@@ -894,12 +885,10 @@
 
   <h3>(3) Encoder training matters more than prior choice</h3>
   <p>
-    If the encoder dominates and the prior is secondary, degrading the encoder should hurt far more than changing the prior.
-    We reduce the observation encoder's learning rate to 1/10 of the action head's, with all else fixed. In simulation (eight
-    tasks, 100% data, priors 𝒵, E<sub>pre</sub>+σ<sub>E</sub>𝒵, and Cocos), success rates drop from 56–59% to 41–43%, a decrease of
-    15 to 17 percentage points for every prior, while the choice of prior makes no measurable difference within each
-    learning-rate regime. On hardware (five tasks, Gaussian prior), success rate drops from 37% to 28%. No change of prior in
-    this study produces an effect of comparable magnitude.
+    If the encoder dominates, degrading it should hurt far more than changing the prior. We cut the encoder's learning rate
+    to 1/10 of the action head's. In simulation (eight tasks, 100% data; 𝒵, E<sub>pre</sub>+σ<sub>E</sub>𝒵, Cocos), success drops
+    from 56–59% to 41–43% for every prior, with no measurable prior effect within either learning rate. On hardware (five tasks,
+    Gaussian prior), success drops from 37% to 28%. No change of prior in this study has an effect of comparable magnitude.
   </p>
   <div class="figure">
     <img src="Assets/setting_B_DP_1_10_lr_FT_avg.png" alt="Encoder learning-rate ablation, simulation" />
@@ -918,15 +907,13 @@
   <h2>Discussion</h2>
   <p>
     <strong>Implications for practitioners.</strong> The standard Gaussian prior is sufficient for fine-tuning LBMs with a
-    flow-matching action head; implementing learned priors adds engineering complexity with no measurable benefit. The key
-    factor appears to be the quality of the pretrained representations rather than where the flow starts. In the from-scratch
-    regime without pretrained models, learned priors may still be valuable, consistent with both our results and prior work.
+    flow-matching action head; learned priors add engineering complexity with no measurable benefit. What matters is the quality
+    of the pretrained representations. Without pretraining, learned priors may still be valuable.
   </p>
   <p>
-    <strong>Limitations.</strong> Our findings are established on three LBMs and on fine-tuning datasets of roughly 10 to 400
-    demonstrations per task. Much larger or smaller models, other pretraining distributions, or substantially larger fine-tuning
-    datasets might behave differently, and our explanation that the pretrained encoder dominates the prior remains a hypothesis
-    at other scales.
+    <strong>Limitations.</strong> Our findings cover three LBMs and roughly 10 to 400 fine-tuning demonstrations per task.
+    Much larger or smaller models, other pretraining data, or much larger fine-tuning sets might behave differently, and the
+    encoder-dominance explanation remains a hypothesis at other scales.
   </p>
   <p><strong>Open questions.</strong></p>
   <ul>
