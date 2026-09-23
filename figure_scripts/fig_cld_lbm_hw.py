@@ -585,7 +585,7 @@ def plot_stacked_violins(
     ax_bot.set_xlim(-0.5, num - 1 + vw / 2 + 0.55)
     ax_bot.set_ylim(-0.05, 1.05)
     ax_bot.set_ylabel("Partial Task Progress", fontsize=14)
-    ax_bot.set_title("Partial Task Progress (↑)", fontsize=14)
+    pass  # website copy: no panel title (left panel has none either)
 
     fig.tight_layout()
 

@@ -682,9 +682,8 @@
       <ul>
         <li><a class="toc-sub" href="#ov-prior">What is the action prior?</a></li>
         <li><a class="toc-sub" href="#key-finding">Key finding</a></li>
+        <li><a class="toc-sub" href="#bg-closer">Why a closer prior might help</a></li>
       </ul>
-    </li>
-    <li><a class="toc-sec" href="#background">Background</a>
     </li>
     <li><a class="toc-sec" href="#setup">Setup</a>
       <ul>
@@ -796,9 +795,8 @@
   </div>
 </div>
 
-<!-- Background -->
-<section id="background" class="container">
-  <h2>Background</h2>
+<!-- Overview (3): why a closer prior might help -->
+<section class="container" style="padding-bottom: 28px;">
   <p id="bg-closer">
     <strong>Why a closer prior might help.</strong> <a href="https://arxiv.org/abs/2210.02747">Flow matching</a> only requires
     paired samples from the prior and the target, so any distribution can serve as the prior without changing training or
@@ -967,10 +965,10 @@
   </div>
   <div class="hw-tabs" role="tablist" aria-label="Hardware tasks">
     <button class="prior-tab hw-tab" type="button" data-task="FoodBank" role="tab">FoodBank</button>
+    <button class="prior-tab hw-tab" type="button" data-task="Bike" role="tab">BikeRotorInstall</button>
     <button class="prior-tab hw-tab" type="button" data-task="Kitchen" role="tab">ClearKitchenCounter</button>
     <button class="prior-tab hw-tab" type="button" data-task="Cookies" role="tab">GatheringIngredientsForCookies</button>
     <button class="prior-tab hw-tab" type="button" data-task="BusBin" role="tab">BusBin</button>
-    <button class="prior-tab hw-tab" type="button" data-task="Bike" role="tab">BikeRotorInstall</button>
   </div>
   <div class="hw-panel" data-task="FoodBank" hidden>
   <div class="video-pair wall">
@@ -1002,6 +1000,34 @@
     </figure>
   </div>
   </div>
+  <div class="hw-panel" data-task="Bike" hidden>
+  <div class="video-pair wall">
+    <figure>
+      <video src="Assets/hw_wall_Bike.mp4" poster="Assets/hw_wall_Bike_poster.jpg" muted loop playsinline controls preload="none" aria-label="All 250 hardware rollouts on BikeRotorInstall"></video>
+      <figcaption><strong>BikeRotorInstall</strong>: 5 priors × 50 rollouts. Success rates: 𝒵 18%, E<sub>pre</sub>+σ<sub>E</sub>𝒵 28%, Cocos 22%, BRIDGER 0%, Retrieval 14%. Use fullscreen to inspect individual tiles.</figcaption>
+    </figure>
+  </div>
+  <div class="video-pair">
+    <figure>
+      <video src="Assets/hw_row_Bike_random.mp4" poster="Assets/hw_row_Bike_random_poster.jpg" muted loop playsinline controls preload="none" aria-label="Randomly selected initial condition on BikeRotorInstall"></video>
+      <figcaption><strong>BikeRotorInstall, randomly selected initial condition</strong> (IC 8): 𝒵 fails, E<sub>pre</sub>+σ<sub>E</sub>𝒵 fails, Cocos succeeds, BRIDGER fails, Retrieval fails. Each clip time-normalized to 12 s.</figcaption>
+    </figure>
+  </div>
+  <div>
+    <p>
+      BRIDGER never succeeds on BikeRotorInstall, so no initial condition has all five policies succeeding. Below is one where
+      all five fail after comparable progress: each seats the rotor on the hub, then 𝒵 and Retrieval skip the lockring and reach
+      for the tool, while E<sub>pre</sub>+σ<sub>E</sub>𝒵, Cocos, and BRIDGER place the lockring but drop the tool between the spokes.
+    </p>
+  </div>
+  <div class="video-pair">
+    <figure>
+      <video src="Assets/hw_row_Bike_failure.mp4" poster="Assets/hw_row_Bike_failure_poster.jpg" muted loop playsinline controls preload="none" aria-label="Five fine-tuned policies failing from the same initial condition on the bike-rotor task"></video>
+      <figcaption><strong>BikeRotorInstall, hand-selected initial condition; all five policies fail</strong> after seating the rotor, with distinct failure modes. Each clip time-normalized to 12 s.</figcaption>
+    </figure>
+  </div>
+  </div>
+
   <div class="hw-panel" data-task="Kitchen" hidden>
   <div class="video-pair wall">
     <figure>
@@ -1044,34 +1070,6 @@
     </figure>
   </div>
   </div>
-  <div class="hw-panel" data-task="Bike" hidden>
-  <div class="video-pair wall">
-    <figure>
-      <video src="Assets/hw_wall_Bike.mp4" poster="Assets/hw_wall_Bike_poster.jpg" muted loop playsinline controls preload="none" aria-label="All 250 hardware rollouts on BikeRotorInstall"></video>
-      <figcaption><strong>BikeRotorInstall</strong>: 5 priors × 50 rollouts. Success rates: 𝒵 18%, E<sub>pre</sub>+σ<sub>E</sub>𝒵 28%, Cocos 22%, BRIDGER 0%, Retrieval 14%. Use fullscreen to inspect individual tiles.</figcaption>
-    </figure>
-  </div>
-  <div class="video-pair">
-    <figure>
-      <video src="Assets/hw_row_Bike_random.mp4" poster="Assets/hw_row_Bike_random_poster.jpg" muted loop playsinline controls preload="none" aria-label="Randomly selected initial condition on BikeRotorInstall"></video>
-      <figcaption><strong>BikeRotorInstall, randomly selected initial condition</strong> (IC 8): 𝒵 fails, E<sub>pre</sub>+σ<sub>E</sub>𝒵 fails, Cocos succeeds, BRIDGER fails, Retrieval fails. Each clip time-normalized to 12 s.</figcaption>
-    </figure>
-  </div>
-  <div>
-    <p>
-      BRIDGER never succeeds on BikeRotorInstall, so no initial condition has all five policies succeeding. Below is one where
-      all five fail after comparable progress: each seats the rotor on the hub, then 𝒵 and Retrieval skip the lockring and reach
-      for the tool, while E<sub>pre</sub>+σ<sub>E</sub>𝒵, Cocos, and BRIDGER place the lockring but drop the tool between the spokes.
-    </p>
-  </div>
-  <div class="video-pair">
-    <figure>
-      <video src="Assets/hw_row_Bike_failure.mp4" poster="Assets/hw_row_Bike_failure_poster.jpg" muted loop playsinline controls preload="none" aria-label="Five fine-tuned policies failing from the same initial condition on the bike-rotor task"></video>
-      <figcaption><strong>BikeRotorInstall, hand-selected initial condition; all five policies fail</strong> after seating the rotor, with distinct failure modes. Each clip time-normalized to 12 s.</figcaption>
-    </figure>
-  </div>
-  </div>
-
   <div>
     <h3 id="res-4">(4) Other LBM architectures: the finding holds on π<sub>0.5</sub> and GR00T N1.5 <span>(<a href="#q3" class="q-link">Q3</a>)</span></h3>
     <p>
