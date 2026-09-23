@@ -55,19 +55,66 @@
       background: rgba(250, 250, 248, 0.92);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
-      padding: 14px 0;
-      text-align: center;
     }
-    nav a {
+    .nav-menu {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 0;
+      padding: 0;
+    }
+    .nav-item { position: relative; }
+    .nav-top {
+      display: block;
+      padding: 14px 16px;
       color: var(--text-muted);
       text-decoration: none;
       font-size: 14px;
       font-weight: 500;
       letter-spacing: 0.02em;
-      margin: 0 16px;
       transition: color 0.2s;
     }
-    nav a:hover { color: var(--accent); }
+    .nav-item:hover .nav-top, .nav-item:focus-within .nav-top { color: var(--accent); }
+    .nav-drop {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translate(-50%, 4px);
+      min-width: 220px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      padding: 6px 0;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.15s, transform 0.15s, visibility 0.15s;
+      text-align: left;
+    }
+    .nav-item.has-drop:hover .nav-drop,
+    .nav-item.has-drop:focus-within .nav-drop {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%, 0);
+    }
+    .nav-drop a {
+      display: block;
+      padding: 7px 16px;
+      font-size: 14px;
+      color: var(--text-muted);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .nav-drop a:hover, .nav-drop a:focus-visible {
+      background: var(--accent-light);
+      color: var(--accent);
+      outline: none;
+    }
+    @media (hover: none) and (pointer: coarse) { .nav-drop { display: none; } }
+
+    /* Jump targets clear the sticky nav */
+    [id] { scroll-margin-top: 72px; }
 
     /* Layout */
     .container {
@@ -486,7 +533,7 @@
 
     @media (max-width: 720px) {
       .hero { padding: 44px 0 26px; }
-      nav a { margin: 0 9px; font-size: 12px; }
+      .nav-top { padding: 12px 9px; }
       .finding .statement { font-size: 18px; }
       section { padding: 30px 0; }
       .teaser1 { flex-direction: column; --fig1-h: 220px; }
@@ -498,14 +545,64 @@
 <body>
 
 <nav>
-  <a href="#overview">Overview</a>
-  <a href="#abstract">Abstract</a>
-  <a href="#background">Background</a>
-  <a href="#setup">Setup</a>
-  <a href="#results">Results</a>
-  <a href="#analysis">Analysis</a>
-  <a href="#discussion">Discussion</a>
-  <a href="#bibtex">BibTeX</a>
+  <ul class="nav-menu">
+    <li class="nav-item has-drop">
+      <a class="nav-top" href="#overview">Overview</a>
+      <div class="nav-drop">
+        <a href="#ov-prior">What is the action prior?</a>
+        <a href="#key-finding">Key finding</a>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-top" href="#abstract">Abstract</a>
+    </li>
+    <li class="nav-item has-drop">
+      <a class="nav-top" href="#background">Background</a>
+      <div class="nav-drop">
+        <a href="#bg-lbm">Large Behavior Models</a>
+        <a href="#bg-prior">Generative policies and the action prior</a>
+        <a href="#bg-closer">Why a closer prior might help</a>
+      </div>
+    </li>
+    <li class="nav-item has-drop">
+      <a class="nav-top" href="#setup">Setup</a>
+      <div class="nav-drop">
+        <a href="#priors">Seven action priors</a>
+        <a href="#setup-questions">Research questions</a>
+        <a href="#setup-settings">Experimental settings</a>
+        <a href="#setup-reading">How to read the plots</a>
+      </div>
+    </li>
+    <li class="nav-item has-drop">
+      <a class="nav-top" href="#results">Results</a>
+      <div class="nav-drop">
+        <a href="#res-1">(1) Controlled test</a>
+        <a href="#res-2">(2) Full-scale fine-tuning in simulation</a>
+        <a href="#res-3">(3) Bimanual hardware</a>
+        <a href="#res-4">(4) Other LBM architectures</a>
+      </div>
+    </li>
+    <li class="nav-item has-drop">
+      <a class="nav-top" href="#analysis">Analysis</a>
+      <div class="nav-drop">
+        <a href="#ana-summary">Summary</a>
+        <a href="#ana-1">(1) Encoder feature quality</a>
+        <a href="#ana-2">(2) Encoder vs. action change</a>
+        <a href="#ana-3">(3) Encoder learning-rate ablation</a>
+      </div>
+    </li>
+    <li class="nav-item has-drop">
+      <a class="nav-top" href="#discussion">Discussion</a>
+      <div class="nav-drop">
+        <a href="#disc-implications">Implications for practitioners</a>
+        <a href="#disc-limitations">Limitations</a>
+        <a href="#disc-open">Open questions</a>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-top" href="#bibtex">BibTeX</a>
+    </li>
+  </ul>
 </nav>
 
 <!-- Hero -->
@@ -548,7 +645,7 @@
       </div>
     </div>
   </div>
-  <p class="overview-caption">
+  <p class="overview-caption" id="ov-prior">
     <strong>What is the action prior?</strong>
     <strong>Left:</strong> a flow-matching policy generates an action by transporting a random sample a&#8320;, drawn from a prior
     distribution p&#8320; over action chunks, to the target action. The action head is conditioned on the observation embedding e
@@ -561,7 +658,7 @@
 </section>
 
 <!-- Key Finding -->
-<div class="finding">
+<div class="finding" id="key-finding">
   <div class="label">Key Finding</div>
   <p class="statement">
     Non-Gaussian action priors that are measurably closer to the target action distribution help when training an imitation
@@ -614,21 +711,21 @@
 <!-- Background -->
 <section id="background" class="container">
   <h2>Background</h2>
-  <p>
+  <p id="bg-lbm">
     <strong>Large Behavior Models.</strong> An LBM is a robot policy pretrained once on large, diverse robot, vision, and
     language data, then <em>fine-tuned</em> on a modest set of demonstrations for a new task. In contrast, <em>training from
     scratch</em> learns a single-task policy from random initialization. Examples include
     <a href="https://arxiv.org/abs/2507.05331">LBM 1.0</a>, <a href="https://arxiv.org/abs/2504.16054">π<sub>0.5</sub></a>, and
     <a href="https://arxiv.org/abs/2503.14734">GR00T N1.5</a>.
   </p>
-  <p>
+  <p id="bg-prior">
     <strong>Generative policies and the action prior.</strong> These models generate an action chunk a&#8321; (a short sequence
     of future actions) by transporting a sample a&#8320; from a prior distribution p&#8320;, conditioned on the observation. By
     default p&#8320; is an isotropic Gaussian 𝒵 ∼ 𝒩(0, I). <a href="https://arxiv.org/abs/2210.02747">Flow matching</a>, however, only requires paired samples
     (a&#8320;, a&#8321;), so any distribution can serve as the prior without changing training or inference: the Gaussian is a
     convention, not a requirement.
   </p>
-  <p>
+  <p id="bg-closer">
     <strong>Why a closer prior might help.</strong> Recent work exploits this flexibility when training from scratch:
     <a href="https://arxiv.org/abs/2402.16075">BRIDGER</a> (Chen et al., 2024) learns a CVAE action prior, <a href="https://scholar.google.com/scholar?q=%22Conditioning%20Matters%3A%20Training%20Diffusion%20Policies%20is%20Faster%20Than%20You%20Think%22">Cocos</a> (Dong et al., 2026) a
     condition-dependent Gaussian, <a href="https://scholar.google.com/scholar?q=%22Action-to-Action%20Flow%20Matching%22">action-to-action flow matching</a> (Jia et al., 2026) starts from demonstration
@@ -678,20 +775,20 @@
       <video id="prior-video" muted loop playsinline controls preload="metadata"></video>
     </div>
   </div>
-  <p>Our study is guided by three research questions:</p>
+  <p id="setup-questions">Our study is guided by three research questions:</p>
   <ul>
     <li id="q1"><strong>Q1.</strong> Do non-Gaussian priors that are measurably <em>closer to the target</em> improve policy fine-tuning performance?</li>
     <li id="q2"><strong>Q2.</strong> Do informed priors have an advantage across data fractions, particularly in the <em>low-data regime</em>, where the added inductive bias may be most beneficial?</li>
     <li id="q3"><strong>Q3.</strong> Is the effect of prior choice <em>consistent</em> across model architectures, and across simulation and hardware?</li>
   </ul>
-  <p>Four experimental settings address these questions:</p>
+  <p id="setup-settings">Four experimental settings address these questions:</p>
   <ul>
     <li><strong>(1) Controlled test</strong> <span style="color: var(--accent); font-weight: 600;">(Q1)</span>: a prior constructed to be measurably close to the target, using LBM 1.0 on five <a href="https://arxiv.org/abs/2507.05331">LBM Eval</a> tasks in simulation (14,000 rollouts).</li>
     <li><strong>(2) Full-scale fine-tuning in simulation</strong> <span style="color: var(--accent); font-weight: 600;">(Q1, Q2)</span>: LBM 1.0 on eight LBM Eval tasks unseen during pretraining, at five fine-tuning data fractions (56,000 rollouts).</li>
     <li><strong>(3) Bimanual hardware</strong> <span style="color: var(--accent); font-weight: 600;">(Q3)</span>: blind A/B testing on five bimanual tasks with two Franka FR3 arms (1250 rollouts).</li>
     <li><strong>(4) Other LBM architectures</strong> <span style="color: var(--accent); font-weight: 600;">(Q3)</span>: π<sub>0.5</sub> and GR00T N1.5 on 34 <a href="https://scholar.google.com/scholar?q=%22RoboCasa365%3A%20A%20Large-Scale%20Simulation%20Framework%20for%20Training%20and%20Benchmarking%20Generalist%20Robots%22">RoboCasa365</a> tasks (54,400 rollouts).</li>
   </ul>
-  <div class="note">
+  <div class="note" id="setup-reading">
     <p>
       <strong>How to read the plots.</strong> Success-rate violins show Bayesian posteriors (black tick: posterior mean; dot:
       empirical mean; counts: successes out of rollouts); violins for continuous metrics show empirical distributions. Each
@@ -713,7 +810,7 @@
   <h2>Results</h2>
 
   <div>
-    <h3>(1) Controlled test: a closer-to-target prior helps from scratch, but not after fine-tuning <span>(<a href="#q1" class="q-link">Q1</a>)</span></h3>
+    <h3 id="res-1">(1) Controlled test: a closer-to-target prior helps from scratch, but not after fine-tuning <span>(<a href="#q1" class="q-link">Q1</a>)</span></h3>
     <p>
       A pretrained LBM has never seen the fine-tuning task, so its zero-shot actions may form a weak prior, and a null result
       could simply reflect that. We therefore first fine-tune LBM 1.0 with the Gaussian on 50% of the demonstrations, yielding a
@@ -734,7 +831,7 @@
   </div>
 
   <div>
-    <h3>(2) Full-scale fine-tuning in simulation: priors are statistically tied at every data fraction above 5% <span>(<a href="#q1" class="q-link">Q1</a>, <a href="#q2" class="q-link">Q2</a>)</span></h3>
+    <h3 id="res-2">(2) Full-scale fine-tuning in simulation: priors are statistically tied at every data fraction above 5% <span>(<a href="#q1" class="q-link">Q1</a>, <a href="#q2" class="q-link">Q2</a>)</span></h3>
     <p>
       We fine-tune LBM 1.0 on eight LBM Eval tasks unseen during pretraining, using 5% to 100% of the available demonstrations.
       From 25% upward, all seven priors share CLD group "a". The one exception is 5% (approximately 10 to 20 demonstrations per
@@ -766,7 +863,7 @@
   </div>
 
   <div>
-    <h3>(3) Bimanual hardware: the finding holds on real robots <span>(<a href="#q3" class="q-link">Q3</a>)</span></h3>
+    <h3 id="res-3">(3) Bimanual hardware: the finding holds on real robots <span>(<a href="#q3" class="q-link">Q3</a>)</span></h3>
     <p>
       We fine-tune LBM 1.0 on five bimanual tasks with two Franka FR3 arms (FoodBank, ClearKitchenCounter,
       GatheringIngredientsForCookies, BusBin, BikeRotorInstall) and compare five priors: 𝒵, E<sub>pre</sub>+σ<sub>E</sub>𝒵, Cocos,
@@ -833,7 +930,7 @@
   </div>
 
   <div>
-    <h3>(4) Other LBM architectures: the finding holds on π<sub>0.5</sub> and GR00T N1.5 <span>(<a href="#q3" class="q-link">Q3</a>)</span></h3>
+    <h3 id="res-4">(4) Other LBM architectures: the finding holds on π<sub>0.5</sub> and GR00T N1.5 <span>(<a href="#q3" class="q-link">Q3</a>)</span></h3>
     <p>
       We repeat the comparison on the <a href="https://scholar.google.com/scholar?q=%22RoboCasa365%3A%20A%20Large-Scale%20Simulation%20Framework%20for%20Training%20and%20Benchmarking%20Generalist%20Robots%22">RoboCasa365</a>
       benchmark with π<sub>0.5</sub> and GR00T N1.5, each fine-tuned on 18 atomic (single-step) and 16 composite (multi-step) tasks.
@@ -857,7 +954,7 @@
 <section id="analysis" class="container">
   <h2>Analysis</h2>
 
-  <p class="analysis-q"><strong>How do priors shape the training dynamics and model internals?</strong></p>
+  <p class="analysis-q" id="ana-summary"><strong>How do priors shape the training dynamics and model internals?</strong></p>
   <div class="insight">
     <p>
       <strong>In short:</strong> different action priors lead to different fine-tuned encoder representations, but these are
@@ -866,7 +963,7 @@
     </p>
   </div>
 
-  <h3>(1) Fine-tuned encoders are equally predictive of the target actions</h3>
+  <h3 id="ana-1">(1) Fine-tuned encoders are equally predictive of the target actions</h3>
   <p>
     <a href="https://arxiv.org/abs/2102.11005">LogME</a> is a training-free measure of feature quality: the log marginal evidence of a Bayesian linear regression from
     the fine-tuned encoder's embeddings to the ground-truth actions. Scores are statistically inseparable across priors at every
@@ -880,7 +977,7 @@
     </figcaption>
   </div>
 
-  <h3>(2) Encoder representations diverge, action predictions do not</h3>
+  <h3 id="ana-2">(2) Encoder representations diverge, action predictions do not</h3>
   <p>
     We measure how far fine-tuning moves each model from the pretrained one (per-observation ℓ<sub>2</sub> distance). Action
     predictions change by a comparable amount across priors, but encoder embeddings diverge sharply: the Gaussian moves the
@@ -895,7 +992,7 @@
     </figcaption>
   </div>
 
-  <h3>(3) Encoder training matters more than prior choice</h3>
+  <h3 id="ana-3">(3) Encoder training matters more than prior choice</h3>
   <p>
     If the encoder dominates, degrading it should hurt far more than changing the prior. We cut the encoder's learning rate
     to 1/10 of the action head's. In simulation (eight tasks, 100% data; 𝒵, E<sub>pre</sub>+σ<sub>E</sub>𝒵, Cocos), success drops
@@ -917,17 +1014,17 @@
 <!-- Discussion -->
 <section id="discussion" class="container">
   <h2>Discussion</h2>
-  <p>
+  <p id="disc-implications">
     <strong>Implications for practitioners.</strong> The standard Gaussian prior is sufficient for fine-tuning LBMs with a
     flow-matching action head; learned priors add engineering complexity with no measurable benefit. What matters is the quality
     of the pretrained representations. Without pretraining, learned priors may still be valuable.
   </p>
-  <p>
+  <p id="disc-limitations">
     <strong>Limitations.</strong> Our findings cover three LBMs and roughly 10 to 400 fine-tuning demonstrations per task.
     Much larger or smaller models, other pretraining data, or much larger fine-tuning sets might behave differently, and the
     encoder-dominance explanation remains a hypothesis at other scales.
   </p>
-  <p><strong>Open questions.</strong></p>
+  <p id="disc-open"><strong>Open questions.</strong></p>
   <ul>
     <li><strong>Where is the transition?</strong> At 5% data, a learned prior significantly outperformed the Gaussian. Mapping where
       the prior begins to matter as a function of dataset size, task complexity, and model capacity would tell practitioners when
@@ -1011,6 +1108,9 @@ document.querySelectorAll('.prior-tab').forEach(b => {
   b.addEventListener('focus', () => showPrior(b.dataset.prior));
 });
 showPrior('Z');
+
+document.querySelectorAll('.nav-drop a, .nav-top').forEach(a =>
+  a.addEventListener('click', () => a.blur()));
 
 function copyBibtex() {
   const text = document.querySelector('.bibtex-block pre').textContent;
