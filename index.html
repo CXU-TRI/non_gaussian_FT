@@ -628,7 +628,7 @@
 
 <!-- Overview: what an action prior is, and what two of them look like -->
 <section id="overview" class="container" style="padding-top: 20px;">
-  <div class="teaser1">
+  <div class="teaser1" id="ov-prior">
     <div class="schematic">
       <img src="Assets/policy_schematic.png" alt="Flow-matching policy schematic" />
     </div>
@@ -645,7 +645,7 @@
       </div>
     </div>
   </div>
-  <p class="overview-caption" id="ov-prior">
+  <p class="overview-caption">
     <strong>What is the action prior?</strong>
     <strong>Left:</strong> a flow-matching policy generates an action by transporting a random sample a&#8320;, drawn from a prior
     distribution p&#8320; over action chunks, to the target action. The action head is conditioned on the observation embedding e
@@ -741,13 +741,13 @@
 <!-- Setup -->
 <section id="setup" class="container">
   <h2>Experimental Setup</h2>
-  <p>
+  <p id="priors">
     We compare seven action priors: the standard Gaussian, three constructed directly from the pretrained LBM with no
     auxiliary training, and three baselines from the literature. Within each experiment, only the prior differs; task, data,
     architecture, optimizer, and training steps are held fixed.
   </p>
   <p>Seven action priors (hover or tap a name):</p>
-  <div class="priors" id="priors">
+  <div class="priors">
     <div class="prior-tabs" role="tablist" aria-label="Action priors">
       <div class="prior-row">
         <span class="prior-group">Default prior</span>
