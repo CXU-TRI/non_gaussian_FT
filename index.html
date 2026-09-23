@@ -812,13 +812,13 @@
   <div>
     <h3 id="res-1">(1) Controlled test: a closer-to-target prior helps from scratch, but not after fine-tuning <span>(<a href="#q1" class="q-link">Q1</a>)</span></h3>
     <p>
-      A pretrained LBM has never seen the fine-tuning task, so its zero-shot actions may form a weak prior, and a null result
-      could simply reflect that. We therefore first fine-tune LBM 1.0 with the Gaussian on 50% of the demonstrations, yielding a
+      The key challenge in studying non-Gaussian priors for fine-tuning is controlling prior quality: a pretrained LBM has never
+      seen the fine-tuning task, so its zero-shot actions may be out of distribution and form a weak prior. A null result would
+      then be hard to tell apart from a poor-quality prior. We therefore first fine-tune LBM 1.0 with the Gaussian on 50% of the demonstrations, yielding a
       task-aware checkpoint whose actions are measurably closer to the target, and then fine-tune again from it, varying only the
       prior. The from-scratch baseline trains the same architecture from random initialization. From scratch, A<sub>pre</sub>
       significantly outperforms the Gaussian (roughly 28% vs. 18%). After fine-tuning, A<sub>pre</sub> becomes the lowest-performing
-      prior, and no prior is statistically separable from the Gaussian in the seven-way comparison. (The pairwise test in the Key
-      Finding figure separates the two in the Gaussian's favor.)
+      prior, and no prior is statistically separable from the Gaussian in the seven-way comparison.
     </p>
   </div>
   <div class="figure">
@@ -933,7 +933,7 @@
     <h3 id="res-4">(4) Other LBM architectures: the finding holds on π<sub>0.5</sub> and GR00T N1.5 <span>(<a href="#q3" class="q-link">Q3</a>)</span></h3>
     <p>
       We repeat the comparison on the <a href="https://scholar.google.com/scholar?q=%22RoboCasa365%3A%20A%20Large-Scale%20Simulation%20Framework%20for%20Training%20and%20Benchmarking%20Generalist%20Robots%22">RoboCasa365</a>
-      benchmark with π<sub>0.5</sub> and GR00T N1.5, each fine-tuned on 18 atomic (single-step) and 16 composite (multi-step) tasks.
+      benchmark with π<sub>0.5</sub> and GR00T N1.5, each fine-tuned on 18 atomic and 16 composite tasks.
       Neither model exposes a single bottleneck embedding, so the embedding-space priors (E<sub>pre</sub>+σ<sub>E</sub>𝒵, Cocos,
       BRIDGER) cannot be ported; we compare the other four. On both models, 𝒵 and A<sub>pre</sub>+σ<sub>A</sub>𝒵 tie at the top, while
       A<sub>pre</sub> and Retrieval are significantly worse, although A<sub>pre</sub> remains roughly 3× closer to the target in
