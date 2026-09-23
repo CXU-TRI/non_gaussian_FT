@@ -1,0 +1,168 @@
+{
+  "Bike": {
+    "seed": 2026,
+    "candidates": 50,
+    "ic": 8,
+    "priors": {
+      "Gaussian Z": {
+        "timestamp": "2026-04-07T08-10-58-07-00",
+        "success": false,
+        "partial_progress": 0.4615
+      },
+      "E_pre + σ_E Z": {
+        "timestamp": "2026-04-07T08-03-30-07-00",
+        "success": false,
+        "partial_progress": 0.5
+      },
+      "Cocos": {
+        "timestamp": "2026-04-07T07-51-28-07-00",
+        "success": true,
+        "partial_progress": 1.0
+      },
+      "BRIDGER": {
+        "timestamp": "2026-04-07T07-55-59-07-00",
+        "success": false,
+        "partial_progress": 0.0909
+      },
+      "Retrieval": {
+        "timestamp": "2026-04-07T08-07-18-07-00",
+        "success": false,
+        "partial_progress": 0.4167
+      }
+    },
+    "ic_definition": "demo_index (single eval_initial_condition set)"
+  },
+  "BusBin": {
+    "seed": 2026,
+    "candidates": 50,
+    "ic": 7,
+    "priors": {
+      "Gaussian Z": {
+        "timestamp": "2026-04-02T11-23-02-07-00",
+        "success": true,
+        "partial_progress": 1.0
+      },
+      "E_pre + σ_E Z": {
+        "timestamp": "2026-04-02T11-54-50-07-00",
+        "success": false,
+        "partial_progress": 0.2353
+      },
+      "Cocos": {
+        "timestamp": "2026-04-02T11-46-05-07-00",
+        "success": true,
+        "partial_progress": 1.0
+      },
+      "BRIDGER": {
+        "timestamp": "2026-04-02T11-42-15-07-00",
+        "success": true,
+        "partial_progress": 1.0
+      },
+      "Retrieval": {
+        "timestamp": "2026-04-02T11-51-42-07-00",
+        "success": false,
+        "partial_progress": 0.9412
+      }
+    },
+    "ic_definition": "demo_index (single eval_initial_condition set)"
+  },
+  "Cookies": {
+    "seed": 2026,
+    "candidates": 50,
+    "ic": 8,
+    "priors": {
+      "Gaussian Z": {
+        "timestamp": "2026-04-02T10-09-15-07-00",
+        "success": true,
+        "partial_progress": 1.0
+      },
+      "E_pre + σ_E Z": {
+        "timestamp": "2026-04-02T10-02-10-07-00",
+        "success": false,
+        "partial_progress": 0.4211
+      },
+      "Cocos": {
+        "timestamp": "2026-04-02T09-53-37-07-00",
+        "success": false,
+        "partial_progress": 0.4211
+      },
+      "BRIDGER": {
+        "timestamp": "2026-04-02T09-57-44-07-00",
+        "success": false,
+        "partial_progress": 0.5263
+      },
+      "Retrieval": {
+        "timestamp": "2026-04-02T10-05-46-07-00",
+        "success": false,
+        "partial_progress": 0.2632
+      }
+    },
+    "ic_definition": "demo_index (single eval_initial_condition set)"
+  },
+  "FoodBank": {
+    "seed": 2026,
+    "candidates": 50,
+    "ic": 9,
+    "priors": {
+      "Gaussian Z": {
+        "timestamp": "2026-03-30T16-39-04-07-00",
+        "success": false,
+        "partial_progress": 0.8667
+      },
+      "E_pre + σ_E Z": {
+        "timestamp": "2026-03-30T16-48-34-07-00",
+        "success": false,
+        "partial_progress": 0.8
+      },
+      "Cocos": {
+        "timestamp": "2026-03-30T16-42-07-07-00",
+        "success": true,
+        "partial_progress": 1.0
+      },
+      "BRIDGER": {
+        "timestamp": "2026-03-30T16-33-54-07-00",
+        "success": false,
+        "partial_progress": 0.8667
+      },
+      "Retrieval": {
+        "timestamp": "2026-03-30T16-45-48-07-00",
+        "success": true,
+        "partial_progress": 1.0
+      }
+    },
+    "ic_definition": "demo_index (single eval_initial_condition set)"
+  },
+  "Kitchen": {
+    "seed": 2026,
+    "candidates": 49,
+    "ic": 8,
+    "ic_set": "2025-03-20T15-51-07-07-00",
+    "ic_definition": "(eval_initial_condition set, demo_index)",
+    "priors": {
+      "Gaussian Z": {
+        "timestamp": "2026-04-09T10-30-13-07-00",
+        "success": true,
+        "partial_progress": 1.0
+      },
+      "E_pre + σ_E Z": {
+        "timestamp": "2026-04-09T10-35-11-07-00",
+        "success": true,
+        "partial_progress": 1.0
+      },
+      "Cocos": {
+        "timestamp": "2026-04-09T10-40-06-07-00",
+        "success": true,
+        "partial_progress": 1.0
+      },
+      "BRIDGER": {
+        "timestamp": "2026-04-09T10-43-10-07-00",
+        "success": false,
+        "partial_progress": 0.4444
+      },
+      "Retrieval": {
+        "timestamp": "2026-04-09T10-46-45-07-00",
+        "success": true,
+        "partial_progress": 1.0
+      }
+    }
+  }
+}

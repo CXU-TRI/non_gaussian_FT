@@ -437,6 +437,7 @@
     }
     .finding .sub {
       font-size: 17px;
+      font-weight: 600;
       color: var(--text-muted);
     }
     .finding-evidence {
@@ -531,6 +532,10 @@
     }
     .note p { color: var(--text-muted); margin: 0; font-size: 17px; line-height: 1.6; }
     .note strong { color: var(--text); }
+
+    /* Hardware task selector */
+    .hw-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 16px; }
+    .hw-panel[hidden] { display: none; }
 
     /* Seven-prior explorer */
     .priors {
@@ -679,14 +684,7 @@
         <li><a class="toc-sub" href="#key-finding">Key finding</a></li>
       </ul>
     </li>
-    <li><a class="toc-sec" href="#abstract">Abstract</a>
-    </li>
     <li><a class="toc-sec" href="#background">Background</a>
-      <ul>
-        <li><a class="toc-sub" href="#bg-lbm">Large Behavior Models</a></li>
-        <li><a class="toc-sub" href="#bg-prior">Generative policies and the action prior</a></li>
-        <li><a class="toc-sub" href="#bg-closer">Why a closer prior might help</a></li>
-      </ul>
     </li>
     <li><a class="toc-sec" href="#setup">Setup</a>
       <ul>
@@ -767,10 +765,10 @@
     <strong>Left:</strong> a flow-matching policy generates an action by transporting a random sample a&#8320;, drawn from a prior
     distribution p&#8320; over action chunks, to the target action. The action head is conditioned on the observation embedding e
     produced by the encoder and on the diffusion step t. By default p&#8320; is a standard Gaussian; it is the only component we vary.
-    <strong>Right:</strong> samples from two priors, executed directly as actions in simulation without any flow-matching transport, on the held-out
+    <strong>Right:</strong> samples from two priors we consider, executed as actions in simulation before flow-matching transport, on the held-out
     DumpVegetablesIntoContainer task from <a href="https://arxiv.org/abs/2507.05331">LBM Eval</a>.
     The Gaussian 𝒵 produces incoherent, random motion. A<sub>pre</sub>, the zero-shot actions of the pretrained policy,
-    already makes partial task progress without any fine-tuning on task-specific data.
+    already makes partial task progress before fine-tuning on task-specific data.
   </p>
 </section>
 
@@ -783,14 +781,14 @@
     Our diagnostic analyses indicate that the observation encoder, not the action prior, governs fine-tuning performance.
   </p>
   <p class="sub">
-    Across over 100K simulated rollouts on three LBM architectures (LBM 1.0, π<sub>0.5</sub>, and GR00T N1.5) and 40+ tasks,
+    Across over 100K simulated rollouts on three LBM architectures (<a href="https://arxiv.org/abs/2507.05331">LBM 1.0</a>, <a href="https://arxiv.org/abs/2504.16054">π<sub>0.5</sub></a>, and <a href="https://arxiv.org/abs/2503.14734">GR00T N1.5</a>) and 40+ tasks,
     and 1250 hardware rollouts on five bimanual tasks, the standard Gaussian prior performs statistically indistinguishably from,
     or better than, closer-to-target action priors, with a possible exception at very low fine-tuning data fractions.
   </p>
   <div class="finding-evidence">
     <img src="Assets/fig1_opener.png" alt="Priors help from scratch but not when fine-tuning" />
     <p class="evidence-caption">
-      Controlled test (setting 1 below): five LBM Eval tasks, 1000 rollouts per prior, pairwise comparison of 𝒵 and A<sub>pre</sub>.
+      Controlled test in simulation (setting 1 below): five LBM Eval tasks, 1000 rollouts per prior, pairwise comparison of 𝒵 and A<sub>pre</sub>.
       <strong>Left:</strong> ℓ<sub>2</sub> distance between prior samples and ground-truth actions; A<sub>pre</sub> is 3× closer to the target than the Gaussian.
       <strong>Middle:</strong> when training from scratch, A<sub>pre</sub> significantly outperforms the Gaussian.
       <strong>Right:</strong> after fine-tuning from the same pretrained LBM 1.0 checkpoint, the Gaussian instead significantly outperforms A<sub>pre</sub>.
@@ -798,52 +796,13 @@
   </div>
 </div>
 
-<!-- Abstract -->
-<section id="abstract" class="container">
-  <h2>Abstract</h2>
-  <p>
-    Modern robot imitation learning increasingly relies on generative policies based on diffusion or flow-matching models,
-    which generate actions by transforming samples from a prior distribution. A key question is whether the choice of prior
-    matters. Replacing the standard Gaussian with a closer-to-target, non-Gaussian prior has been shown to substantially
-    improve performance when <em>training from scratch</em>. A natural next step is to ask whether these gains transfer to
-    <em>fine-tuning</em> pretrained Large Behavior Models (LBMs) such as <a href="https://arxiv.org/abs/2507.05331">LBM 1.0</a>,
-    <a href="https://arxiv.org/abs/2504.16054">π<sub>0.5</sub></a>, and <a href="https://arxiv.org/abs/2503.14734">GR00T N1.5</a>,
-    where one might expect even larger gains. Surprisingly, we find that this is not the case, except possibly at very low
-    fine-tuning data fractions.
-  </p>
-  <p>
-    Across over 100K simulation rollouts spanning all three aforementioned LBMs on 40+ tasks in two simulation platforms, and
-    1250 hardware rollouts on five bimanual manipulation tasks, non-Gaussian priors that are demonstrably closer to the target
-    yield statistically indistinguishable or worse fine-tuning performance than a standard Gaussian prior. Diagnostic analyses
-    suggest why: fine-tuned imitation learning policies converge to similar action predictions across priors, despite their
-    fine-tuned <em>encoder embeddings</em> diverging substantially from the pretrained embeddings and each other. A learning-rate
-    ablation further confirms that encoder training is the dominant factor in fine-tuning performance, substantially outweighing
-    the effect of prior choice. We conclude with concrete directions for future research on when and why learned priors might
-    still matter in fine-tuning.
-  </p>
-</section>
-
-<div class="divider"></div>
-
 <!-- Background -->
 <section id="background" class="container">
   <h2>Background</h2>
-  <p id="bg-lbm">
-    <strong>Large Behavior Models.</strong> An LBM is a robot policy pretrained once on large, diverse robot, vision, and
-    language data, then <em>fine-tuned</em> on a modest set of demonstrations for a new task. In contrast, <em>training from
-    scratch</em> learns a single-task policy from random initialization. Examples include
-    <a href="https://arxiv.org/abs/2507.05331">LBM 1.0</a>, <a href="https://arxiv.org/abs/2504.16054">π<sub>0.5</sub></a>, and
-    <a href="https://arxiv.org/abs/2503.14734">GR00T N1.5</a>.
-  </p>
-  <p id="bg-prior">
-    <strong>Generative policies and the action prior.</strong> These models generate an action chunk a&#8321; (a short sequence
-    of future actions) by transporting a sample a&#8320; from a prior distribution p&#8320;, conditioned on the observation. By
-    default p&#8320; is an isotropic Gaussian 𝒵 ∼ 𝒩(0, I). <a href="https://arxiv.org/abs/2210.02747">Flow matching</a>, however, only requires paired samples
-    (a&#8320;, a&#8321;), so any distribution can serve as the prior without changing training or inference: the Gaussian is a
-    convention, not a requirement.
-  </p>
   <p id="bg-closer">
-    <strong>Why a closer prior might help.</strong> Recent work exploits this flexibility when training from scratch:
+    <strong>Why a closer prior might help.</strong> <a href="https://arxiv.org/abs/2210.02747">Flow matching</a> only requires
+    paired samples from the prior and the target, so any distribution can serve as the prior without changing training or
+    inference: the Gaussian is a convention, not a requirement. Recent work exploits this flexibility when training from scratch:
     <a href="https://arxiv.org/abs/2402.16075">BRIDGER</a> (Chen et al., 2024) learns a CVAE action prior, <a href="https://scholar.google.com/scholar?q=%22Conditioning%20Matters%3A%20Training%20Diffusion%20Policies%20is%20Faster%20Than%20You%20Think%22">Cocos</a> (Dong et al., 2026) a
     condition-dependent Gaussian, <a href="https://scholar.google.com/scholar?q=%22Action-to-Action%20Flow%20Matching%22">action-to-action flow matching</a> (Jia et al., 2026) starts from demonstration
     actions, and <a href="https://scholar.google.com/scholar?q=%22EfficientFlow%3A%20Efficient%20equivariant%20flow%20policy%20learning%20for%20embodied%20AI%22">EfficientFlow</a> (Chang et al., 2026) adds equivariance guarantees. Replacing the Gaussian with
@@ -995,19 +954,107 @@
   </div>
   <div class="figure">
     <img src="Assets/setting_B_real_ab_test.png" alt="Hardware A/B test" />
-    <figcaption><strong>Top:</strong> success rate. <strong>Bottom:</strong> partial task progress. Counts above the violins are successes out of 250 rollouts per prior.</figcaption>
+    <figcaption><strong>Left:</strong> success rate. <strong>Right:</strong> partial task progress. Counts above the violins are successes out of 250 rollouts per prior.</figcaption>
   </div>
 
   <div>
     <p>
-      All rollouts for two of the five tasks, each followed by a zoom-in on one initial condition. In each grid, a row is one
-      prior and a tile is one rollout, individually time-compressed to 10 s and tagged S (success, green) or F (failure, red).
+      Select a task to see all 250 of its rollouts: each row is one prior and each tile one rollout, individually
+      time-compressed to 10 s and tagged S (success, green) or F (failure, red). Below each grid is one initial condition
+      drawn uniformly at random, with a fixed seed, from those that have videos for all five priors, so the example is not
+      chosen by its outcome. For FoodBank and BikeRotorInstall we also show hand-selected initial conditions.
     </p>
   </div>
+  <div class="hw-tabs" role="tablist" aria-label="Hardware tasks">
+    <button class="prior-tab hw-tab" type="button" data-task="FoodBank" role="tab">FoodBank</button>
+    <button class="prior-tab hw-tab" type="button" data-task="Kitchen" role="tab">ClearKitchenCounter</button>
+    <button class="prior-tab hw-tab" type="button" data-task="Cookies" role="tab">GatheringIngredientsForCookies</button>
+    <button class="prior-tab hw-tab" type="button" data-task="BusBin" role="tab">BusBin</button>
+    <button class="prior-tab hw-tab" type="button" data-task="Bike" role="tab">BikeRotorInstall</button>
+  </div>
+  <div class="hw-panel" data-task="FoodBank" hidden>
   <div class="video-pair wall">
     <figure>
-      <video src="Assets/hw_wall_Bike.mp4" poster="Assets/hw_wall_Bike_poster.jpg" autoplay muted loop playsinline controls aria-label="All 250 hardware rollouts on the bike-rotor task"></video>
+      <video src="Assets/hw_wall_FoodBank.mp4" poster="Assets/hw_wall_FoodBank_poster.jpg" muted loop playsinline controls preload="none" aria-label="All 250 hardware rollouts on FoodBank"></video>
+      <figcaption><strong>FoodBank</strong>: 5 priors × 50 rollouts. Success rates: 𝒵 66%, E<sub>pre</sub>+σ<sub>E</sub>𝒵 70%, Cocos 66%, BRIDGER 70%, Retrieval 68%. Use fullscreen to inspect individual tiles.</figcaption>
+    </figure>
+  </div>
+  <div class="video-pair">
+    <figure>
+      <video src="Assets/hw_row_FoodBank_random.mp4" poster="Assets/hw_row_FoodBank_random_poster.jpg" muted loop playsinline controls preload="none" aria-label="Randomly selected initial condition on FoodBank"></video>
+      <figcaption><strong>FoodBank, randomly selected initial condition</strong> (IC 9): 𝒵 fails, E<sub>pre</sub>+σ<sub>E</sub>𝒵 fails, Cocos succeeds, BRIDGER fails, Retrieval succeeds. Each clip time-normalized to 12 s.</figcaption>
+    </figure>
+  </div>
+  <div>
+    <p>
+      Two hand-selected FoodBank initial conditions show the pattern seen in simulation: at one, all five policies succeed with
+      similar motions; at the other, all five fail in different ways.
+    </p>
+  </div>
+  <div class="video-pair">
+    <figure>
+      <video src="Assets/hw_grid_FoodBank_success.mp4" poster="Assets/hw_grid_FoodBank_success_poster.jpg" muted loop playsinline controls preload="none" aria-label="Five fine-tuned policies succeeding from the same initial condition on the food-bank task"></video>
+      <figcaption><strong>FoodBank, hand-selected initial condition; all five policies succeed.</strong> Each clip time-normalized to 12 s.</figcaption>
+    </figure>
+    <figure>
+      <video src="Assets/hw_grid_FoodBank_failure.mp4" poster="Assets/hw_grid_FoodBank_failure_poster.jpg" muted loop playsinline controls preload="none" aria-label="Five fine-tuned policies failing from the same initial condition on the food-bank task"></video>
+      <figcaption><strong>FoodBank, another hand-selected initial condition; all five policies fail</strong>, with distinct failure modes.</figcaption>
+    </figure>
+  </div>
+  </div>
+  <div class="hw-panel" data-task="Kitchen" hidden>
+  <div class="video-pair wall">
+    <figure>
+      <video src="Assets/hw_wall_Kitchen.mp4" poster="Assets/hw_wall_Kitchen_poster.jpg" muted loop playsinline controls preload="none" aria-label="All 250 hardware rollouts on ClearKitchenCounter"></video>
+      <figcaption><strong>ClearKitchenCounter</strong>: 5 priors × 50 rollouts. Success rates: 𝒵 56%, E<sub>pre</sub>+σ<sub>E</sub>𝒵 74%, Cocos 70%, BRIDGER 4%, Retrieval 62%. One 𝒵 rollout has no stored video and is shown as a gray placeholder tile. Use fullscreen to inspect individual tiles.</figcaption>
+    </figure>
+  </div>
+  <div class="video-pair">
+    <figure>
+      <video src="Assets/hw_row_Kitchen_random.mp4" poster="Assets/hw_row_Kitchen_random_poster.jpg" muted loop playsinline controls preload="none" aria-label="Randomly selected initial condition on ClearKitchenCounter"></video>
+      <figcaption><strong>ClearKitchenCounter, randomly selected initial condition</strong> (IC 8 of the first of three initial-condition sets): 𝒵 succeeds, E<sub>pre</sub>+σ<sub>E</sub>𝒵 succeeds, Cocos succeeds, BRIDGER fails, Retrieval succeeds. Each clip time-normalized to 12 s.</figcaption>
+    </figure>
+  </div>
+  </div>
+  <div class="hw-panel" data-task="Cookies" hidden>
+  <div class="video-pair wall">
+    <figure>
+      <video src="Assets/hw_wall_Cookies.mp4" poster="Assets/hw_wall_Cookies_poster.jpg" muted loop playsinline controls preload="none" aria-label="All 250 hardware rollouts on GatheringIngredientsForCookies"></video>
+      <figcaption><strong>GatheringIngredientsForCookies</strong>: 5 priors × 50 rollouts. Success rates: 𝒵 20%, E<sub>pre</sub>+σ<sub>E</sub>𝒵 16%, Cocos 10%, BRIDGER 10%, Retrieval 14%. Use fullscreen to inspect individual tiles.</figcaption>
+    </figure>
+  </div>
+  <div class="video-pair">
+    <figure>
+      <video src="Assets/hw_row_Cookies_random.mp4" poster="Assets/hw_row_Cookies_random_poster.jpg" muted loop playsinline controls preload="none" aria-label="Randomly selected initial condition on GatheringIngredientsForCookies"></video>
+      <figcaption><strong>GatheringIngredientsForCookies, randomly selected initial condition</strong> (IC 8): 𝒵 succeeds, E<sub>pre</sub>+σ<sub>E</sub>𝒵 fails, Cocos fails, BRIDGER fails, Retrieval fails. Each clip time-normalized to 12 s.</figcaption>
+    </figure>
+  </div>
+  </div>
+  <div class="hw-panel" data-task="BusBin" hidden>
+  <div class="video-pair wall">
+    <figure>
+      <video src="Assets/hw_wall_BusBin.mp4" poster="Assets/hw_wall_BusBin_poster.jpg" muted loop playsinline controls preload="none" aria-label="All 250 hardware rollouts on BusBin"></video>
+      <figcaption><strong>BusBin</strong>: 5 priors × 50 rollouts. Success rates: 𝒵 64%, E<sub>pre</sub>+σ<sub>E</sub>𝒵 52%, Cocos 50%, BRIDGER 52%, Retrieval 54%. Use fullscreen to inspect individual tiles.</figcaption>
+    </figure>
+  </div>
+  <div class="video-pair">
+    <figure>
+      <video src="Assets/hw_row_BusBin_random.mp4" poster="Assets/hw_row_BusBin_random_poster.jpg" muted loop playsinline controls preload="none" aria-label="Randomly selected initial condition on BusBin"></video>
+      <figcaption><strong>BusBin, randomly selected initial condition</strong> (IC 7): 𝒵 succeeds, E<sub>pre</sub>+σ<sub>E</sub>𝒵 fails, Cocos succeeds, BRIDGER succeeds, Retrieval fails. Each clip time-normalized to 12 s.</figcaption>
+    </figure>
+  </div>
+  </div>
+  <div class="hw-panel" data-task="Bike" hidden>
+  <div class="video-pair wall">
+    <figure>
+      <video src="Assets/hw_wall_Bike.mp4" poster="Assets/hw_wall_Bike_poster.jpg" muted loop playsinline controls preload="none" aria-label="All 250 hardware rollouts on BikeRotorInstall"></video>
       <figcaption><strong>BikeRotorInstall</strong>: 5 priors × 50 rollouts. Success rates: 𝒵 18%, E<sub>pre</sub>+σ<sub>E</sub>𝒵 28%, Cocos 22%, BRIDGER 0%, Retrieval 14%. Use fullscreen to inspect individual tiles.</figcaption>
+    </figure>
+  </div>
+  <div class="video-pair">
+    <figure>
+      <video src="Assets/hw_row_Bike_random.mp4" poster="Assets/hw_row_Bike_random_poster.jpg" muted loop playsinline controls preload="none" aria-label="Randomly selected initial condition on BikeRotorInstall"></video>
+      <figcaption><strong>BikeRotorInstall, randomly selected initial condition</strong> (IC 8): 𝒵 fails, E<sub>pre</sub>+σ<sub>E</sub>𝒵 fails, Cocos succeeds, BRIDGER fails, Retrieval fails. Each clip time-normalized to 12 s.</figcaption>
     </figure>
   </div>
   <div>
@@ -1019,31 +1066,10 @@
   </div>
   <div class="video-pair">
     <figure>
-      <video src="Assets/hw_row_Bike_failure.mp4" poster="Assets/hw_row_Bike_failure_poster.jpg" autoplay muted loop playsinline controls aria-label="Five fine-tuned policies failing from the same initial condition on the bike-rotor task"></video>
-      <figcaption><strong>BikeRotorInstall, identical initial condition; all five policies fail</strong> after seating the rotor, with distinct failure modes. Each clip time-normalized to 12 s.</figcaption>
+      <video src="Assets/hw_row_Bike_failure.mp4" poster="Assets/hw_row_Bike_failure_poster.jpg" muted loop playsinline controls preload="none" aria-label="Five fine-tuned policies failing from the same initial condition on the bike-rotor task"></video>
+      <figcaption><strong>BikeRotorInstall, hand-selected initial condition; all five policies fail</strong> after seating the rotor, with distinct failure modes. Each clip time-normalized to 12 s.</figcaption>
     </figure>
   </div>
-  <div class="video-pair wall">
-    <figure>
-      <video src="Assets/hw_wall_FoodBank.mp4" poster="Assets/hw_wall_FoodBank_poster.jpg" autoplay muted loop playsinline controls aria-label="All 250 hardware rollouts on the food-bank task"></video>
-      <figcaption><strong>FoodBank</strong>: 5 priors × 50 rollouts. Success rates: 𝒵 66%, E<sub>pre</sub>+σ<sub>E</sub>𝒵 70%, Cocos 66%, BRIDGER 70%, Retrieval 68%.</figcaption>
-    </figure>
-  </div>
-  <div>
-    <p>
-      On FoodBank, the simulation pattern recurs: at one initial condition all five policies succeed with similar motions; at
-      another, all five fail in different ways.
-    </p>
-  </div>
-  <div class="video-pair">
-    <figure>
-      <video src="Assets/hw_grid_FoodBank_success.mp4" poster="Assets/hw_grid_FoodBank_success_poster.jpg" autoplay muted loop playsinline controls aria-label="Five fine-tuned policies succeeding from the same initial condition on the food-bank task"></video>
-      <figcaption><strong>FoodBank, identical initial condition; all five policies succeed.</strong> Each clip time-normalized to 12 s.</figcaption>
-    </figure>
-    <figure>
-      <video src="Assets/hw_grid_FoodBank_failure.mp4" poster="Assets/hw_grid_FoodBank_failure_poster.jpg" autoplay muted loop playsinline controls aria-label="Five fine-tuned policies failing from the same initial condition on the food-bank task"></video>
-      <figcaption><strong>FoodBank, a different initial condition; all five policies fail</strong>, with distinct failure modes.</figcaption>
-    </figure>
   </div>
 
   <div>
@@ -1185,23 +1211,23 @@ const PRIORS = {
   },
   A_LBM: {
     name: "A<sub>pre</sub>: actions from the pretrained LBM",
-    desc: "A partially denoised action chunk from a frozen copy of the pretrained LBM, run for half of its usual denoising budget; the fine-tuned action head spends the other half, so there is no extra inference cost. The pretrained model already outputs roughly plausible actions, so the flow only needs to cover a short transport distance to the target. No auxiliary training."
+    desc: "A partially denoised action chunk from a frozen copy of the pretrained LBM, run for half of its usual denoising budget; the fine-tuned action head spends the other half, so there is no extra inference cost. The pretrained model already outputs roughly plausible actions, so the flow only needs to cover a short transport distance to the target. No auxiliary training. Despite being closest to the target, it is the lowest-performing prior after fine-tuning in the controlled test, and significantly worse than the Gaussian on π<sub>0.5</sub> and GR00T N1.5."
   },
   A_LBMplusZ: {
     name: "A<sub>pre</sub>+σ<sub>A</sub>𝒵: pretrained actions plus noise",
-    desc: "A<sub>pre</sub> with isotropic Gaussian noise added in action space (σ<sub>A</sub> = 1). Unperturbed A<sub>pre</sub> can collapse the prior too tightly around certain modes of the pretrained policy's output; the added noise enriches its distribution. No auxiliary training."
+    desc: "A<sub>pre</sub> with isotropic Gaussian noise added in action space (σ<sub>A</sub> = 1). Unperturbed A<sub>pre</sub> can collapse the prior too tightly around certain modes of the pretrained policy's output; the added noise enriches its distribution and pulls it toward the Gaussian, which is why its samples look close to random. σ<sub>A</sub> was selected by a grid search over {0.25, 0.5, 1.0} reported in the paper's appendix. No auxiliary training."
   },
   O_LBMplus025Z: {
     name: "E<sub>pre</sub>+σ<sub>E</sub>𝒵: perturbed embedding",
-    desc: "Gaussian noise (σ<sub>E</sub> = 0.25) is injected into the pretrained encoder's observation embedding before the frozen pretrained LBM generates the action. This perturbs the prior in embedding space rather than action space, a different axis of prior variation. No auxiliary training."
+    desc: "Gaussian noise (σ<sub>E</sub> = 0.25) is injected into the pretrained encoder's observation embedding before the frozen pretrained LBM generates the action. This perturbs the prior in embedding space rather than action space, a different axis of prior variation. σ<sub>E</sub> was selected by the same grid search over {0.25, 0.5, 1.0}; performance was robust across these scales. No auxiliary training."
   },
   Cocos: {
     name: "Cocos: condition-dependent Gaussian",
-    desc: "A condition-dependent Gaussian whose mean is produced by passing the observation embedding through a small encoder into the action space; the encoder is trained jointly with a decoder that maps back to the embedding space (<a href='https://scholar.google.com/scholar?q=%22Conditioning%20Matters%3A%20Training%20Diffusion%20Policies%20is%20Faster%20Than%20You%20Think%22'>Dong et al., 2026</a>). Trained before fine-tuning on (embedding, action) pairs collected under the pretrained policy, then frozen."
+    desc: "A condition-dependent Gaussian whose mean is produced by passing the observation embedding through a small encoder into the action space; the encoder is trained jointly with a decoder that maps back to the embedding space (<a href='https://scholar.google.com/scholar?q=%22Conditioning%20Matters%3A%20Training%20Diffusion%20Policies%20is%20Faster%20Than%20You%20Think%22'>Dong et al., 2026</a>). Trained before fine-tuning on (embedding, action) pairs collected under the pretrained policy, then frozen. We use unit variance (β = 1) around the mean, which makes samples look close to random: the original paper's β = 0.2 collapsed the prior too tightly under fine-tuning, while β = 1 was reliable in preliminary sweeps."
   },
   BRIDGER: {
     name: "BRIDGER: CVAE action prior",
-    desc: "A conditional variational autoencoder (CVAE) that maps a Gaussian latent to an action chunk, conditioned on the observation embedding (<a href='https://arxiv.org/abs/2402.16075'>Chen et al., 2024</a>). Trained before fine-tuning, then frozen. Its CVAE training was unstable on both our simulation and hardware datasets (NaN losses, requiring restarts with different random seeds)."
+    desc: "A conditional variational autoencoder (CVAE) that maps a Gaussian latent to an action chunk, conditioned on the observation embedding (<a href='https://arxiv.org/abs/2402.16075'>Chen et al., 2024</a>). Trained before fine-tuning, then frozen. Gaussian noise (σ = 0.5) is added to the decoded action: the original paper's σ = 0 collapsed the decoder onto a narrow slice of the demonstrations in our fine-tuning regime. Its CVAE training was unstable on both our simulation and hardware datasets (NaN losses, requiring restarts with different random seeds)."
   },
   Retrieval: {
     name: "Retrieval: k-nearest-neighbor actions",
@@ -1235,6 +1261,25 @@ document.getElementById('theme-toggle').addEventListener('click', () => {
   document.documentElement.setAttribute('data-theme', next);
   try { localStorage.setItem('theme', next); } catch (e) {}
 });
+
+// Hardware task selector: show one task's videos at a time, pause the rest
+(() => {
+  const tabs = [...document.querySelectorAll('.hw-tab')];
+  const panels = [...document.querySelectorAll('.hw-panel')];
+  if (!tabs.length) return;
+  function show(key) {
+    tabs.forEach(t => t.classList.toggle('is-active', t.dataset.task === key));
+    panels.forEach(p => {
+      const on = p.dataset.task === key;
+      p.hidden = !on;
+      p.querySelectorAll('video').forEach(v => {
+        if (on) { v.preload = 'auto'; v.play().catch(() => {}); } else { v.pause(); }
+      });
+    });
+  }
+  tabs.forEach(t => t.addEventListener('click', () => show(t.dataset.task)));
+  show(tabs[0].dataset.task);
+})();
 
 // Narrow screens: the contents list is a drawer opened by the floating button
 (() => {

@@ -704,8 +704,9 @@ def main():
         method_order=fig4_methods,
         output_name="setting_B_real_ab_test.png",
         rng=rng,
-        figsize=(max(7, 2 * len(fig4_methods)), 5),
+        figsize=(16, 5.5),  # website copy: 1x2 side-by-side (paper: stacked 10x9)
         title="",  # website copy: no title
+        horizontal=True,
     )
 
     # ── Fig 10: 2 methods from formal_latest ─────────────────────────────
