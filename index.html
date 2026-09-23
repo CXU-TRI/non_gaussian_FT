@@ -205,6 +205,8 @@
       text-align: left;
     }
 
+    .analysis-q { color: var(--text) !important; }
+
     /* Sections */
     section {
       padding: 46px 0;
@@ -218,7 +220,7 @@
       letter-spacing: -0.01em;
     }
     section h3 {
-      font-size: 1.1rem;
+      font-size: 17px;
       font-weight: 600;
       margin: 30px 0 12px;
       color: var(--text);
@@ -259,7 +261,7 @@
     }
     .finding .label { text-align: center; }
     .finding .label {
-      font-size: 1.5rem;
+      font-size: 20px;
       font-weight: 600;
       letter-spacing: -0.01em;
       color: var(--text);
@@ -267,7 +269,7 @@
     }
     .finding .statement {
       font-family: 'DM Sans', sans-serif;
-      font-size: 1.35rem;
+      font-size: 20px;
       font-weight: 600;
       line-height: 1.35;
       color: var(--text);
@@ -311,6 +313,7 @@
       border: 1px solid var(--border);
     }
     .figure figcaption {
+      text-align: left;
       font-size: 14px;
       color: var(--text-muted);
       margin-top: 12px;
@@ -343,7 +346,7 @@
       font-size: 14px;
       color: var(--text-muted);
       margin-top: 8px;
-      text-align: center;
+      text-align: left;
       line-height: 1.5;
     }
 
@@ -382,7 +385,7 @@
     .prior-row .prior-group { flex: 0 0 100%; margin: 4px 0 0; }
     .prior-row:first-child .prior-group { margin-top: 0; }
     .prior-group {
-      font-size: 12px;
+      font-size: 14px;
       font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
@@ -445,7 +448,7 @@
       border: none;
       padding: 6px 12px;
       border-radius: 4px;
-      font-size: 12px;
+      font-size: 14px;
       cursor: pointer;
       transition: all 0.2s;
     }
@@ -484,7 +487,7 @@
     @media (max-width: 720px) {
       .hero { padding: 44px 0 26px; }
       nav a { margin: 0 9px; font-size: 12px; }
-      .finding .statement { font-size: 1.2rem; }
+      .finding .statement { font-size: 18px; }
       section { padding: 30px 0; }
       .teaser1 { flex-direction: column; --fig1-h: 220px; }
       .teaser1 .rollouts, .teaser1 .schematic { flex: none; }
@@ -551,7 +554,7 @@
     distribution p&#8320; over action chunks, to the target action. The action head is conditioned on the observation embedding e
     produced by the encoder and on the diffusion step t. By default p&#8320; is a standard Gaussian; it is the only component we vary.
     <strong>Right:</strong> samples from two priors, executed directly as actions in simulation without any flow-matching transport, on the held-out
-    DumpVegetablesIntoContainer task from <a href="https://arxiv.org/abs/2507.05331">LBM Eval</a> (real time).
+    DumpVegetablesIntoContainer task from <a href="https://arxiv.org/abs/2507.05331">LBM Eval</a>.
     The Gaussian 𝒵 produces incoherent, random motion. A<sub>pre</sub>, the zero-shot actions of the pretrained policy,
     already makes partial task progress without any fine-tuning on task-specific data.
   </p>
@@ -630,8 +633,8 @@
     <a href="https://arxiv.org/abs/2402.16075">BRIDGER</a> (Chen et al., 2024) learns a CVAE action prior, <a href="https://scholar.google.com/scholar?q=%22Conditioning%20Matters%3A%20Training%20Diffusion%20Policies%20is%20Faster%20Than%20You%20Think%22">Cocos</a> (Dong et al., 2026) a
     condition-dependent Gaussian, <a href="https://scholar.google.com/scholar?q=%22Action-to-Action%20Flow%20Matching%22">action-to-action flow matching</a> (Jia et al., 2026) starts from demonstration
     actions, and <a href="https://scholar.google.com/scholar?q=%22EfficientFlow%3A%20Efficient%20equivariant%20flow%20policy%20learning%20for%20embodied%20AI%22">EfficientFlow</a> (Chang et al., 2026) adds equivariance guarantees. Replacing the Gaussian with
-    such a closer-to-target prior substantially improves success rates on <a href="https://arxiv.org/abs/2306.03310">LIBERO</a>,
-    <a href="https://arxiv.org/abs/1910.10897">MetaWorld</a>, and <a href="https://arxiv.org/abs/1709.10087">Adroit</a>: if the prior is already near the target, the policy only needs to
+    such a closer-to-target prior substantially improves success rates on LIBERO,
+    MetaWorld, and Adroit: if the prior is already near the target, the policy only needs to
     traverse a short transport distance. Whether this benefit carries over to fine-tuning a pretrained LBM is the question we study.
   </p>
 </section>
@@ -710,7 +713,7 @@
   <h2>Results</h2>
 
   <div>
-    <h3>(1) Controlled test: a closer-to-target prior helps from scratch, but not after fine-tuning <span style="font-size: 0.85em;">(<a href="#q1" class="q-link">Q1</a>)</span></h3>
+    <h3>(1) Controlled test: a closer-to-target prior helps from scratch, but not after fine-tuning <span>(<a href="#q1" class="q-link">Q1</a>)</span></h3>
     <p>
       A pretrained LBM has never seen the fine-tuning task, so its zero-shot actions may form a weak prior, and a null result
       could simply reflect that. We therefore first fine-tune LBM 1.0 with the Gaussian on 50% of the demonstrations, yielding a
@@ -731,7 +734,7 @@
   </div>
 
   <div>
-    <h3>(2) Full-scale fine-tuning in simulation: priors are statistically tied at every data fraction above 5% <span style="font-size: 0.85em;">(<a href="#q1" class="q-link">Q1</a>, <a href="#q2" class="q-link">Q2</a>)</span></h3>
+    <h3>(2) Full-scale fine-tuning in simulation: priors are statistically tied at every data fraction above 5% <span>(<a href="#q1" class="q-link">Q1</a>, <a href="#q2" class="q-link">Q2</a>)</span></h3>
     <p>
       We fine-tune LBM 1.0 on eight LBM Eval tasks unseen during pretraining, using 5% to 100% of the available demonstrations.
       From 25% upward, all seven priors share CLD group "a". The one exception is 5% (approximately 10 to 20 demonstrations per
@@ -763,7 +766,7 @@
   </div>
 
   <div>
-    <h3>(3) Bimanual hardware: the finding holds on real robots <span style="font-size: 0.85em;">(<a href="#q3" class="q-link">Q3</a>)</span></h3>
+    <h3>(3) Bimanual hardware: the finding holds on real robots <span>(<a href="#q3" class="q-link">Q3</a>)</span></h3>
     <p>
       We fine-tune LBM 1.0 on five bimanual tasks with two Franka FR3 arms (FoodBank, ClearKitchenCounter,
       GatheringIngredientsForCookies, BusBin, BikeRotorInstall) and compare five priors: 𝒵, E<sub>pre</sub>+σ<sub>E</sub>𝒵, Cocos,
@@ -830,7 +833,7 @@
   </div>
 
   <div>
-    <h3>(4) Other LBM architectures: the finding holds on π<sub>0.5</sub> and GR00T N1.5 <span style="font-size: 0.85em;">(<a href="#q3" class="q-link">Q3</a>)</span></h3>
+    <h3>(4) Other LBM architectures: the finding holds on π<sub>0.5</sub> and GR00T N1.5 <span>(<a href="#q3" class="q-link">Q3</a>)</span></h3>
     <p>
       We repeat the comparison on the <a href="https://scholar.google.com/scholar?q=%22RoboCasa365%3A%20A%20Large-Scale%20Simulation%20Framework%20for%20Training%20and%20Benchmarking%20Generalist%20Robots%22">RoboCasa365</a>
       benchmark with π<sub>0.5</sub> and GR00T N1.5, each fine-tuned on 18 atomic (single-step) and 16 composite (multi-step) tasks.
@@ -852,8 +855,9 @@
 
 <!-- Why -->
 <section id="analysis" class="container">
-  <h2>Analysis: Why Does the Action Prior Not Matter Under Fine-Tuning?</h2>
+  <h2>Analysis</h2>
 
+  <p class="analysis-q"><strong>How do priors shape the training dynamics and model internals?</strong></p>
   <div class="insight">
     <p>
       <strong>In short:</strong> different action priors lead to different fine-tuned encoder representations, but these are
