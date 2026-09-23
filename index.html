@@ -21,6 +21,15 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
 
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('theme');
+        if (!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'night' : 'day';
+        document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {}
+    })();
+  </script>
   <style>
     :root {
       --bg: #fafaf8;
@@ -32,7 +41,31 @@
       --surface: #f3f2ee;
       --code-bg: #2d2d2d;
       --code-text: #e6e6e6;
+      --link-line: rgba(26, 107, 92, 0.3);
+      --header-bg: rgba(250, 250, 248, 0.92);
+      --shadow: rgba(0, 0, 0, 0.08);
+      --header-h: 52px;
     }
+    [data-theme="night"] {
+      --bg: #131514;
+      --text: #e7e8e5;
+      --text-muted: #a4a9a5;
+      --accent: #5cbfa9;
+      --accent-light: #172d28;
+      --border: #2c312f;
+      --surface: #1b1e1d;
+      --code-bg: #0d0f0e;
+      --code-text: #e6e6e6;
+      --link-line: rgba(92, 191, 169, 0.35);
+      --header-bg: rgba(19, 21, 20, 0.92);
+      --shadow: rgba(0, 0, 0, 0.45);
+      color-scheme: dark;
+    }
+    /* figures are white PNGs: keep them on white cards, slightly dimmed at night */
+    [data-theme="night"] .figure img,
+    [data-theme="night"] .finding-evidence img,
+    [data-theme="night"] .teaser1 .schematic img { filter: brightness(0.92); }
+    [data-theme="night"] .teaser1 .schematic { background: #fff; }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -47,8 +80,69 @@
       -webkit-font-smoothing: antialiased;
     }
 
+    /* Sticky header: running title left, links and theme toggle right */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 150;
+      height: var(--header-h);
+      background: var(--header-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .site-header__in {
+      height: 100%;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .site-header__title {
+      flex: 1;
+      min-width: 0;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      text-decoration: none;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .site-header__actions { display: flex; align-items: center; gap: 8px; }
+    .hbtn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      height: 34px;
+      padding: 0 12px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .hbtn:hover { border-color: var(--accent); color: var(--accent); }
+    .hbtn svg { width: 15px; height: 15px; }
+    .hbtn--icon { width: 34px; padding: 0; justify-content: center; }
+    .hbtn--icon svg { width: 17px; height: 17px; }
+    @media (max-width: 560px) {
+      .hbtn__label { display: none; }
+      .hbtn { width: 34px; padding: 0; justify-content: center; }
+      .site-header__in { padding: 0 14px; }
+      .hero h1 { font-size: 1.7rem; text-wrap: balance; }
+      .hero h1 br { display: none; }
+    }
+
     /* Two-column layout: sticky contents on the left, 804 px content column */
-    body { overflow-x: hidden; }
+    html, body { overflow-x: clip; }
     .layout {
       display: grid;
       grid-template-columns: 280px 804px;
@@ -61,15 +155,15 @@
     main .hero { padding-left: 0; padding-right: 0; }
     .toc {
       position: sticky;
-      top: 24px;
-      max-height: calc(100vh - 48px);
+      top: calc(var(--header-h) + 16px);
+      max-height: calc(100vh - var(--header-h) - 32px);
       overflow-y: auto;
       z-index: 5;
       padding: 0;
       font-size: 14px;
       line-height: 1.3;
     }
-    .toc > ul { padding-top: 70px; }
+    .toc > ul { padding-top: 54px; }
     .toc ul { list-style: none; margin: 0; padding: 0; }
     .toc ul ul { margin: 0 0 6px; }
     .toc a {
@@ -82,14 +176,52 @@
     .toc-sub { padding: 2px 0 2px 24px; color: var(--text-muted); }
     .toc a:hover { color: var(--accent); }
     .toc a.active { color: var(--accent); border-left-color: var(--accent); }
+    .toc-toggle, .toc-backdrop { display: none; }
     @media (max-width: 1180px) {
       .layout { display: block; }
-      .toc { display: none; }
       main { max-width: 860px; margin: 0 auto; padding: 0 28px; }
+      .toc {
+        position: fixed;
+        top: 0; left: 0; bottom: 0;
+        width: min(300px, 82vw);
+        max-height: none;
+        z-index: 210;
+        background: var(--bg);
+        border-right: 1px solid var(--border);
+        box-shadow: 4px 0 24px var(--shadow);
+        padding: 20px 16px 32px 8px;
+        transform: translateX(-105%);
+        transition: transform 0.25s ease;
+      }
+      .toc > ul { padding-top: 0; }
+      .toc.open { transform: none; }
+      .toc-backdrop {
+        display: block;
+        position: fixed; inset: 0;
+        z-index: 200;
+        background: rgba(0, 0, 0, 0.28);
+      }
+      .toc-backdrop[hidden] { display: none; }
+      .toc-toggle {
+        display: block;
+        position: fixed;
+        right: 18px; bottom: 18px;
+        z-index: 190;
+        font-family: 'DM Sans', sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+        color: #fff;
+        background: var(--accent);
+        border: none;
+        border-radius: 999px;
+        padding: 11px 18px;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+        cursor: pointer;
+      }
     }
 
     /* Jump targets keep a little space above them */
-    [id] { scroll-margin-top: 24px; }
+    [id] { scroll-margin-top: calc(var(--header-h) + 16px); }
 
     /* Layout */
     .container {
@@ -105,7 +237,7 @@
 
     /* Hero */
     .hero {
-      padding: 70px 28px 40px;
+      padding: 70px 28px 16px;
       text-align: center;
     }
     .hero h1 {
@@ -129,10 +261,13 @@
       transition: border-color 0.2s;
     }
     .authors-list a:hover { border-color: var(--accent); }
+    .author { white-space: nowrap; }
+    .correspondence { font-size: 14px; color: var(--text-muted); }
+    .correspondence a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--link-line); }
     .affiliations {
       font-size: 14px;
       color: var(--text-muted);
-      margin-bottom: 28px;
+      margin-bottom: 6px;
     }
     .links {
       display: flex;
@@ -260,28 +395,18 @@
     section p a, section li a, .finding a {
       color: var(--accent);
       text-decoration: none;
-      border-bottom: 1px solid rgba(26, 107, 92, 0.3);
+      border-bottom: 1px solid var(--link-line);
       transition: border-color 0.2s;
     }
     section p a:hover, section li a:hover { border-bottom-color: var(--accent); }
 
     /* Key finding */
     .finding {
-      position: relative;
-      isolation: isolate;
       padding: 46px 0;
       margin: 30px 0;
       text-align: center;
-    }
-    .finding::before {
-      content: "";
-      position: absolute;
-      z-index: -1;
-      top: 0; bottom: 0;
-      left: -100vw; right: -100vw;
-      background: var(--accent-light);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
+      /* full-bleed band painted as ink overflow, so it never widens the page */
+      border-image: conic-gradient(var(--accent-light) 0 0) fill 0 / / 0 100vmax;
     }
     .finding .label, .finding .statement, .finding .sub {
       max-width: 804px;
@@ -317,7 +442,7 @@
       background: var(--bg);
       border: 1px solid var(--border);
       border-radius: 8px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+      box-shadow: 0 2px 12px var(--shadow);
     }
     .finding-evidence img {
       width: 100%;
@@ -496,7 +621,7 @@
     .q-link:hover { opacity: 0.65; }
 
     /* Briefly highlight a question when jumped to */
-    #q1, #q2, #q3 { scroll-margin-top: 24px; }
+    #q1, #q2, #q3 { scroll-margin-top: calc(var(--header-h) + 16px); }
     #q1:target, #q2:target, #q3:target {
       background: var(--accent-light);
       border-radius: 4px;
@@ -525,11 +650,24 @@
   </style>
 </head>
 
-<body>
+<body id="top">
 
 
+<header class="site-header">
+  <div class="site-header__in">
+    <a class="site-header__title" href="#top">The Gaussian Is Enough for Fine-Tuning LBMs</a>
+    <div class="site-header__actions">
+      <a class="hbtn" href="" aria-label="Paper"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span class="hbtn__label">Paper</span></a>
+      <a class="hbtn" href="#bibtex" aria-label="BibTeX"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span class="hbtn__label">BibTeX</span></a>
+      <button class="hbtn hbtn--icon" type="button" id="theme-toggle" aria-label="Switch between day and night mode"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<button class="toc-toggle" type="button" aria-controls="toc" aria-expanded="false">☰&nbsp; Contents</button>
+<div class="toc-backdrop" hidden></div>
 <div class="layout">
-<aside class="toc" aria-label="Contents">
+<aside class="toc" id="toc" aria-label="Contents">
   <ul>
     <li><a class="toc-sec" href="#overview">Overview</a>
       <ul>
@@ -585,23 +723,20 @@
 
 <!-- Hero -->
 <div class="hero container">
-  <h1>The Gaussian Is Enough:<br>Flow-Matching Priors Do Not Help<br>When Fine-Tuning Large Behavior Models</h1>
+  <h1>The Gaussian Is Enough: <br>Flow-Matching Priors Do Not Help <br>When Fine-Tuning Large Behavior Models</h1>
   <p class="authors-list">
-    Chen Xu<sup>1</sup>&ensp;
-    Rishi Shah<sup>2</sup>&ensp;
-    Hadas Kress-Gazit<sup>3</sup>&ensp;
-    Haruki Nishimura<sup>1</sup>&ensp;
-    Masha Itkina<sup>1</sup>
+    <span class="author">Chen Xu<sup>1,*</sup></span>&ensp;
+    <span class="author">Rishi Shah<sup>2</sup></span>&ensp;
+    <span class="author">Hadas Kress-Gazit<sup>3</sup></span>&ensp;
+    <span class="author">Haruki Nishimura<sup>1</sup></span>&ensp;
+    <span class="author">Masha Itkina<sup>1</sup></span>
   </p>
   <p class="affiliations">
     <sup>1</sup>Toyota Research Institute&ensp;&ensp;
     <sup>2</sup>Woven by Toyota&ensp;&ensp;
     <sup>3</sup>Cornell University
   </p>
-  <div class="links">
-    <a href="" class="primary">Paper</a>
-    <a href="#bibtex" class="secondary">BibTeX</a>
-  </div>
+  <p class="correspondence">*Corresponding author: <a href="mailto:chen.xu@tri.global">chen.xu@tri.global</a></p>
 </div>
 
 <!-- Overview: what an action prior is, and what two of them look like -->
@@ -1089,6 +1224,29 @@ document.querySelectorAll('.prior-tab').forEach(b => {
   b.addEventListener('focus', () => showPrior(b.dataset.prior));
 });
 showPrior('Z');
+
+// Day / night toggle (remembers the choice)
+document.getElementById('theme-toggle').addEventListener('click', () => {
+  const next = document.documentElement.getAttribute('data-theme') === 'night' ? 'day' : 'night';
+  document.documentElement.setAttribute('data-theme', next);
+  try { localStorage.setItem('theme', next); } catch (e) {}
+});
+
+// Narrow screens: the contents list is a drawer opened by the floating button
+(() => {
+  const toc = document.getElementById('toc');
+  const btn = document.querySelector('.toc-toggle');
+  const backdrop = document.querySelector('.toc-backdrop');
+  const setOpen = open => {
+    toc.classList.toggle('open', open);
+    backdrop.hidden = !open;
+    btn.setAttribute('aria-expanded', String(open));
+  };
+  btn.addEventListener('click', () => setOpen(!toc.classList.contains('open')));
+  backdrop.addEventListener('click', () => setOpen(false));
+  toc.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setOpen(false)));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') setOpen(false); });
+})();
 
 // Highlight the contents entry for the part currently being read
 (() => {
