@@ -9,6 +9,8 @@
 
   <!-- Open Graph / link-preview cards -->
   <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://cxu-tri.github.io/non_gaussian_FT/" />
+  <meta name="citation_arxiv_id" content="2609.27070" />
   <meta property="og:title" content="The Gaussian Is Enough: Flow-Matching Priors Do Not Help When Fine-Tuning Large Behavior Models" />
   <meta property="og:description" content="Non-Gaussian action priors that help when training from scratch do not improve fine-tuning of pretrained Large Behavior Models. Across 100K+ simulation and 1250 hardware rollouts, the standard Gaussian prior is statistically indistinguishable from or better than closer-to-target priors." />
   <meta property="og:image" content="Assets/fig1_opener.png" />
@@ -666,7 +668,7 @@
   <div class="site-header__in">
     <a class="site-header__title" href="#top"><svg class="gauss-mark" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><circle cx="22.59" cy="12.54" r="0.65" fill-opacity="0.38"/><circle cx="5.13" cy="5.03" r="0.70" fill-opacity="0.43"/><circle cx="12.34" cy="21.22" r="0.73" fill-opacity="0.46"/><circle cx="17.70" cy="5.31" r="0.75" fill-opacity="0.49"/><circle cx="3.64" cy="13.04" r="0.77" fill-opacity="0.51"/><circle cx="18.62" cy="16.70" r="0.79" fill-opacity="0.53"/><circle cx="10.35" cy="4.33" r="0.81" fill-opacity="0.54"/><circle cx="8.16" cy="18.55" r="0.82" fill-opacity="0.56"/><circle cx="19.04" cy="9.83" r="0.83" fill-opacity="0.57"/><circle cx="5.53" cy="8.94" r="0.85" fill-opacity="0.58"/><circle cx="14.62" cy="18.44" r="0.86" fill-opacity="0.59"/><circle cx="14.35" cy="5.65" r="0.87" fill-opacity="0.60"/><circle cx="6.13" cy="15.01" r="0.88" fill-opacity="0.61"/><circle cx="18.20" cy="13.70" r="0.89" fill-opacity="0.62"/><circle cx="8.66" cy="6.69" r="0.89" fill-opacity="0.63"/><circle cx="10.90" cy="18.02" r="0.90" fill-opacity="0.64"/><circle cx="16.76" cy="8.39" r="0.91" fill-opacity="0.65"/><circle cx="6.20" cy="11.46" r="0.92" fill-opacity="0.66"/><circle cx="15.82" cy="16.22" r="0.93" fill-opacity="0.67"/><circle cx="12.03" cy="6.44" r="0.94" fill-opacity="0.67"/><circle cx="8.32" cy="15.98" r="0.94" fill-opacity="0.68"/><circle cx="17.28" cy="11.56" r="0.95" fill-opacity="0.69"/><circle cx="7.91" cy="8.83" r="0.96" fill-opacity="0.70"/><circle cx="12.86" cy="16.98" r="0.96" fill-opacity="0.70"/><circle cx="14.66" cy="7.86" r="0.97" fill-opacity="0.71"/><circle cx="7.35" cy="13.23" r="0.98" fill-opacity="0.72"/><circle cx="16.15" cy="14.18" r="0.98" fill-opacity="0.73"/><circle cx="10.45" cy="7.70" r="0.99" fill-opacity="0.73"/><circle cx="10.28" cy="16.11" r="1.00" fill-opacity="0.74"/><circle cx="15.94" cy="10.18" r="1.00" fill-opacity="0.75"/><circle cx="7.97" cy="10.71" r="1.01" fill-opacity="0.75"/><circle cx="14.05" cy="15.57" r="1.02" fill-opacity="0.76"/><circle cx="12.88" cy="8.09" r="1.02" fill-opacity="0.77"/><circle cx="8.81" cy="14.22" r="1.03" fill-opacity="0.77"/><circle cx="15.75" cy="12.50" r="1.04" fill-opacity="0.78"/><circle cx="9.65" cy="9.19" r="1.04" fill-opacity="0.79"/><circle cx="11.84" cy="15.55" r="1.05" fill-opacity="0.79"/><circle cx="14.44" cy="9.57" r="1.06" fill-opacity="0.80"/><circle cx="8.68" cy="12.14" r="1.06" fill-opacity="0.81"/><circle cx="14.45" cy="14.07" r="1.07" fill-opacity="0.81"/><circle cx="11.60" cy="8.93" r="1.07" fill-opacity="0.82"/><circle cx="10.29" cy="14.43" r="1.08" fill-opacity="0.83"/><circle cx="14.79" cy="11.39" r="1.09" fill-opacity="0.83"/><circle cx="9.64" cy="10.63" r="1.10" fill-opacity="0.84"/><circle cx="12.78" cy="14.49" r="1.10" fill-opacity="0.85"/><circle cx="13.05" cy="9.76" r="1.11" fill-opacity="0.86"/><circle cx="9.83" cy="12.89" r="1.12" fill-opacity="0.86"/><circle cx="14.07" cy="12.76" r="1.13" fill-opacity="0.87"/><circle cx="11.05" cy="10.17" r="1.13" fill-opacity="0.88"/><circle cx="11.50" cy="13.84" r="1.14" fill-opacity="0.89"/><circle cx="13.48" cy="11.06" r="1.15" fill-opacity="0.90"/><circle cx="10.45" cy="11.73" r="1.16" fill-opacity="0.91"/><circle cx="12.84" cy="13.10" r="1.17" fill-opacity="0.92"/><circle cx="12.10" cy="10.84" r="1.18" fill-opacity="0.93"/><circle cx="11.34" cy="12.61" r="1.20" fill-opacity="0.95"/><circle cx="12.52" cy="12.00" r="1.22" fill-opacity="0.97"/></svg><span>The Gaussian Is Enough for Fine-Tuning LBMs</span></a>
     <div class="site-header__actions">
-      <a class="hbtn" href="" aria-label="Paper"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span class="hbtn__label">Paper</span></a>
+      <a class="hbtn" href="https://arxiv.org/abs/2609.27070" target="_blank" rel="noopener noreferrer" aria-label="Paper"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span class="hbtn__label">Paper</span></a>
       <a class="hbtn" href="#bibtex" aria-label="BibTeX"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span class="hbtn__label">BibTeX</span></a>
       <button class="hbtn hbtn--icon" type="button" id="theme-toggle" aria-label="Switch between day and night mode"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor"/></svg></button>
     </div>
@@ -765,7 +767,7 @@
     distribution p&#8320; over action chunks, to the target action. The action head is conditioned on the observation embedding e
     produced by the encoder and on the diffusion step t. By default p&#8320; is a standard Gaussian; it is the only component we vary.
     <strong>Right:</strong> samples from two priors we consider, executed as actions in simulation before flow-matching transport, on the held-out
-    DumpVegetablesIntoContainer task from <a href="https://arxiv.org/abs/2507.05331">LBM Eval</a>.
+    DumpVegetablesIntoContainer task from <a href="https://github.com/ToyotaResearchInstitute/lbm_eval">LBM Eval</a>.
     The Gaussian 𝒵 produces incoherent, random motion. A<sub>pre</sub>, the zero-shot actions of the pretrained policy,
     already makes partial task progress before fine-tuning on task-specific data.
   </p>
@@ -857,7 +859,7 @@
   </ul>
   <p id="setup-settings">Four experimental settings address these questions:</p>
   <ul>
-    <li><strong>(1) Controlled test</strong> <span style="color: var(--accent); font-weight: 600;">(Q1)</span>: a prior constructed to be measurably close to the target, using LBM 1.0 on five <a href="https://arxiv.org/abs/2507.05331">LBM Eval</a> tasks in simulation (14,000 rollouts).</li>
+    <li><strong>(1) Controlled test</strong> <span style="color: var(--accent); font-weight: 600;">(Q1)</span>: a prior constructed to be measurably close to the target, using LBM 1.0 on five <a href="https://github.com/ToyotaResearchInstitute/lbm_eval">LBM Eval</a> tasks in simulation (14,000 rollouts).</li>
     <li><strong>(2) Full-scale fine-tuning in simulation</strong> <span style="color: var(--accent); font-weight: 600;">(Q1, Q2)</span>: LBM 1.0 on eight LBM Eval tasks unseen during pretraining, at five fine-tuning data fractions (56,000 rollouts).</li>
     <li><strong>(3) Bimanual hardware</strong> <span style="color: var(--accent); font-weight: 600;">(Q3)</span>: blind A/B testing on five bimanual tasks with two Franka FR3 arms (1250 rollouts).</li>
     <li><strong>(4) Other LBM architectures</strong> <span style="color: var(--accent); font-weight: 600;">(Q3)</span>: π<sub>0.5</sub> and GR00T N1.5 on 34 <a href="https://scholar.google.com/scholar?q=%22RoboCasa365%3A%20A%20Large-Scale%20Simulation%20Framework%20for%20Training%20and%20Benchmarking%20Generalist%20Robots%22">RoboCasa365</a> tasks (54,400 rollouts).</li>
@@ -1182,14 +1184,14 @@
 <!-- BibTeX -->
 <section id="bibtex" class="container">
   <h2>BibTeX</h2>
+  <p>Preprint: <a href="https://arxiv.org/abs/2609.27070">arXiv:2609.27070</a></p>
   <div class="bibtex-block">
     <button class="copy-btn" onclick="copyBibtex()">Copy</button>
     <pre>@article{xu2026gaussian,
-  title   = {The Gaussian Is Enough: Flow-Matching Priors Do Not
-             Help When Fine-Tuning Large Behavior Models},
-  author  = {Xu, Chen and Shah, Rishi and Kress-Gazit, Hadas
-             and Nishimura, Haruki and Itkina, Masha},
-  year    = {2026},
+  title={The Gaussian Is Enough: Flow-Matching Priors Do Not Help When Fine-Tuning Large Behavior Models},
+  author={Xu, Chen and Shah, Rishi and Kress-Gazit, Hadas and Nishimura, Haruki and Itkina, Masha},
+  journal={arXiv preprint arXiv:2609.27070},
+  year={2026}
 }</pre>
   </div>
 </section>
