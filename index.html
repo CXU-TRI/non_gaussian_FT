@@ -539,6 +539,19 @@
     .hw-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 16px; }
     .hw-panel[hidden] { display: none; }
 
+    /* Initial-condition browsers */
+    .ic-browser { margin: 8px 0 20px; }
+    .ic-tasks { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+    .ic-pick { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; color: var(--text-muted); margin-bottom: 10px; }
+    .ic-select {
+      font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; color: var(--text);
+      background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 5px 8px;
+    }
+    .ic-browser .video-pair { margin-top: 0; }
+    .ic-ok { color: var(--accent); font-weight: 600; }
+    .ic-bad { color: #b3261e; font-weight: 600; }
+    [data-theme="night"] .ic-bad { color: #f28b82; }
+
     /* Seven-prior explorer */
     .priors {
       border: 1px solid var(--border);
@@ -938,6 +951,22 @@
     </figure>
   </div>
 
+  <div class="ic-browser" id="sim-ic" data-index="Assets/sim_ic/index.json" data-root="Assets/sim_ic" data-kind="sim">
+    <p>
+      To look beyond hand-selected examples, the browser below covers all eight LBM Eval tasks. Each task was evaluated on
+      200 initial conditions per prior; for visualization we drew 10 of them at random with a fixed seed, so the examples are
+      not chosen by their outcome. Each grid shows the seven fine-tuned policies (100% data) from the same initial condition.
+    </p>
+    <div class="ic-tasks" role="tablist" aria-label="Simulation tasks"></div>
+    <label class="ic-pick">Initial condition <select class="ic-select" aria-label="Initial condition"></select></label>
+    <div class="video-pair">
+      <figure>
+        <video muted loop playsinline controls preload="none"></video>
+        <figcaption></figcaption>
+      </figure>
+    </div>
+  </div>
+
   <div>
     <h3 id="res-3">(3) Bimanual hardware: the finding holds on real robots <span>(<a href="#q3" class="q-link">Q3</a>)</span></h3>
     <p>
@@ -960,9 +989,10 @@
   <div>
     <p>
       Select a task to see all 250 of its rollouts: each row is one prior and each tile one rollout, individually
-      time-compressed to 10 s and tagged S (success, green) or F (failure, red). Below each grid is one initial condition
-      drawn uniformly at random, with a fixed seed, from those that have videos for all five priors, so the example is not
-      chosen by its outcome. For FoodBank and BikeRotorInstall we also show hand-selected initial conditions.
+      time-compressed to 10 s and tagged S (success, green) or F (failure, red). Below each grid, a selector lets you view any
+      of the task's 50 initial conditions side by side across the five priors; it opens on one drawn uniformly at random with a
+      fixed seed, so the default example is not chosen by its outcome. For FoodBank and BikeRotorInstall we also show
+      hand-selected initial conditions.
     </p>
   </div>
   <div class="hw-tabs" role="tablist" aria-label="Hardware tasks">
@@ -979,11 +1009,14 @@
       <figcaption><strong>FoodBank</strong>: 5 priors × 50 rollouts. Success rates: 𝒵 66%, E<sub>pre</sub>+σ<sub>E</sub>𝒵 70%, Cocos 66%, BRIDGER 70%, Retrieval 68%. Use fullscreen to inspect individual tiles.</figcaption>
     </figure>
   </div>
-  <div class="video-pair">
-    <figure>
-      <video src="Assets/hw_row_FoodBank_random.mp4" poster="Assets/hw_row_FoodBank_random_poster.jpg" muted loop playsinline controls preload="none" aria-label="Randomly selected initial condition on FoodBank"></video>
-      <figcaption><strong>FoodBank, randomly selected initial condition</strong> (IC 9): 𝒵 fails, E<sub>pre</sub>+σ<sub>E</sub>𝒵 fails, Cocos succeeds, BRIDGER fails, Retrieval succeeds. Each clip time-normalized to 12 s.</figcaption>
-    </figure>
+  <div class="ic-browser" data-index="Assets/hw_ic/index.json" data-root="Assets/hw_ic" data-kind="hw" data-task="FoodBank" data-task-name="FoodBank" data-default="Assets/random_ic_selection.json">
+    <label class="ic-pick">Initial condition <select class="ic-select" aria-label="Initial condition"></select></label>
+    <div class="video-pair">
+      <figure>
+        <video muted loop playsinline controls preload="none"></video>
+        <figcaption></figcaption>
+      </figure>
+    </div>
   </div>
   <div>
     <p>
@@ -1009,11 +1042,14 @@
       <figcaption><strong>BikeRotorInstall</strong>: 5 priors × 50 rollouts. Success rates: 𝒵 18%, E<sub>pre</sub>+σ<sub>E</sub>𝒵 28%, Cocos 22%, BRIDGER 0%, Retrieval 14%. Use fullscreen to inspect individual tiles.</figcaption>
     </figure>
   </div>
-  <div class="video-pair">
-    <figure>
-      <video src="Assets/hw_row_Bike_random.mp4" poster="Assets/hw_row_Bike_random_poster.jpg" muted loop playsinline controls preload="none" aria-label="Randomly selected initial condition on BikeRotorInstall"></video>
-      <figcaption><strong>BikeRotorInstall, randomly selected initial condition</strong> (IC 8): 𝒵 fails, E<sub>pre</sub>+σ<sub>E</sub>𝒵 fails, Cocos succeeds, BRIDGER fails, Retrieval fails. Each clip time-normalized to 12 s.</figcaption>
-    </figure>
+  <div class="ic-browser" data-index="Assets/hw_ic/index.json" data-root="Assets/hw_ic" data-kind="hw" data-task="Bike" data-task-name="BikeRotorInstall" data-default="Assets/random_ic_selection.json">
+    <label class="ic-pick">Initial condition <select class="ic-select" aria-label="Initial condition"></select></label>
+    <div class="video-pair">
+      <figure>
+        <video muted loop playsinline controls preload="none"></video>
+        <figcaption></figcaption>
+      </figure>
+    </div>
   </div>
   <div>
     <p>
@@ -1037,11 +1073,14 @@
       <figcaption><strong>ClearKitchenCounter</strong>: 5 priors × 50 rollouts. Success rates: 𝒵 56%, E<sub>pre</sub>+σ<sub>E</sub>𝒵 74%, Cocos 70%, BRIDGER 4%, Retrieval 62%. One 𝒵 rollout has no stored video and is shown as a gray placeholder tile. Use fullscreen to inspect individual tiles.</figcaption>
     </figure>
   </div>
-  <div class="video-pair">
-    <figure>
-      <video src="Assets/hw_row_Kitchen_random.mp4" poster="Assets/hw_row_Kitchen_random_poster.jpg" muted loop playsinline controls preload="none" aria-label="Randomly selected initial condition on ClearKitchenCounter"></video>
-      <figcaption><strong>ClearKitchenCounter, randomly selected initial condition</strong> (IC 8 of the first of three initial-condition sets): 𝒵 succeeds, E<sub>pre</sub>+σ<sub>E</sub>𝒵 succeeds, Cocos succeeds, BRIDGER fails, Retrieval succeeds. Each clip time-normalized to 12 s.</figcaption>
-    </figure>
+  <div class="ic-browser" data-index="Assets/hw_ic/index.json" data-root="Assets/hw_ic" data-kind="hw" data-task="Kitchen" data-task-name="ClearKitchenCounter" data-default="Assets/random_ic_selection.json">
+    <label class="ic-pick">Initial condition <select class="ic-select" aria-label="Initial condition"></select></label>
+    <div class="video-pair">
+      <figure>
+        <video muted loop playsinline controls preload="none"></video>
+        <figcaption></figcaption>
+      </figure>
+    </div>
   </div>
   </div>
   <div class="hw-panel" data-task="Cookies" hidden>
@@ -1051,11 +1090,14 @@
       <figcaption><strong>GatheringIngredientsForCookies</strong>: 5 priors × 50 rollouts. Success rates: 𝒵 20%, E<sub>pre</sub>+σ<sub>E</sub>𝒵 16%, Cocos 10%, BRIDGER 10%, Retrieval 14%. Use fullscreen to inspect individual tiles.</figcaption>
     </figure>
   </div>
-  <div class="video-pair">
-    <figure>
-      <video src="Assets/hw_row_Cookies_random.mp4" poster="Assets/hw_row_Cookies_random_poster.jpg" muted loop playsinline controls preload="none" aria-label="Randomly selected initial condition on GatheringIngredientsForCookies"></video>
-      <figcaption><strong>GatheringIngredientsForCookies, randomly selected initial condition</strong> (IC 8): 𝒵 succeeds, E<sub>pre</sub>+σ<sub>E</sub>𝒵 fails, Cocos fails, BRIDGER fails, Retrieval fails. Each clip time-normalized to 12 s.</figcaption>
-    </figure>
+  <div class="ic-browser" data-index="Assets/hw_ic/index.json" data-root="Assets/hw_ic" data-kind="hw" data-task="Cookies" data-task-name="GatheringIngredientsForCookies" data-default="Assets/random_ic_selection.json">
+    <label class="ic-pick">Initial condition <select class="ic-select" aria-label="Initial condition"></select></label>
+    <div class="video-pair">
+      <figure>
+        <video muted loop playsinline controls preload="none"></video>
+        <figcaption></figcaption>
+      </figure>
+    </div>
   </div>
   </div>
   <div class="hw-panel" data-task="BusBin" hidden>
@@ -1065,11 +1107,14 @@
       <figcaption><strong>BusBin</strong>: 5 priors × 50 rollouts. Success rates: 𝒵 64%, E<sub>pre</sub>+σ<sub>E</sub>𝒵 52%, Cocos 50%, BRIDGER 52%, Retrieval 54%. Use fullscreen to inspect individual tiles.</figcaption>
     </figure>
   </div>
-  <div class="video-pair">
-    <figure>
-      <video src="Assets/hw_row_BusBin_random.mp4" poster="Assets/hw_row_BusBin_random_poster.jpg" muted loop playsinline controls preload="none" aria-label="Randomly selected initial condition on BusBin"></video>
-      <figcaption><strong>BusBin, randomly selected initial condition</strong> (IC 7): 𝒵 succeeds, E<sub>pre</sub>+σ<sub>E</sub>𝒵 fails, Cocos succeeds, BRIDGER succeeds, Retrieval fails. Each clip time-normalized to 12 s.</figcaption>
-    </figure>
+  <div class="ic-browser" data-index="Assets/hw_ic/index.json" data-root="Assets/hw_ic" data-kind="hw" data-task="BusBin" data-task-name="BusBin" data-default="Assets/random_ic_selection.json">
+    <label class="ic-pick">Initial condition <select class="ic-select" aria-label="Initial condition"></select></label>
+    <div class="video-pair">
+      <figure>
+        <video muted loop playsinline controls preload="none"></video>
+        <figcaption></figcaption>
+      </figure>
+    </div>
   </div>
   </div>
   <div>
@@ -1261,6 +1306,77 @@ document.getElementById('theme-toggle').addEventListener('click', () => {
   document.documentElement.setAttribute('data-theme', next);
   try { localStorage.setItem('theme', next); } catch (e) {}
 });
+
+// Initial-condition browsers (simulation: task + IC; hardware: IC within a task tab)
+(() => {
+  const PRIOR_HTML = {
+    'Gaussian Z': '𝒵', 'A_pre': 'A<sub>pre</sub>', 'A_pre + σ_A Z': 'A<sub>pre</sub>+σ<sub>A</sub>𝒵',
+    'E_pre + σ_E Z': 'E<sub>pre</sub>+σ<sub>E</sub>𝒵', 'Cocos': 'Cocos', 'BRIDGER': 'BRIDGER', 'Retrieval': 'Retrieval'
+  };
+  const mark = ok => ok ? '<span class="ic-ok">✓</span>' : '<span class="ic-bad">✗</span>';
+  const cache = {};
+  const load = url => cache[url] || (cache[url] = fetch(url).then(r => r.ok ? r.json() : Promise.reject(url)));
+
+  document.querySelectorAll('.ic-browser').forEach(async box => {
+    const kind = box.dataset.kind, root = box.dataset.root;
+    const video = box.querySelector('video'), cap = box.querySelector('figcaption');
+    const sel = box.querySelector('.ic-select'), tasks = box.querySelector('.ic-tasks');
+    let index;
+    try { index = await load(box.dataset.index); } catch (e) { box.hidden = true; return; }
+
+    let task = box.dataset.task || Object.keys(index)[0];
+    const show = key => {
+      const ic = index[task].ics[key];
+      video.pause();
+      video.poster = `${root}/${task}/ic_${key}_poster.jpg`;
+      video.src = `${root}/${task}/ic_${key}.mp4`;
+      video.play().catch(() => {});
+      const parts = Object.entries(ic.priors).map(([p, r]) => {
+        const extra = kind === 'hw' && r.partial_progress !== undefined ? ` (${Math.round(r.partial_progress * 100)}%)` : '';
+        const nov = r.video === false ? ' (no video)' : '';
+        return `${PRIOR_HTML[p] || p} ${mark(r.success)}${extra}${nov}`;
+      });
+      const name = box.dataset.taskName || index[task].lbm_task || task;
+      const where = kind === 'sim' ? `episode ${key}` : label(key);
+      const speed = kind === 'sim' && ic.speed ? ` ${ic.speed.toFixed(1)}× speed.` : ' Each clip time-normalized to 12 s.';
+      const legend = kind === 'hw' ? ' Percentages are partial task progress.' : '';
+      cap.innerHTML = `<strong>${name}, ${where}:</strong> ${parts.join(', ')}.${speed}${legend}`;
+    };
+    const label = k => {                 // hardware: name ICs by demo index (and initial-condition set for Kitchen)
+      const ic = index[task].ics[k];
+      return `IC ${ic.demo_index ?? k}` + (ic.ic_set ? ` (set ${ic.ic_set.slice(0, 10)})` : '');
+    };
+    const fill = () => {
+      const keys = Object.keys(index[task].ics).sort((a, b) => Number(a) - Number(b));
+      sel.innerHTML = keys.map(k => `<option value="${k}">${kind === 'sim' ? 'episode ' + k : label(k)}</option>`).join('');
+      return keys;
+    };
+    if (tasks) {
+      tasks.innerHTML = Object.keys(index).map(t =>
+        `<button class="prior-tab" type="button" role="tab" data-task="${t}" title="${index[t].lbm_task || ''}">${t}</button>`).join('');
+      tasks.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+        task = b.dataset.task;
+        tasks.querySelectorAll('button').forEach(x => x.classList.toggle('is-active', x === b));
+        const keys = fill(); sel.value = keys[0]; show(keys[0]);
+      }));
+      tasks.querySelector('button').classList.add('is-active');
+    }
+    const keys = fill();
+    let start = keys[0];
+    if (box.dataset.default) {          // hardware: open on the seeded random IC
+      try {
+        const rnd = (await load(box.dataset.default))[task];
+        const hit = keys.find(k => {
+          const ic = index[task].ics[k];
+          return String(ic.demo_index) === String(rnd.ic) && (!rnd.ic_set || ic.ic_set === rnd.ic_set);
+        });
+        if (hit) start = hit;
+      } catch (e) {}
+    }
+    sel.value = start; show(start);
+    sel.addEventListener('change', () => show(sel.value));
+  });
+})();
 
 // Hardware task selector: show one task's videos at a time, pause the rest
 (() => {
