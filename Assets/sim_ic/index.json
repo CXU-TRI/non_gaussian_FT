@@ -1,0 +1,3026 @@
+{
+ "DumpVeg": {
+  "lbm_task": "DumpVegetablesFromSmallToLargeContainer",
+  "runs": {
+   "Z": "s3://robotics-manip-lbm/efs/data/tasks/DumpVegetablesFromSmallToLargeContainer/cabot/sim/bc/rollout/2025-12-02T04-13-48+00-00/",
+   "A_LBM": "s3://robotics-manip-lbm/efs/data/tasks/DumpVegetablesFromSmallToLargeContainer/cabot/sim/bc/rollout/2025-12-03T20-01-38+00-00/",
+   "A_LBMplusZ": "s3://robotics-manip-lbm/efs/data/tasks/DumpVegetablesFromSmallToLargeContainer/cabot/sim/bc/rollout/2025-11-26T19-02-36+00-00/",
+   "O_LBMplus025Z": "s3://robotics-manip-lbm/efs/data/tasks/DumpVegetablesFromSmallToLargeContainer/cabot/sim/bc/rollout/2026-02-05T22-06-41+00-00/",
+   "Cocos": "s3://robotics-manip-lbm/efs/data/tasks/DumpVegetablesFromSmallToLargeContainer/cabot/sim/bc/rollout/2026-03-28T09-05-49+00-00/",
+   "BRIDGER": "s3://robotics-manip-lbm/efs/data/tasks/DumpVegetablesFromSmallToLargeContainer/cabot/sim/bc/rollout/2026-03-23T12-37-12+00-00/",
+   "Retrieval": "s3://robotics-manip-lbm/efs/data/tasks/DumpVegetablesFromSmallToLargeContainer/cabot/sim/bc/rollout/2026-03-23T12-52-01+00-00/"
+  },
+  "seed": 2026,
+  "candidates": 198,
+  "episodes": [
+   30,
+   82,
+   130,
+   133,
+   167,
+   26,
+   58,
+   155,
+   161,
+   144
+  ],
+  "ics": {
+   "30": {
+    "speed": 5.0083,
+    "seed_match": true,
+    "ic_seed": 100000130,
+    "priors": {
+     "Gaussian Z": {
+      "success": false,
+      "duration_s": 60.1
+     },
+     "A_pre": {
+      "success": true,
+      "duration_s": 27.7
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 17.8
+     },
+     "E_pre + σ_E Z": {
+      "success": true,
+      "duration_s": 24.4
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 23.2
+     },
+     "BRIDGER": {
+      "success": false,
+      "duration_s": 60.1
+     },
+     "Retrieval": {
+      "success": false,
+      "duration_s": 60.1
+     }
+    }
+   },
+   "82": {
+    "speed": 5.0083,
+    "seed_match": true,
+    "ic_seed": 100000182,
+    "priors": {
+     "Gaussian Z": {
+      "success": false,
+      "duration_s": 60.1
+     },
+     "A_pre": {
+      "success": false,
+      "duration_s": 60.1
+     },
+     "A_pre + σ_A Z": {
+      "success": false,
+      "duration_s": 60.1
+     },
+     "E_pre + σ_E Z": {
+      "success": false,
+      "duration_s": 60.1
+     },
+     "Cocos": {
+      "success": false,
+      "duration_s": 60.1
+     },
+     "BRIDGER": {
+      "success": false,
+      "duration_s": 60.1
+     },
+     "Retrieval": {
+      "success": false,
+      "duration_s": 60.1
+     }
+    }
+   },
+   "130": {
+    "speed": 5.0083,
+    "seed_match": true,
+    "ic_seed": 100000230,
+    "priors": {
+     "Gaussian Z": {
+      "success": true,
+      "duration_s": 23.2
+     },
+     "A_pre": {
+      "success": false,
+      "duration_s": 60.1
+     },
+     "A_pre + σ_A Z": {
+      "success": false,
+      "duration_s": 60.1
+     },
+     "E_pre + σ_E Z": {
+      "success": true,
+      "duration_s": 28.8
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 29.3
+     },
+     "BRIDGER": {
+      "success": false,
+      "duration_s": 60.1
+     },
+     "Retrieval": {
+      "success": true,
+      "duration_s": 21.7
+     }
+    }
+   },
+   "133": {
+    "speed": 5.0083,
+    "seed_match": true,
+    "ic_seed": 100000233,
+    "priors": {
+     "Gaussian Z": {
+      "success": false,
+      "duration_s": 60.1
+     },
+     "A_pre": {
+      "success": true,
+      "duration_s": 37.1
+     },
+     "A_pre + σ_A Z": {
+      "success": false,
+      "duration_s": 60.1
+     },
+     "E_pre + σ_E Z": {
+      "success": false,
+      "duration_s": 60.1
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 42.9
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 43.4
+     },
+     "Retrieval": {
+      "success": false,
+      "duration_s": 60.1
+     }
+    }
+   },
+   "167": {
+    "speed": 5.0083,
+    "seed_match": true,
+    "ic_seed": 100000267,
+    "priors": {
+     "Gaussian Z": {
+      "success": false,
+      "duration_s": 60.1
+     },
+     "A_pre": {
+      "success": false,
+      "duration_s": 60.1
+     },
+     "A_pre + σ_A Z": {
+      "success": false,
+      "duration_s": 60.1
+     },
+     "E_pre + σ_E Z": {
+      "success": false,
+      "duration_s": 60.1
+     },
+     "Cocos": {
+      "success": false,
+      "duration_s": 60.1
+     },
+     "BRIDGER": {
+      "success": false,
+      "duration_s": 60.1
+     },
+     "Retrieval": {
+      "success": false,
+      "duration_s": 60.1
+     }
+    }
+   },
+   "26": {
+    "speed": 5.0083,
+    "seed_match": true,
+    "ic_seed": 100000126,
+    "priors": {
+     "Gaussian Z": {
+      "success": false,
+      "duration_s": 60.1
+     },
+     "A_pre": {
+      "success": false,
+      "duration_s": 60.1
+     },
+     "A_pre + σ_A Z": {
+      "success": false,
+      "duration_s": 60.1
+     },
+     "E_pre + σ_E Z": {
+      "success": false,
+      "duration_s": 60.1
+     },
+     "Cocos": {
+      "success": false,
+      "duration_s": 60.1
+     },
+     "BRIDGER": {
+      "success": false,
+      "duration_s": 60.1
+     },
+     "Retrieval": {
+      "success": true,
+      "duration_s": 29.9
+     }
+    }
+   },
+   "58": {
+    "speed": 5.0083,
+    "seed_match": true,
+    "ic_seed": 100000158,
+    "priors": {
+     "Gaussian Z": {
+      "success": true,
+      "duration_s": 34.7
+     },
+     "A_pre": {
+      "success": false,
+      "duration_s": 60.1
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 29.4
+     },
+     "E_pre + σ_E Z": {
+      "success": true,
+      "duration_s": 26.6
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 24.4
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 35.8
+     },
+     "Retrieval": {
+      "success": true,
+      "duration_s": 38.1
+     }
+    }
+   },
+   "155": {
+    "speed": 5.0083,
+    "seed_match": true,
+    "ic_seed": 100000255,
+    "priors": {
+     "Gaussian Z": {
+      "success": false,
+      "duration_s": 60.1
+     },
+     "A_pre": {
+      "success": false,
+      "duration_s": 60.1
+     },
+     "A_pre + σ_A Z": {
+      "success": false,
+      "duration_s": 60.1
+     },
+     "E_pre + σ_E Z": {
+      "success": false,
+      "duration_s": 60.1
+     },
+     "Cocos": {
+      "success": false,
+      "duration_s": 60.1
+     },
+     "BRIDGER": {
+      "success": false,
+      "duration_s": 60.1
+     },
+     "Retrieval": {
+      "success": false,
+      "duration_s": 60.1
+     }
+    }
+   },
+   "161": {
+    "speed": 5.0083,
+    "seed_match": true,
+    "ic_seed": 100000261,
+    "priors": {
+     "Gaussian Z": {
+      "success": true,
+      "duration_s": 27.6
+     },
+     "A_pre": {
+      "success": false,
+      "duration_s": 60.1
+     },
+     "A_pre + σ_A Z": {
+      "success": false,
+      "duration_s": 60.1
+     },
+     "E_pre + σ_E Z": {
+      "success": false,
+      "duration_s": 60.1
+     },
+     "Cocos": {
+      "success": false,
+      "duration_s": 60.1
+     },
+     "BRIDGER": {
+      "success": false,
+      "duration_s": 60.1
+     },
+     "Retrieval": {
+      "success": false,
+      "duration_s": 60.1
+     }
+    }
+   },
+   "144": {
+    "speed": 5.0083,
+    "seed_match": true,
+    "ic_seed": 100000244,
+    "priors": {
+     "Gaussian Z": {
+      "success": false,
+      "duration_s": 60.1
+     },
+     "A_pre": {
+      "success": false,
+      "duration_s": 60.1
+     },
+     "A_pre + σ_A Z": {
+      "success": false,
+      "duration_s": 60.1
+     },
+     "E_pre + σ_E Z": {
+      "success": false,
+      "duration_s": 60.1
+     },
+     "Cocos": {
+      "success": false,
+      "duration_s": 60.1
+     },
+     "BRIDGER": {
+      "success": false,
+      "duration_s": 60.1
+     },
+     "Retrieval": {
+      "success": false,
+      "duration_s": 60.1
+     }
+    }
+   }
+  }
+ },
+ "SeparateFruit": {
+  "lbm_task": "SeparateFruitsVegetablesIntoContainers",
+  "runs": {
+   "Z": "s3://robotics-manip-lbm/efs/data/tasks/SeparateFruitsVegetablesIntoContainers/cabot/sim/bc/rollout/2025-12-02T04-12-38+00-00/",
+   "A_LBM": "s3://robotics-manip-lbm/efs/data/tasks/SeparateFruitsVegetablesIntoContainers/cabot/sim/bc/rollout/2025-12-04T21-44-19+00-00/",
+   "A_LBMplusZ": "s3://robotics-manip-lbm/efs/data/tasks/SeparateFruitsVegetablesIntoContainers/cabot/sim/bc/rollout/2025-11-27T06-40-23+00-00/",
+   "O_LBMplus025Z": "s3://robotics-manip-lbm/efs/data/tasks/SeparateFruitsVegetablesIntoContainers/cabot/sim/bc/rollout/2026-02-06T01-40-38+00-00/",
+   "Cocos": "s3://robotics-manip-lbm/efs/data/tasks/SeparateFruitsVegetablesIntoContainers/cabot/sim/bc/rollout/2026-03-28T12-34-36+00-00/",
+   "BRIDGER": "s3://robotics-manip-lbm/efs/data/tasks/SeparateFruitsVegetablesIntoContainers/cabot/sim/bc/rollout/2026-03-23T10-52-07+00-00/",
+   "Retrieval": "s3://robotics-manip-lbm/efs/data/tasks/SeparateFruitsVegetablesIntoContainers/cabot/sim/bc/rollout/2026-03-23T11-04-20+00-00/"
+  },
+  "seed": 2026,
+  "candidates": 198,
+  "episodes": [
+   31,
+   82,
+   129,
+   132,
+   166,
+   26,
+   58,
+   154,
+   160,
+   143
+  ],
+  "ics": {
+   "31": {
+    "speed": 3.7583,
+    "seed_match": true,
+    "ic_seed": 100000131,
+    "priors": {
+     "Gaussian Z": {
+      "success": true,
+      "duration_s": 19.5
+     },
+     "A_pre": {
+      "success": false,
+      "duration_s": 45.1
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 9.7
+     },
+     "E_pre + σ_E Z": {
+      "success": false,
+      "duration_s": 45.1
+     },
+     "Cocos": {
+      "success": false,
+      "duration_s": 45.1
+     },
+     "BRIDGER": {
+      "success": false,
+      "duration_s": 45.1
+     },
+     "Retrieval": {
+      "success": true,
+      "duration_s": 13.2
+     }
+    }
+   },
+   "82": {
+    "speed": 3.7583,
+    "seed_match": true,
+    "ic_seed": 100000182,
+    "priors": {
+     "Gaussian Z": {
+      "success": false,
+      "duration_s": 45.1
+     },
+     "A_pre": {
+      "success": true,
+      "duration_s": 38.5
+     },
+     "A_pre + σ_A Z": {
+      "success": false,
+      "duration_s": 45.1
+     },
+     "E_pre + σ_E Z": {
+      "success": false,
+      "duration_s": 45.1
+     },
+     "Cocos": {
+      "success": false,
+      "duration_s": 45.1
+     },
+     "BRIDGER": {
+      "success": false,
+      "duration_s": 45.1
+     },
+     "Retrieval": {
+      "success": false,
+      "duration_s": 45.1
+     }
+    }
+   },
+   "129": {
+    "speed": 3.7583,
+    "seed_match": true,
+    "ic_seed": 100000229,
+    "priors": {
+     "Gaussian Z": {
+      "success": false,
+      "duration_s": 45.1
+     },
+     "A_pre": {
+      "success": false,
+      "duration_s": 45.1
+     },
+     "A_pre + σ_A Z": {
+      "success": false,
+      "duration_s": 45.1
+     },
+     "E_pre + σ_E Z": {
+      "success": false,
+      "duration_s": 45.1
+     },
+     "Cocos": {
+      "success": false,
+      "duration_s": 45.1
+     },
+     "BRIDGER": {
+      "success": false,
+      "duration_s": 45.1
+     },
+     "Retrieval": {
+      "success": false,
+      "duration_s": 45.1
+     }
+    }
+   },
+   "132": {
+    "speed": 3.7583,
+    "seed_match": true,
+    "ic_seed": 100000232,
+    "priors": {
+     "Gaussian Z": {
+      "success": true,
+      "duration_s": 18.0
+     },
+     "A_pre": {
+      "success": true,
+      "duration_s": 18.6
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 12.2
+     },
+     "E_pre + σ_E Z": {
+      "success": true,
+      "duration_s": 16.1
+     },
+     "Cocos": {
+      "success": false,
+      "duration_s": 45.1
+     },
+     "BRIDGER": {
+      "success": false,
+      "duration_s": 45.1
+     },
+     "Retrieval": {
+      "success": true,
+      "duration_s": 13.1
+     }
+    }
+   },
+   "166": {
+    "speed": 3.7583,
+    "seed_match": true,
+    "ic_seed": 100000266,
+    "priors": {
+     "Gaussian Z": {
+      "success": false,
+      "duration_s": 45.1
+     },
+     "A_pre": {
+      "success": true,
+      "duration_s": 14.1
+     },
+     "A_pre + σ_A Z": {
+      "success": false,
+      "duration_s": 45.1
+     },
+     "E_pre + σ_E Z": {
+      "success": false,
+      "duration_s": 45.1
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 20.7
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 12.9
+     },
+     "Retrieval": {
+      "success": false,
+      "duration_s": 45.1
+     }
+    }
+   },
+   "26": {
+    "speed": 3.7583,
+    "seed_match": true,
+    "ic_seed": 100000126,
+    "priors": {
+     "Gaussian Z": {
+      "success": false,
+      "duration_s": 45.1
+     },
+     "A_pre": {
+      "success": false,
+      "duration_s": 45.1
+     },
+     "A_pre + σ_A Z": {
+      "success": false,
+      "duration_s": 45.1
+     },
+     "E_pre + σ_E Z": {
+      "success": false,
+      "duration_s": 45.1
+     },
+     "Cocos": {
+      "success": false,
+      "duration_s": 45.1
+     },
+     "BRIDGER": {
+      "success": false,
+      "duration_s": 45.1
+     },
+     "Retrieval": {
+      "success": false,
+      "duration_s": 45.1
+     }
+    }
+   },
+   "58": {
+    "speed": 3.7583,
+    "seed_match": true,
+    "ic_seed": 100000158,
+    "priors": {
+     "Gaussian Z": {
+      "success": false,
+      "duration_s": 45.1
+     },
+     "A_pre": {
+      "success": false,
+      "duration_s": 45.1
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 17.8
+     },
+     "E_pre + σ_E Z": {
+      "success": false,
+      "duration_s": 45.1
+     },
+     "Cocos": {
+      "success": false,
+      "duration_s": 45.1
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 7.7
+     },
+     "Retrieval": {
+      "success": false,
+      "duration_s": 45.1
+     }
+    }
+   },
+   "154": {
+    "speed": 3.7583,
+    "seed_match": true,
+    "ic_seed": 100000254,
+    "priors": {
+     "Gaussian Z": {
+      "success": false,
+      "duration_s": 45.1
+     },
+     "A_pre": {
+      "success": false,
+      "duration_s": 45.1
+     },
+     "A_pre + σ_A Z": {
+      "success": false,
+      "duration_s": 45.1
+     },
+     "E_pre + σ_E Z": {
+      "success": false,
+      "duration_s": 45.1
+     },
+     "Cocos": {
+      "success": false,
+      "duration_s": 45.1
+     },
+     "BRIDGER": {
+      "success": false,
+      "duration_s": 45.1
+     },
+     "Retrieval": {
+      "success": false,
+      "duration_s": 45.1
+     }
+    }
+   },
+   "160": {
+    "speed": 3.7583,
+    "seed_match": true,
+    "ic_seed": 100000260,
+    "priors": {
+     "Gaussian Z": {
+      "success": false,
+      "duration_s": 45.1
+     },
+     "A_pre": {
+      "success": false,
+      "duration_s": 45.1
+     },
+     "A_pre + σ_A Z": {
+      "success": false,
+      "duration_s": 45.1
+     },
+     "E_pre + σ_E Z": {
+      "success": false,
+      "duration_s": 45.1
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 11.5
+     },
+     "BRIDGER": {
+      "success": false,
+      "duration_s": 45.1
+     },
+     "Retrieval": {
+      "success": false,
+      "duration_s": 45.1
+     }
+    }
+   },
+   "143": {
+    "speed": 3.7583,
+    "seed_match": true,
+    "ic_seed": 100000243,
+    "priors": {
+     "Gaussian Z": {
+      "success": false,
+      "duration_s": 45.1
+     },
+     "A_pre": {
+      "success": false,
+      "duration_s": 45.1
+     },
+     "A_pre + σ_A Z": {
+      "success": false,
+      "duration_s": 45.1
+     },
+     "E_pre + σ_E Z": {
+      "success": false,
+      "duration_s": 45.1
+     },
+     "Cocos": {
+      "success": false,
+      "duration_s": 45.1
+     },
+     "BRIDGER": {
+      "success": false,
+      "duration_s": 45.1
+     },
+     "Retrieval": {
+      "success": false,
+      "duration_s": 45.1
+     }
+    }
+   }
+  }
+ },
+ "TurnContainer": {
+  "lbm_task": "TurnLargeContainerUpsideDown",
+  "runs": {
+   "Z": "s3://robotics-manip-lbm/efs/data/tasks/TurnLargeContainerUpsideDown/cabot/sim/bc/rollout/2025-12-02T04-42-22+00-00/",
+   "A_LBM": "s3://robotics-manip-lbm/efs/data/tasks/TurnLargeContainerUpsideDown/cabot/sim/bc/rollout/2025-12-04T22-15-24+00-00/",
+   "A_LBMplusZ": "s3://robotics-manip-lbm/efs/data/tasks/TurnLargeContainerUpsideDown/cabot/sim/bc/rollout/2025-11-27T07-12-37+00-00/",
+   "O_LBMplus025Z": "s3://robotics-manip-lbm/efs/data/tasks/TurnLargeContainerUpsideDown/cabot/sim/bc/rollout/2026-02-06T02-43-07+00-00/",
+   "Cocos": "s3://robotics-manip-lbm/efs/data/tasks/TurnLargeContainerUpsideDown/cabot/sim/bc/rollout/2026-03-28T13-36-41+00-00/",
+   "BRIDGER": "s3://robotics-manip-lbm/efs/data/tasks/TurnLargeContainerUpsideDown/cabot/sim/bc/rollout/2026-03-23T13-52-47+00-00/",
+   "Retrieval": "s3://robotics-manip-lbm/efs/data/tasks/TurnLargeContainerUpsideDown/cabot/sim/bc/rollout/2026-03-23T14-04-18+00-00/"
+  },
+  "seed": 2026,
+  "candidates": 200,
+  "episodes": [
+   30,
+   81,
+   128,
+   131,
+   165,
+   26,
+   57,
+   153,
+   159,
+   142
+  ],
+  "ics": {
+   "30": {
+    "speed": 3.3417,
+    "seed_match": true,
+    "ic_seed": 100000130,
+    "priors": {
+     "Gaussian Z": {
+      "success": false,
+      "duration_s": 40.1
+     },
+     "A_pre": {
+      "success": false,
+      "duration_s": 40.1
+     },
+     "A_pre + σ_A Z": {
+      "success": false,
+      "duration_s": 40.1
+     },
+     "E_pre + σ_E Z": {
+      "success": true,
+      "duration_s": 26.9
+     },
+     "Cocos": {
+      "success": false,
+      "duration_s": 40.1
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 12.5
+     },
+     "Retrieval": {
+      "success": true,
+      "duration_s": 32.3
+     }
+    }
+   },
+   "81": {
+    "speed": 3.3417,
+    "seed_match": true,
+    "ic_seed": 100000181,
+    "priors": {
+     "Gaussian Z": {
+      "success": false,
+      "duration_s": 40.1
+     },
+     "A_pre": {
+      "success": true,
+      "duration_s": 37.8
+     },
+     "A_pre + σ_A Z": {
+      "success": false,
+      "duration_s": 40.1
+     },
+     "E_pre + σ_E Z": {
+      "success": true,
+      "duration_s": 30.4
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 23.8
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 19.3
+     },
+     "Retrieval": {
+      "success": false,
+      "duration_s": 40.1
+     }
+    }
+   },
+   "128": {
+    "speed": 3.3417,
+    "seed_match": true,
+    "ic_seed": 100000228,
+    "priors": {
+     "Gaussian Z": {
+      "success": true,
+      "duration_s": 12.4
+     },
+     "A_pre": {
+      "success": false,
+      "duration_s": 40.1
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 29.8
+     },
+     "E_pre + σ_E Z": {
+      "success": true,
+      "duration_s": 13.2
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 14.0
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 12.8
+     },
+     "Retrieval": {
+      "success": false,
+      "duration_s": 40.1
+     }
+    }
+   },
+   "131": {
+    "speed": 3.3417,
+    "seed_match": true,
+    "ic_seed": 100000231,
+    "priors": {
+     "Gaussian Z": {
+      "success": true,
+      "duration_s": 18.3
+     },
+     "A_pre": {
+      "success": true,
+      "duration_s": 23.9
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 23.9
+     },
+     "E_pre + σ_E Z": {
+      "success": false,
+      "duration_s": 40.1
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 18.8
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 16.5
+     },
+     "Retrieval": {
+      "success": true,
+      "duration_s": 32.4
+     }
+    }
+   },
+   "165": {
+    "speed": 3.3417,
+    "seed_match": true,
+    "ic_seed": 100000265,
+    "priors": {
+     "Gaussian Z": {
+      "success": false,
+      "duration_s": 40.1
+     },
+     "A_pre": {
+      "success": false,
+      "duration_s": 40.1
+     },
+     "A_pre + σ_A Z": {
+      "success": false,
+      "duration_s": 40.1
+     },
+     "E_pre + σ_E Z": {
+      "success": true,
+      "duration_s": 26.8
+     },
+     "Cocos": {
+      "success": false,
+      "duration_s": 40.1
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 27.2
+     },
+     "Retrieval": {
+      "success": false,
+      "duration_s": 40.1
+     }
+    }
+   },
+   "26": {
+    "speed": 3.3417,
+    "seed_match": true,
+    "ic_seed": 100000126,
+    "priors": {
+     "Gaussian Z": {
+      "success": false,
+      "duration_s": 40.1
+     },
+     "A_pre": {
+      "success": false,
+      "duration_s": 40.1
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 20.3
+     },
+     "E_pre + σ_E Z": {
+      "success": false,
+      "duration_s": 40.1
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 15.4
+     },
+     "BRIDGER": {
+      "success": false,
+      "duration_s": 40.1
+     },
+     "Retrieval": {
+      "success": false,
+      "duration_s": 40.1
+     }
+    }
+   },
+   "57": {
+    "speed": 3.3417,
+    "seed_match": true,
+    "ic_seed": 100000157,
+    "priors": {
+     "Gaussian Z": {
+      "success": false,
+      "duration_s": 40.1
+     },
+     "A_pre": {
+      "success": false,
+      "duration_s": 40.1
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 12.8
+     },
+     "E_pre + σ_E Z": {
+      "success": false,
+      "duration_s": 40.1
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 8.8
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 19.2
+     },
+     "Retrieval": {
+      "success": true,
+      "duration_s": 31.4
+     }
+    }
+   },
+   "153": {
+    "speed": 3.3417,
+    "seed_match": true,
+    "ic_seed": 100000253,
+    "priors": {
+     "Gaussian Z": {
+      "success": false,
+      "duration_s": 40.1
+     },
+     "A_pre": {
+      "success": true,
+      "duration_s": 19.9
+     },
+     "A_pre + σ_A Z": {
+      "success": false,
+      "duration_s": 40.1
+     },
+     "E_pre + σ_E Z": {
+      "success": false,
+      "duration_s": 40.1
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 38.2
+     },
+     "BRIDGER": {
+      "success": false,
+      "duration_s": 40.1
+     },
+     "Retrieval": {
+      "success": false,
+      "duration_s": 40.1
+     }
+    }
+   },
+   "159": {
+    "speed": 3.3417,
+    "seed_match": true,
+    "ic_seed": 100000259,
+    "priors": {
+     "Gaussian Z": {
+      "success": false,
+      "duration_s": 40.1
+     },
+     "A_pre": {
+      "success": false,
+      "duration_s": 40.1
+     },
+     "A_pre + σ_A Z": {
+      "success": false,
+      "duration_s": 40.1
+     },
+     "E_pre + σ_E Z": {
+      "success": false,
+      "duration_s": 40.1
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 15.9
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 21.1
+     },
+     "Retrieval": {
+      "success": false,
+      "duration_s": 40.1
+     }
+    }
+   },
+   "142": {
+    "speed": 3.3417,
+    "seed_match": true,
+    "ic_seed": 100000242,
+    "priors": {
+     "Gaussian Z": {
+      "success": true,
+      "duration_s": 22.9
+     },
+     "A_pre": {
+      "success": false,
+      "duration_s": 40.1
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 35.3
+     },
+     "E_pre + σ_E Z": {
+      "success": false,
+      "duration_s": 40.1
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 21.0
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 11.6
+     },
+     "Retrieval": {
+      "success": true,
+      "duration_s": 22.5
+     }
+    }
+   }
+  }
+ },
+ "PutContainer": {
+  "lbm_task": "PutContainersOnPlate",
+  "runs": {
+   "Z": "s3://robotics-manip-lbm/efs/data/tasks/PutContainersOnPlate/cabot/sim/bc/rollout/2025-12-02T04-50-53+00-00/",
+   "A_LBM": "s3://robotics-manip-lbm/efs/data/tasks/PutContainersOnPlate/cabot/sim/bc/rollout/2025-12-04T23-21-43+00-00/",
+   "A_LBMplusZ": "s3://robotics-manip-lbm/efs/data/tasks/PutContainersOnPlate/cabot/sim/bc/rollout/2025-11-27T05-29-24+00-00/",
+   "O_LBMplus025Z": "s3://robotics-manip-lbm/efs/data/tasks/PutContainersOnPlate/cabot/sim/bc/rollout/2026-02-05T23-17-32+00-00/",
+   "Cocos": "s3://robotics-manip-lbm/efs/data/tasks/PutContainersOnPlate/cabot/sim/bc/rollout/2026-03-28T10-18-52+00-00/",
+   "BRIDGER": "s3://robotics-manip-lbm/efs/data/tasks/PutContainersOnPlate/cabot/sim/bc/rollout/2026-03-23T16-16-14+00-00/",
+   "Retrieval": "s3://robotics-manip-lbm/efs/data/tasks/PutContainersOnPlate/cabot/sim/bc/rollout/2026-03-23T16-29-25+00-00/"
+  },
+  "seed": 2026,
+  "candidates": 199,
+  "episodes": [
+   30,
+   82,
+   129,
+   132,
+   166,
+   26,
+   58,
+   154,
+   160,
+   143
+  ],
+  "ics": {
+   "30": {
+    "speed": 4.175,
+    "seed_match": true,
+    "ic_seed": 100000130,
+    "priors": {
+     "Gaussian Z": {
+      "success": false,
+      "duration_s": 50.1
+     },
+     "A_pre": {
+      "success": true,
+      "duration_s": 25.6
+     },
+     "A_pre + σ_A Z": {
+      "success": false,
+      "duration_s": 50.1
+     },
+     "E_pre + σ_E Z": {
+      "success": true,
+      "duration_s": 20.2
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 43.6
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 20.8
+     },
+     "Retrieval": {
+      "success": false,
+      "duration_s": 50.1
+     }
+    }
+   },
+   "82": {
+    "speed": 4.175,
+    "seed_match": true,
+    "ic_seed": 100000182,
+    "priors": {
+     "Gaussian Z": {
+      "success": false,
+      "duration_s": 50.1
+     },
+     "A_pre": {
+      "success": true,
+      "duration_s": 26.1
+     },
+     "A_pre + σ_A Z": {
+      "success": false,
+      "duration_s": 50.1
+     },
+     "E_pre + σ_E Z": {
+      "success": true,
+      "duration_s": 20.9
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 19.5
+     },
+     "BRIDGER": {
+      "success": false,
+      "duration_s": 50.1
+     },
+     "Retrieval": {
+      "success": true,
+      "duration_s": 20.9
+     }
+    }
+   },
+   "129": {
+    "speed": 4.175,
+    "seed_match": true,
+    "ic_seed": 100000229,
+    "priors": {
+     "Gaussian Z": {
+      "success": false,
+      "duration_s": 50.1
+     },
+     "A_pre": {
+      "success": false,
+      "duration_s": 50.1
+     },
+     "A_pre + σ_A Z": {
+      "success": false,
+      "duration_s": 50.1
+     },
+     "E_pre + σ_E Z": {
+      "success": false,
+      "duration_s": 50.1
+     },
+     "Cocos": {
+      "success": false,
+      "duration_s": 50.1
+     },
+     "BRIDGER": {
+      "success": false,
+      "duration_s": 50.1
+     },
+     "Retrieval": {
+      "success": false,
+      "duration_s": 50.1
+     }
+    }
+   },
+   "132": {
+    "speed": 4.175,
+    "seed_match": true,
+    "ic_seed": 100000232,
+    "priors": {
+     "Gaussian Z": {
+      "success": false,
+      "duration_s": 50.1
+     },
+     "A_pre": {
+      "success": false,
+      "duration_s": 50.1
+     },
+     "A_pre + σ_A Z": {
+      "success": false,
+      "duration_s": 50.1
+     },
+     "E_pre + σ_E Z": {
+      "success": false,
+      "duration_s": 50.1
+     },
+     "Cocos": {
+      "success": false,
+      "duration_s": 50.1
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 37.0
+     },
+     "Retrieval": {
+      "success": false,
+      "duration_s": 50.1
+     }
+    }
+   },
+   "166": {
+    "speed": 4.175,
+    "seed_match": true,
+    "ic_seed": 100000266,
+    "priors": {
+     "Gaussian Z": {
+      "success": false,
+      "duration_s": 50.1
+     },
+     "A_pre": {
+      "success": false,
+      "duration_s": 50.1
+     },
+     "A_pre + σ_A Z": {
+      "success": false,
+      "duration_s": 50.1
+     },
+     "E_pre + σ_E Z": {
+      "success": true,
+      "duration_s": 30.9
+     },
+     "Cocos": {
+      "success": false,
+      "duration_s": 50.1
+     },
+     "BRIDGER": {
+      "success": false,
+      "duration_s": 50.1
+     },
+     "Retrieval": {
+      "success": false,
+      "duration_s": 50.1
+     }
+    }
+   },
+   "26": {
+    "speed": 4.175,
+    "seed_match": true,
+    "ic_seed": 100000126,
+    "priors": {
+     "Gaussian Z": {
+      "success": true,
+      "duration_s": 21.8
+     },
+     "A_pre": {
+      "success": false,
+      "duration_s": 50.1
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 20.9
+     },
+     "E_pre + σ_E Z": {
+      "success": true,
+      "duration_s": 22.4
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 27.6
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 19.1
+     },
+     "Retrieval": {
+      "success": true,
+      "duration_s": 21.1
+     }
+    }
+   },
+   "58": {
+    "speed": 4.175,
+    "seed_match": true,
+    "ic_seed": 100000158,
+    "priors": {
+     "Gaussian Z": {
+      "success": true,
+      "duration_s": 26.6
+     },
+     "A_pre": {
+      "success": false,
+      "duration_s": 50.1
+     },
+     "A_pre + σ_A Z": {
+      "success": false,
+      "duration_s": 50.1
+     },
+     "E_pre + σ_E Z": {
+      "success": true,
+      "duration_s": 28.0
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 26.5
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 27.1
+     },
+     "Retrieval": {
+      "success": true,
+      "duration_s": 33.0
+     }
+    }
+   },
+   "154": {
+    "speed": 4.175,
+    "seed_match": true,
+    "ic_seed": 100000254,
+    "priors": {
+     "Gaussian Z": {
+      "success": false,
+      "duration_s": 50.1
+     },
+     "A_pre": {
+      "success": false,
+      "duration_s": 50.1
+     },
+     "A_pre + σ_A Z": {
+      "success": false,
+      "duration_s": 50.1
+     },
+     "E_pre + σ_E Z": {
+      "success": false,
+      "duration_s": 50.1
+     },
+     "Cocos": {
+      "success": false,
+      "duration_s": 50.1
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 18.5
+     },
+     "Retrieval": {
+      "success": false,
+      "duration_s": 50.1
+     }
+    }
+   },
+   "160": {
+    "speed": 4.175,
+    "seed_match": true,
+    "ic_seed": 100000260,
+    "priors": {
+     "Gaussian Z": {
+      "success": true,
+      "duration_s": 21.4
+     },
+     "A_pre": {
+      "success": false,
+      "duration_s": 50.1
+     },
+     "A_pre + σ_A Z": {
+      "success": false,
+      "duration_s": 50.1
+     },
+     "E_pre + σ_E Z": {
+      "success": false,
+      "duration_s": 50.1
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 38.6
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 19.2
+     },
+     "Retrieval": {
+      "success": false,
+      "duration_s": 50.1
+     }
+    }
+   },
+   "143": {
+    "speed": 4.175,
+    "seed_match": true,
+    "ic_seed": 100000243,
+    "priors": {
+     "Gaussian Z": {
+      "success": false,
+      "duration_s": 50.1
+     },
+     "A_pre": {
+      "success": true,
+      "duration_s": 23.1
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 24.9
+     },
+     "E_pre + σ_E Z": {
+      "success": false,
+      "duration_s": 50.1
+     },
+     "Cocos": {
+      "success": false,
+      "duration_s": 50.1
+     },
+     "BRIDGER": {
+      "success": false,
+      "duration_s": 50.1
+     },
+     "Retrieval": {
+      "success": false,
+      "duration_s": 50.1
+     }
+    }
+   }
+  }
+ },
+ "PutFruit": {
+  "lbm_task": "PutFruitInLargeContainerAndCoverWithPlate",
+  "runs": {
+   "Z": "s3://robotics-manip-lbm/efs/data/tasks/PutFruitInLargeContainerAndCoverWithPlate/cabot/sim/bc/rollout/2025-12-02T03-38-03+00-00/",
+   "A_LBM": "s3://robotics-manip-lbm/efs/data/tasks/PutFruitInLargeContainerAndCoverWithPlate/cabot/sim/bc/rollout/2025-12-04T21-07-55+00-00/",
+   "A_LBMplusZ": "s3://robotics-manip-lbm/efs/data/tasks/PutFruitInLargeContainerAndCoverWithPlate/cabot/sim/bc/rollout/2025-11-27T06-04-49+00-00/",
+   "O_LBMplus025Z": "s3://robotics-manip-lbm/efs/data/tasks/PutFruitInLargeContainerAndCoverWithPlate/cabot/sim/bc/rollout/2026-02-06T00-32-06+00-00/",
+   "Cocos": "s3://robotics-manip-lbm/efs/data/tasks/PutFruitInLargeContainerAndCoverWithPlate/cabot/sim/bc/rollout/2026-03-28T11-22-25+00-00/",
+   "BRIDGER": "s3://robotics-manip-lbm/efs/data/tasks/PutFruitInLargeContainerAndCoverWithPlate/cabot/sim/bc/rollout/2026-03-23T07-22-36+00-00/",
+   "Retrieval": "s3://robotics-manip-lbm/efs/data/tasks/PutFruitInLargeContainerAndCoverWithPlate/cabot/sim/bc/rollout/2026-03-23T07-36-40+00-00/"
+  },
+  "seed": 2026,
+  "candidates": 199,
+  "episodes": [
+   30,
+   81,
+   128,
+   131,
+   166,
+   26,
+   57,
+   154,
+   160,
+   143
+  ],
+  "ics": {
+   "30": {
+    "speed": 2.125,
+    "seed_match": true,
+    "ic_seed": 100000130,
+    "priors": {
+     "Gaussian Z": {
+      "success": true,
+      "duration_s": 25.5
+     },
+     "A_pre": {
+      "success": true,
+      "duration_s": 19.6
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 17.4
+     },
+     "E_pre + σ_E Z": {
+      "success": true,
+      "duration_s": 19.5
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 18.9
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 21.2
+     },
+     "Retrieval": {
+      "success": true,
+      "duration_s": 25.4
+     }
+    }
+   },
+   "81": {
+    "speed": 2.7583,
+    "seed_match": true,
+    "ic_seed": 100000181,
+    "priors": {
+     "Gaussian Z": {
+      "success": true,
+      "duration_s": 23.4
+     },
+     "A_pre": {
+      "success": true,
+      "duration_s": 20.8
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 25.7
+     },
+     "E_pre + σ_E Z": {
+      "success": true,
+      "duration_s": 17.9
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 33.1
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 22.7
+     },
+     "Retrieval": {
+      "success": true,
+      "duration_s": 21.1
+     }
+    }
+   },
+   "128": {
+    "speed": 4.5917,
+    "seed_match": true,
+    "ic_seed": 100000228,
+    "priors": {
+     "Gaussian Z": {
+      "success": false,
+      "duration_s": 55.1
+     },
+     "A_pre": {
+      "success": false,
+      "duration_s": 55.1
+     },
+     "A_pre + σ_A Z": {
+      "success": false,
+      "duration_s": 55.1
+     },
+     "E_pre + σ_E Z": {
+      "success": true,
+      "duration_s": 30.0
+     },
+     "Cocos": {
+      "success": false,
+      "duration_s": 55.1
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 21.1
+     },
+     "Retrieval": {
+      "success": true,
+      "duration_s": 24.1
+     }
+    }
+   },
+   "131": {
+    "speed": 1.75,
+    "seed_match": true,
+    "ic_seed": 100000231,
+    "priors": {
+     "Gaussian Z": {
+      "success": true,
+      "duration_s": 18.8
+     },
+     "A_pre": {
+      "success": true,
+      "duration_s": 18.7
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 17.5
+     },
+     "E_pre + σ_E Z": {
+      "success": true,
+      "duration_s": 16.7
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 18.9
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 21.0
+     },
+     "Retrieval": {
+      "success": true,
+      "duration_s": 18.7
+     }
+    }
+   },
+   "166": {
+    "speed": 4.5917,
+    "seed_match": true,
+    "ic_seed": 100000266,
+    "priors": {
+     "Gaussian Z": {
+      "success": true,
+      "duration_s": 28.2
+     },
+     "A_pre": {
+      "success": true,
+      "duration_s": 21.1
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 19.7
+     },
+     "E_pre + σ_E Z": {
+      "success": false,
+      "duration_s": 55.1
+     },
+     "Cocos": {
+      "success": false,
+      "duration_s": 55.1
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 20.6
+     },
+     "Retrieval": {
+      "success": false,
+      "duration_s": 55.1
+     }
+    }
+   },
+   "26": {
+    "speed": 4.5917,
+    "seed_match": true,
+    "ic_seed": 100000126,
+    "priors": {
+     "Gaussian Z": {
+      "success": true,
+      "duration_s": 25.1
+     },
+     "A_pre": {
+      "success": false,
+      "duration_s": 55.1
+     },
+     "A_pre + σ_A Z": {
+      "success": false,
+      "duration_s": 55.1
+     },
+     "E_pre + σ_E Z": {
+      "success": true,
+      "duration_s": 28.2
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 30.7
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 24.5
+     },
+     "Retrieval": {
+      "success": false,
+      "duration_s": 55.1
+     }
+    }
+   },
+   "57": {
+    "speed": 4.5917,
+    "seed_match": true,
+    "ic_seed": 100000157,
+    "priors": {
+     "Gaussian Z": {
+      "success": true,
+      "duration_s": 35.5
+     },
+     "A_pre": {
+      "success": true,
+      "duration_s": 35.6
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 27.6
+     },
+     "E_pre + σ_E Z": {
+      "success": false,
+      "duration_s": 55.1
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 26.2
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 32.6
+     },
+     "Retrieval": {
+      "success": true,
+      "duration_s": 28.2
+     }
+    }
+   },
+   "154": {
+    "speed": 3.55,
+    "seed_match": true,
+    "ic_seed": 100000254,
+    "priors": {
+     "Gaussian Z": {
+      "success": true,
+      "duration_s": 18.4
+     },
+     "A_pre": {
+      "success": true,
+      "duration_s": 22.4
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 42.6
+     },
+     "E_pre + σ_E Z": {
+      "success": true,
+      "duration_s": 21.6
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 17.8
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 17.2
+     },
+     "Retrieval": {
+      "success": true,
+      "duration_s": 28.5
+     }
+    }
+   },
+   "160": {
+    "speed": 1.6333,
+    "seed_match": true,
+    "ic_seed": 100000260,
+    "priors": {
+     "Gaussian Z": {
+      "success": true,
+      "duration_s": 17.8
+     },
+     "A_pre": {
+      "success": true,
+      "duration_s": 14.3
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 17.0
+     },
+     "E_pre + σ_E Z": {
+      "success": true,
+      "duration_s": 16.0
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 16.6
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 19.6
+     },
+     "Retrieval": {
+      "success": true,
+      "duration_s": 15.5
+     }
+    }
+   },
+   "143": {
+    "speed": 4.5917,
+    "seed_match": true,
+    "ic_seed": 100000243,
+    "priors": {
+     "Gaussian Z": {
+      "success": true,
+      "duration_s": 44.2
+     },
+     "A_pre": {
+      "success": true,
+      "duration_s": 35.6
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 28.0
+     },
+     "E_pre + σ_E Z": {
+      "success": false,
+      "duration_s": 55.1
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 47.1
+     },
+     "BRIDGER": {
+      "success": false,
+      "duration_s": 55.1
+     },
+     "Retrieval": {
+      "success": false,
+      "duration_s": 55.1
+     }
+    }
+   }
+  }
+ },
+ "PutMug": {
+  "lbm_task": "PutMugInCenterOfTable",
+  "runs": {
+   "Z": "s3://robotics-manip-lbm/efs/data/tasks/PutMugInCenterOfTable/cabot/sim/bc/rollout/2025-12-02T04-03-16+00-00/",
+   "A_LBM": "s3://robotics-manip-lbm/efs/data/tasks/PutMugInCenterOfTable/cabot/sim/bc/rollout/2025-12-03T19-47-48+00-00/",
+   "A_LBMplusZ": "s3://robotics-manip-lbm/efs/data/tasks/PutMugInCenterOfTable/cabot/sim/bc/rollout/2025-11-26T18-01-32+00-00/",
+   "O_LBMplus025Z": "s3://robotics-manip-lbm/efs/data/tasks/PutMugInCenterOfTable/cabot/sim/bc/rollout/2026-02-05T20-11-00+00-00/",
+   "Cocos": "s3://robotics-manip-lbm/efs/data/tasks/PutMugInCenterOfTable/cabot/sim/bc/rollout/2026-03-28T08-32-36+00-00/",
+   "BRIDGER": "s3://robotics-manip-lbm/efs/data/tasks/PutMugInCenterOfTable/cabot/sim/bc/rollout/2026-03-23T10-50-06+00-00/",
+   "Retrieval": "s3://robotics-manip-lbm/efs/data/tasks/PutMugInCenterOfTable/cabot/sim/bc/rollout/2026-03-23T10-56-43+00-00/"
+  },
+  "seed": 2026,
+  "candidates": 200,
+  "episodes": [
+   30,
+   81,
+   128,
+   131,
+   165,
+   26,
+   57,
+   153,
+   159,
+   142
+  ],
+  "ics": {
+   "30": {
+    "speed": 1.2667,
+    "seed_match": true,
+    "ic_seed": 100000130,
+    "priors": {
+     "Gaussian Z": {
+      "success": true,
+      "duration_s": 10.7
+     },
+     "A_pre": {
+      "success": true,
+      "duration_s": 7.9
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 8.8
+     },
+     "E_pre + σ_E Z": {
+      "success": true,
+      "duration_s": 7.3
+     },
+     "Cocos": {
+      "success": false,
+      "duration_s": 15.2
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 8.1
+     },
+     "Retrieval": {
+      "success": false,
+      "duration_s": 15.2
+     }
+    }
+   },
+   "81": {
+    "speed": 1.0,
+    "seed_match": true,
+    "ic_seed": 100000181,
+    "priors": {
+     "Gaussian Z": {
+      "success": true,
+      "duration_s": 6.4
+     },
+     "A_pre": {
+      "success": true,
+      "duration_s": 6.8
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 5.9
+     },
+     "E_pre + σ_E Z": {
+      "success": true,
+      "duration_s": 6.7
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 6.7
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 10.2
+     },
+     "Retrieval": {
+      "success": true,
+      "duration_s": 6.3
+     }
+    }
+   },
+   "128": {
+    "speed": 1.0,
+    "seed_match": true,
+    "ic_seed": 100000228,
+    "priors": {
+     "Gaussian Z": {
+      "success": true,
+      "duration_s": 5.0
+     },
+     "A_pre": {
+      "success": true,
+      "duration_s": 5.2
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 5.9
+     },
+     "E_pre + σ_E Z": {
+      "success": true,
+      "duration_s": 5.9
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 5.1
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 5.7
+     },
+     "Retrieval": {
+      "success": true,
+      "duration_s": 6.0
+     }
+    }
+   },
+   "131": {
+    "speed": 1.0,
+    "seed_match": true,
+    "ic_seed": 100000231,
+    "priors": {
+     "Gaussian Z": {
+      "success": true,
+      "duration_s": 10.7
+     },
+     "A_pre": {
+      "success": true,
+      "duration_s": 6.2
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 5.9
+     },
+     "E_pre + σ_E Z": {
+      "success": true,
+      "duration_s": 7.9
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 8.1
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 7.0
+     },
+     "Retrieval": {
+      "success": true,
+      "duration_s": 8.3
+     }
+    }
+   },
+   "165": {
+    "speed": 1.0,
+    "seed_match": true,
+    "ic_seed": 100000265,
+    "priors": {
+     "Gaussian Z": {
+      "success": true,
+      "duration_s": 8.2
+     },
+     "A_pre": {
+      "success": true,
+      "duration_s": 9.6
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 7.8
+     },
+     "E_pre + σ_E Z": {
+      "success": true,
+      "duration_s": 9.4
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 9.8
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 4.7
+     },
+     "Retrieval": {
+      "success": true,
+      "duration_s": 9.0
+     }
+    }
+   },
+   "26": {
+    "speed": 1.0,
+    "seed_match": true,
+    "ic_seed": 100000126,
+    "priors": {
+     "Gaussian Z": {
+      "success": true,
+      "duration_s": 9.2
+     },
+     "A_pre": {
+      "success": true,
+      "duration_s": 7.0
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 6.2
+     },
+     "E_pre + σ_E Z": {
+      "success": true,
+      "duration_s": 10.1
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 8.2
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 7.2
+     },
+     "Retrieval": {
+      "success": true,
+      "duration_s": 7.0
+     }
+    }
+   },
+   "57": {
+    "speed": 1.0,
+    "seed_match": true,
+    "ic_seed": 100000157,
+    "priors": {
+     "Gaussian Z": {
+      "success": true,
+      "duration_s": 4.9
+     },
+     "A_pre": {
+      "success": true,
+      "duration_s": 5.4
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 5.1
+     },
+     "E_pre + σ_E Z": {
+      "success": true,
+      "duration_s": 4.8
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 5.4
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 5.7
+     },
+     "Retrieval": {
+      "success": true,
+      "duration_s": 5.0
+     }
+    }
+   },
+   "153": {
+    "speed": 1.0,
+    "seed_match": true,
+    "ic_seed": 100000253,
+    "priors": {
+     "Gaussian Z": {
+      "success": true,
+      "duration_s": 4.7
+     },
+     "A_pre": {
+      "success": true,
+      "duration_s": 4.7
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 4.4
+     },
+     "E_pre + σ_E Z": {
+      "success": true,
+      "duration_s": 4.6
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 4.8
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 4.7
+     },
+     "Retrieval": {
+      "success": true,
+      "duration_s": 5.1
+     }
+    }
+   },
+   "159": {
+    "speed": 1.0,
+    "seed_match": true,
+    "ic_seed": 100000259,
+    "priors": {
+     "Gaussian Z": {
+      "success": true,
+      "duration_s": 5.1
+     },
+     "A_pre": {
+      "success": true,
+      "duration_s": 6.9
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 5.4
+     },
+     "E_pre + σ_E Z": {
+      "success": true,
+      "duration_s": 7.2
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 5.0
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 5.8
+     },
+     "Retrieval": {
+      "success": true,
+      "duration_s": 6.0
+     }
+    }
+   },
+   "142": {
+    "speed": 1.2667,
+    "seed_match": true,
+    "ic_seed": 100000242,
+    "priors": {
+     "Gaussian Z": {
+      "success": true,
+      "duration_s": 8.3
+     },
+     "A_pre": {
+      "success": true,
+      "duration_s": 5.9
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 5.6
+     },
+     "E_pre + σ_E Z": {
+      "success": true,
+      "duration_s": 6.5
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 5.0
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 5.4
+     },
+     "Retrieval": {
+      "success": false,
+      "duration_s": 15.2
+     }
+    }
+   }
+  }
+ },
+ "PlaceAvocado": {
+  "lbm_task": "BimanualPlaceAvocadoFromBowlIntoBin",
+  "runs": {
+   "Z": "s3://robotics-manip-lbm/efs/data/tasks/BimanualPlaceAvocadoFromBowlIntoBin/riverway/sim/bc/rollout/2025-12-02T03-38-43+00-00/",
+   "A_LBM": "s3://robotics-manip-lbm/efs/data/tasks/BimanualPlaceAvocadoFromBowlIntoBin/riverway/sim/bc/rollout/2025-12-04T22-55-00+00-00/",
+   "A_LBMplusZ": "s3://robotics-manip-lbm/efs/data/tasks/BimanualPlaceAvocadoFromBowlIntoBin/riverway/sim/bc/rollout/2025-11-27T04-59-32+00-00/",
+   "O_LBMplus025Z": "s3://robotics-manip-lbm/efs/data/tasks/BimanualPlaceAvocadoFromBowlIntoBin/riverway/sim/bc/rollout/2026-02-05T18-16-24+00-00/",
+   "Cocos": "s3://robotics-manip-lbm/efs/data/tasks/BimanualPlaceAvocadoFromBowlIntoBin/riverway/sim/bc/rollout/2026-03-28T07-20-51+00-00/",
+   "BRIDGER": "s3://robotics-manip-lbm/efs/data/tasks/BimanualPlaceAvocadoFromBowlIntoBin/riverway/sim/bc/rollout/2026-05-12T20-17-45+00-00/",
+   "Retrieval": "s3://robotics-manip-lbm/efs/data/tasks/BimanualPlaceAvocadoFromBowlIntoBin/riverway/sim/bc/rollout/2026-03-23T07-29-27+00-00/"
+  },
+  "seed": 2026,
+  "candidates": 194,
+  "episodes": [
+   30,
+   86,
+   134,
+   137,
+   171,
+   26,
+   59,
+   159,
+   165,
+   148
+  ],
+  "ics": {
+   "30": {
+    "speed": 2.3,
+    "seed_match": true,
+    "ic_seed": 100000130,
+    "priors": {
+     "Gaussian Z": {
+      "success": true,
+      "duration_s": 18.6
+     },
+     "A_pre": {
+      "success": true,
+      "duration_s": 22.9
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 21.4
+     },
+     "E_pre + σ_E Z": {
+      "success": true,
+      "duration_s": 21.7
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 27.6
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 27.2
+     },
+     "Retrieval": {
+      "success": true,
+      "duration_s": 17.6
+     }
+    }
+   },
+   "86": {
+    "speed": 4.5917,
+    "seed_match": true,
+    "ic_seed": 100000186,
+    "priors": {
+     "Gaussian Z": {
+      "success": true,
+      "duration_s": 22.9
+     },
+     "A_pre": {
+      "success": true,
+      "duration_s": 17.8
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 26.5
+     },
+     "E_pre + σ_E Z": {
+      "success": true,
+      "duration_s": 21.6
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 23.3
+     },
+     "BRIDGER": {
+      "success": false,
+      "duration_s": 55.1
+     },
+     "Retrieval": {
+      "success": true,
+      "duration_s": 20.2
+     }
+    }
+   },
+   "134": {
+    "speed": 1.6917,
+    "seed_match": true,
+    "ic_seed": 100000234,
+    "priors": {
+     "Gaussian Z": {
+      "success": true,
+      "duration_s": 19.3
+     },
+     "A_pre": {
+      "success": true,
+      "duration_s": 20.3
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 19.6
+     },
+     "E_pre + σ_E Z": {
+      "success": true,
+      "duration_s": 18.7
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 18.3
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 18.6
+     },
+     "Retrieval": {
+      "success": true,
+      "duration_s": 20.3
+     }
+    }
+   },
+   "137": {
+    "speed": 4.5917,
+    "seed_match": true,
+    "ic_seed": 100000237,
+    "priors": {
+     "Gaussian Z": {
+      "success": true,
+      "duration_s": 54.7
+     },
+     "A_pre": {
+      "success": true,
+      "duration_s": 20.1
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 36.7
+     },
+     "E_pre + σ_E Z": {
+      "success": true,
+      "duration_s": 21.0
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 23.5
+     },
+     "BRIDGER": {
+      "success": false,
+      "duration_s": 55.1
+     },
+     "Retrieval": {
+      "success": true,
+      "duration_s": 28.8
+     }
+    }
+   },
+   "171": {
+    "speed": 2.8417,
+    "seed_match": true,
+    "ic_seed": 100000271,
+    "priors": {
+     "Gaussian Z": {
+      "success": true,
+      "duration_s": 29.5
+     },
+     "A_pre": {
+      "success": true,
+      "duration_s": 23.5
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 34.1
+     },
+     "E_pre + σ_E Z": {
+      "success": true,
+      "duration_s": 24.0
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 21.6
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 25.8
+     },
+     "Retrieval": {
+      "success": true,
+      "duration_s": 20.8
+     }
+    }
+   },
+   "26": {
+    "speed": 2.0083,
+    "seed_match": true,
+    "ic_seed": 100000126,
+    "priors": {
+     "Gaussian Z": {
+      "success": true,
+      "duration_s": 22.9
+     },
+     "A_pre": {
+      "success": true,
+      "duration_s": 22.6
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 24.1
+     },
+     "E_pre + σ_E Z": {
+      "success": true,
+      "duration_s": 20.3
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 18.7
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 18.3
+     },
+     "Retrieval": {
+      "success": true,
+      "duration_s": 19.3
+     }
+    }
+   },
+   "59": {
+    "speed": 3.8583,
+    "seed_match": true,
+    "ic_seed": 100000159,
+    "priors": {
+     "Gaussian Z": {
+      "success": true,
+      "duration_s": 30.6
+     },
+     "A_pre": {
+      "success": true,
+      "duration_s": 24.2
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 46.3
+     },
+     "E_pre + σ_E Z": {
+      "success": true,
+      "duration_s": 24.9
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 46.3
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 38.9
+     },
+     "Retrieval": {
+      "success": true,
+      "duration_s": 41.3
+     }
+    }
+   },
+   "159": {
+    "speed": 4.125,
+    "seed_match": true,
+    "ic_seed": 100000259,
+    "priors": {
+     "Gaussian Z": {
+      "success": true,
+      "duration_s": 19.8
+     },
+     "A_pre": {
+      "success": true,
+      "duration_s": 17.4
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 17.4
+     },
+     "E_pre + σ_E Z": {
+      "success": true,
+      "duration_s": 16.9
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 18.5
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 17.7
+     },
+     "Retrieval": {
+      "success": true,
+      "duration_s": 49.5
+     }
+    }
+   },
+   "165": {
+    "speed": 1.6917,
+    "seed_match": true,
+    "ic_seed": 100000265,
+    "priors": {
+     "Gaussian Z": {
+      "success": true,
+      "duration_s": 20.3
+     },
+     "A_pre": {
+      "success": true,
+      "duration_s": 17.6
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 17.7
+     },
+     "E_pre + σ_E Z": {
+      "success": true,
+      "duration_s": 17.8
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 16.3
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 17.7
+     },
+     "Retrieval": {
+      "success": true,
+      "duration_s": 17.7
+     }
+    }
+   },
+   "148": {
+    "speed": 2.9583,
+    "seed_match": true,
+    "ic_seed": 100000248,
+    "priors": {
+     "Gaussian Z": {
+      "success": true,
+      "duration_s": 19.2
+     },
+     "A_pre": {
+      "success": true,
+      "duration_s": 17.0
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 19.3
+     },
+     "E_pre + σ_E Z": {
+      "success": true,
+      "duration_s": 35.5
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 17.7
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 17.8
+     },
+     "Retrieval": {
+      "success": true,
+      "duration_s": 27.9
+     }
+    }
+   }
+  }
+ },
+ "PutSpatula": {
+  "lbm_task": "BimanualPutSpatulaOnPlateFromUtensilCrock",
+  "runs": {
+   "Z": "s3://robotics-manip-lbm/efs/data/tasks/BimanualPutSpatulaOnPlateFromUtensilCrock/riverway/sim/bc/rollout/2026-01-11T21-16-20+00-00/",
+   "A_LBM": "s3://robotics-manip-lbm/efs/data/tasks/BimanualPutSpatulaOnPlateFromUtensilCrock/riverway/sim/bc/rollout/2025-12-04T23-08-30+00-00/",
+   "A_LBMplusZ": "s3://robotics-manip-lbm/efs/data/tasks/BimanualPutSpatulaOnPlateFromUtensilCrock/riverway/sim/bc/rollout/2026-01-11T21-32-03+00-00/",
+   "O_LBMplus025Z": "s3://robotics-manip-lbm/efs/data/tasks/BimanualPutSpatulaOnPlateFromUtensilCrock/riverway/sim/bc/rollout/2026-02-05T19-34-29+00-00/",
+   "Cocos": "s3://robotics-manip-lbm/efs/data/tasks/BimanualPutSpatulaOnPlateFromUtensilCrock/riverway/sim/bc/rollout/2026-03-28T08-02-33+00-00/",
+   "BRIDGER": "s3://robotics-manip-lbm/efs/data/tasks/BimanualPutSpatulaOnPlateFromUtensilCrock/riverway/sim/bc/rollout/2026-03-23T09-19-05+00-00/",
+   "Retrieval": "s3://robotics-manip-lbm/efs/data/tasks/BimanualPutSpatulaOnPlateFromUtensilCrock/riverway/sim/bc/rollout/2026-03-23T09-25-20+00-00/"
+  },
+  "seed": 2026,
+  "candidates": 191,
+  "episodes": [
+   30,
+   82,
+   131,
+   134,
+   168,
+   26,
+   57,
+   156,
+   162,
+   145
+  ],
+  "ics": {
+   "30": {
+    "speed": 1.325,
+    "seed_match": true,
+    "ic_seed": 100000130,
+    "priors": {
+     "Gaussian Z": {
+      "success": true,
+      "duration_s": 13.9
+     },
+     "A_pre": {
+      "success": true,
+      "duration_s": 13.2
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 12.8
+     },
+     "E_pre + σ_E Z": {
+      "success": true,
+      "duration_s": 13.5
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 15.9
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 12.1
+     },
+     "Retrieval": {
+      "success": true,
+      "duration_s": 14.0
+     }
+    }
+   },
+   "82": {
+    "speed": 2.0917,
+    "seed_match": true,
+    "ic_seed": 100000182,
+    "priors": {
+     "Gaussian Z": {
+      "success": true,
+      "duration_s": 11.9
+     },
+     "A_pre": {
+      "success": false,
+      "duration_s": 25.1
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 9.8
+     },
+     "E_pre + σ_E Z": {
+      "success": false,
+      "duration_s": 25.1
+     },
+     "Cocos": {
+      "success": false,
+      "duration_s": 25.1
+     },
+     "BRIDGER": {
+      "success": false,
+      "duration_s": 25.1
+     },
+     "Retrieval": {
+      "success": true,
+      "duration_s": 11.1
+     }
+    }
+   },
+   "131": {
+    "speed": 2.0917,
+    "seed_match": true,
+    "ic_seed": 100000231,
+    "priors": {
+     "Gaussian Z": {
+      "success": false,
+      "duration_s": 25.1
+     },
+     "A_pre": {
+      "success": true,
+      "duration_s": 12.3
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 12.9
+     },
+     "E_pre + σ_E Z": {
+      "success": true,
+      "duration_s": 13.5
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 16.9
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 14.0
+     },
+     "Retrieval": {
+      "success": false,
+      "duration_s": 25.1
+     }
+    }
+   },
+   "134": {
+    "speed": 2.0917,
+    "seed_match": true,
+    "ic_seed": 100000234,
+    "priors": {
+     "Gaussian Z": {
+      "success": true,
+      "duration_s": 13.7
+     },
+     "A_pre": {
+      "success": false,
+      "duration_s": 25.1
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 14.4
+     },
+     "E_pre + σ_E Z": {
+      "success": false,
+      "duration_s": 25.1
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 15.0
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 15.5
+     },
+     "Retrieval": {
+      "success": true,
+      "duration_s": 21.2
+     }
+    }
+   },
+   "168": {
+    "speed": 2.0917,
+    "seed_match": true,
+    "ic_seed": 100000268,
+    "priors": {
+     "Gaussian Z": {
+      "success": true,
+      "duration_s": 15.3
+     },
+     "A_pre": {
+      "success": false,
+      "duration_s": 25.1
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 15.1
+     },
+     "E_pre + σ_E Z": {
+      "success": false,
+      "duration_s": 25.1
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 13.2
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 13.3
+     },
+     "Retrieval": {
+      "success": true,
+      "duration_s": 11.9
+     }
+    }
+   },
+   "26": {
+    "speed": 2.0917,
+    "seed_match": true,
+    "ic_seed": 100000126,
+    "priors": {
+     "Gaussian Z": {
+      "success": true,
+      "duration_s": 12.8
+     },
+     "A_pre": {
+      "success": false,
+      "duration_s": 25.1
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 10.4
+     },
+     "E_pre + σ_E Z": {
+      "success": true,
+      "duration_s": 11.7
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 17.1
+     },
+     "BRIDGER": {
+      "success": false,
+      "duration_s": 25.1
+     },
+     "Retrieval": {
+      "success": false,
+      "duration_s": 25.1
+     }
+    }
+   },
+   "57": {
+    "speed": 2.0917,
+    "seed_match": true,
+    "ic_seed": 100000157,
+    "priors": {
+     "Gaussian Z": {
+      "success": true,
+      "duration_s": 10.4
+     },
+     "A_pre": {
+      "success": false,
+      "duration_s": 25.1
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 11.0
+     },
+     "E_pre + σ_E Z": {
+      "success": true,
+      "duration_s": 10.5
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 10.4
+     },
+     "BRIDGER": {
+      "success": false,
+      "duration_s": 25.1
+     },
+     "Retrieval": {
+      "success": false,
+      "duration_s": 25.1
+     }
+    }
+   },
+   "156": {
+    "speed": 2.0917,
+    "seed_match": true,
+    "ic_seed": 100000256,
+    "priors": {
+     "Gaussian Z": {
+      "success": false,
+      "duration_s": 25.1
+     },
+     "A_pre": {
+      "success": false,
+      "duration_s": 25.1
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 17.9
+     },
+     "E_pre + σ_E Z": {
+      "success": false,
+      "duration_s": 25.1
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 11.8
+     },
+     "BRIDGER": {
+      "success": false,
+      "duration_s": 25.1
+     },
+     "Retrieval": {
+      "success": true,
+      "duration_s": 18.0
+     }
+    }
+   },
+   "162": {
+    "speed": 2.0917,
+    "seed_match": true,
+    "ic_seed": 100000262,
+    "priors": {
+     "Gaussian Z": {
+      "success": true,
+      "duration_s": 15.0
+     },
+     "A_pre": {
+      "success": false,
+      "duration_s": 25.1
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 23.4
+     },
+     "E_pre + σ_E Z": {
+      "success": false,
+      "duration_s": 25.1
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 14.3
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 15.8
+     },
+     "Retrieval": {
+      "success": true,
+      "duration_s": 16.7
+     }
+    }
+   },
+   "145": {
+    "speed": 1.2333,
+    "seed_match": true,
+    "ic_seed": 100000245,
+    "priors": {
+     "Gaussian Z": {
+      "success": true,
+      "duration_s": 11.6
+     },
+     "A_pre": {
+      "success": true,
+      "duration_s": 14.8
+     },
+     "A_pre + σ_A Z": {
+      "success": true,
+      "duration_s": 12.4
+     },
+     "E_pre + σ_E Z": {
+      "success": true,
+      "duration_s": 12.5
+     },
+     "Cocos": {
+      "success": true,
+      "duration_s": 12.4
+     },
+     "BRIDGER": {
+      "success": true,
+      "duration_s": 11.6
+     },
+     "Retrieval": {
+      "success": true,
+      "duration_s": 10.9
+     }
+    }
+   }
+  }
+ }
+}

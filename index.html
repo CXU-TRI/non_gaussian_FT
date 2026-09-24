@@ -1338,7 +1338,7 @@ document.getElementById('theme-toggle').addEventListener('click', () => {
       });
       const name = box.dataset.taskName || index[task].lbm_task || task;
       const where = kind === 'sim' ? `episode ${key}` : label(key);
-      const speed = kind === 'sim' && ic.speed ? ` ${ic.speed.toFixed(1)}× speed.` : ' Each clip time-normalized to 12 s.';
+      const speed = kind === 'sim' && ic.speed ? (ic.speed <= 1.0 ? ' Real time.' : ` ${ic.speed.toFixed(1)}× speed.`) : ' Each clip time-normalized to 12 s.';
       const legend = kind === 'hw' ? ' Percentages are partial task progress.' : '';
       cap.innerHTML = `<strong>${name}, ${where}:</strong> ${parts.join(', ')}.${speed}${legend}`;
     };
